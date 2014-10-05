@@ -4,7 +4,7 @@ class VerifyLogin extends CI_Controller {
   function __construct()
   {
     parent::__construct();
-    $this->load->model('usuario', '', TRUE);
+    $this->load->model('usuarios', '', TRUE);
   }
  
   function index()
@@ -14,7 +14,7 @@ class VerifyLogin extends CI_Controller {
 
     if($this->form_validation->run() == FALSE)
     {
-			$this->load->view('login_view');
+			$this->load->view('login');
     }
     else
     {
@@ -25,7 +25,7 @@ class VerifyLogin extends CI_Controller {
   function check_database($contrasena)
   {
     $usuario = $this->input->post('usuario');
-    $result = $this->usuario->login($usuario, $contrasena);
+    $result = $this->usuarios->login($usuario, $contrasena);
 
     if($result)
     {

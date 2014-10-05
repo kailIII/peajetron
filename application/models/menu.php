@@ -18,7 +18,7 @@ Class Menu extends CI_Model
 			$this->db->order_by('orden');
 			$menuh = $this->db->get();
 			foreach($menuh->result() as $rowh)
-				$menu .= '{id: "m'.$rowh->id_menu.'", text: "'.$rowh->menu.'", img: "'.$rowh->icono.'"},';
+				$menu .= '{id: "'.$rowh->url.'", text: "'.$rowh->menu.'", img: "'.$rowh->icono.'"},';
 			$menu .= ']},';
 		}
 		$menu .= ']';

@@ -1,5 +1,5 @@
 <?php
-Class Usuario extends CI_Model
+Class Usuarios extends CI_Model
 {
 	function login($usuario, $contrasena)
 	{
