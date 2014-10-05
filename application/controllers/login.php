@@ -8,7 +8,6 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		$data['meta'] = array(array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv'),array('name' => 'language', 'content' => 'es'));
 		$data['logo_image'] = array('src' => 'images/logo.png','alt' => 'logo', 'width' => '90', 'height' => '100');
 		$data['banner_image'] = array('src' => 'images/banner.png','alt' => 'banner', 'width' => '616', 'height' => '100');
 		$data['titulo'] = 'Pago de Peajes';

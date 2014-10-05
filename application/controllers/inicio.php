@@ -5,6 +5,7 @@ class Inicio extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+    $this->load->model('menu', '', TRUE);
 	}
 
 	function index()
@@ -12,13 +13,14 @@ class Inicio extends CI_Controller {
 		if($this->session->userdata('peajetron'))
 		{
 			$session = $this->session->userdata('peajetron');
-			$data['meta'] = array(array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv'),array('name' => 'language', 'content' => 'es'));
+			$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 			$data['logo_image'] = array('src' => 'images/logo.png','alt' => 'logo', 'width' => '90', 'height' => '100');
 			$data['banner_image'] = array('src' => 'images/banner.png','alt' => 'banner', 'width' => '616', 'height' => '100');
 			$data['titulo'] = 'Usuario: '.$session['nombre'];
 			$this->load->view('front/head.php', $data);
 			$this->load->view('front/header.php', $data);
-			$this->load->view('inicio', $data);
+			$this->load->view('menu', $menu);
+			$this->load->view('inicio');
 			$this->load->view('front/footer.php');
 		}
 		else
