@@ -18,6 +18,8 @@ class Inicio extends CI_Controller {
 	function index()
 	{
 		$session = $this->session->userdata('peajetron');
+		if($session['controlador'] != '')
+			redirect($session['controlador'], 'refresh');
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -26,7 +28,7 @@ class Inicio extends CI_Controller {
 		$this->load->view('inicio');
 		$this->load->view('front/footer.php');
 	}
-	  
+
 	function salir()
 	{
 		$this->session->unset_userdata('peajetron');

@@ -12,7 +12,7 @@ class VerifyLogin extends CI_Controller {
     $this->form_validation->set_rules('usuario', 'Usuario', 'required|valid_email');
     $this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|xss_clean|md5|callback_check_database');
 
-    if($this->form_validation->run() == FALSE)
+    if($this->form_validation->run() == false)
     {
 			$this->load->view('login');
     }
@@ -32,10 +32,10 @@ class VerifyLogin extends CI_Controller {
       $sess_array = array();
       foreach($result as $row)
       {
-        $sess_array = array('id_usuario' => $row->id_usuario, 'id_perfil' => $row->id_perfil, 'nombre' => $row->nombre, 'correo' => $row->correo, 'activo' => $row->activo);
+        $sess_array = array('id_usuario' => $row->id_usuario, 'id_perfil' => $row->id_perfil, 'nombre' => $row->nombre, 'correo' => $row->correo, 'activo' => $row->activo, 'controlador' => $row->controlador);
         $this->session->set_userdata('peajetron', $sess_array);
       }
-      return TRUE;
+      return true;
     }
     else
     {

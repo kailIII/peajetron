@@ -184,3 +184,10 @@ header table {
 	top: 50%;
 }
 
+#contenido {
+	top: 40px;
+	left: 30px;
+	position: absolute;
+	width: 800px;
+	z-index: 89;
+}
