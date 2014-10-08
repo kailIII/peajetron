@@ -188,6 +188,6 @@ header table {
 	top: 40px;
 	left: 30px;
 	position: absolute;
-	width: 800px;
+	width: 100%;
 	z-index: 89;
 }

@@ -6,7 +6,7 @@ Class Cobros extends CI_Model
 		parent::__construct();
 	}
 
-	function insertar($datos)
+	function insertarQR($datos)
 	{
 		$placa = preg_split('/\r\n|[\r\n]/', $datos['vcard']);
 		$placa = explode(":", $placa[2]);
@@ -24,6 +24,11 @@ Class Cobros extends CI_Model
 		{
 			return 'El vehículo no existe';
 		}
+	}
+
+	function insertarPlaca($datos)
+	{
+		return 'Cruce registrado correctamente!';
 	}
 }
 ?>

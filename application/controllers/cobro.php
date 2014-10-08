@@ -48,14 +48,26 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/footer.php');
 	}
 
-	function registrar()
+	function placa()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('placa', $session);
+		$this->load->view('front/footer.php');
+	}
+
+	function registrarQR()
 	{
 		$result = null;
-    $this->form_validation->set_rules('vcard', 'Vcard', 'trim|required|xss_clean|callback_check_vcard');
+    $this->form_validation->set_rules('vcard', 'Vcard', 'required|xss_clean|callback_check_vcard');
     $this->form_validation->set_rules('id_usuario', 'Usuario', 'required|xss_clean|integer');
     $this->form_validation->set_rules('id_peaje', 'Peaje', 'required|xss_clean|integer');
 		if($this->form_validation->run() == true)
-			$result = $this->cobros->insertar($this->input->post());
+			$result = $this->cobros->insertarQR($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
 		$session['mensaje'] = $result;
@@ -68,6 +80,30 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/footer.php');
 	}
 
+	function registrarPlaca()
+	{
+		$result = null;
+    $this->form_validation->set_rules('placa', 'Placa', 'required|xss_clean|callback_check_placa');
+    $this->form_validation->set_rules('id_usuario', 'Usuario', 'required|xss_clean|integer');
+    $this->form_validation->set_rules('id_peaje', 'Peaje', 'required|xss_clean|integer');
+		$validation = $this->form_validation->run();
+		if($validation == true)
+			$result = $this->cobros->insertarPlaca($this->input->post());
+
+  	$session = $this->session->userdata('peajetron');
+		$session['mensaje'] = $result;
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		if($validation == true)
+			$this->load->view('cruce', $session);
+		else
+			$this->load->view('placa', $session);
+		$this->load->view('front/footer.php');
+	}
+
 	function check_vcard($vcard)
 	{
 		$resultado = true;
@@ -76,7 +112,7 @@ class Cobro extends CI_Controller {
 			$resultado = false;
 		elseif($lines[1] != 'VERSION:4.0')
 			$resultado = false;
-		elseif(strlen($lines[2]) != 8 || substr($lines[2], 0, 2) != 'N:')
+		elseif(strlen($lines[2]) != 8 || substr($lines[2], 0, 2) != 'N:' || !preg_match("/[A-Z]{3}[0-9]{3}/", substr($lines[2], 2, 6)))
 			$resultado = false;
 		elseif(strlen($lines[3]) != 69)
 			$resultado = false;
@@ -87,6 +123,16 @@ class Cobro extends CI_Controller {
 		if(!$resultado)
 			$this->form_validation->set_message('check_vcard', 'Formato de vcard incorrecto');
 		return $resultado;
+	}
+
+	function check_placa($placa)
+	{
+		if(!preg_match("/[A-Z]{3}[0-9]{3}/", $placa))
+		{
+			$this->form_validation->set_message('check_placa', 'Formato de placa incorrecto');
+			return false;
+		}
+		return true;
 	}
 }
 ?>
