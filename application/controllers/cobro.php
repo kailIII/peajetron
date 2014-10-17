@@ -1,6 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 session_start();
+require_once('application/third_party/dhtmlx/sources/dhtmlxConnector/codebase/grid_connector.php');
+require_once('application/third_party/dhtmlx/sources/dhtmlxConnector/codebase/db_phpci.php');
+DataProcessor::$action_param = 'dhx_editor_status';
+
 class Cobro extends CI_Controller {
 	function __construct()
 	{
@@ -10,7 +14,6 @@ class Cobro extends CI_Controller {
 			$this->load->model('menu', '', TRUE);
 			$this->load->model('cobros', '', TRUE);
 			$this->load->model('peajes', '', TRUE);
-			$this->load->model('vehiculos', '', TRUE);
 		}
 		else
 		{
@@ -22,12 +25,27 @@ class Cobro extends CI_Controller {
 	{
 		$session = $this->session->userdata('peajetron');
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
-		$select['peaje'] = json_decode($this->peajes->listar(), true);
+		$peajes = json_decode($this->peajes->listar(), true);
+		foreach($peajes as $value)
+			$select['peaje'][$value['id_peaje']] = $value['peaje'];
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
 		$this->load->view('cobros', $select);
+		$this->load->view('front/footer.php');
+	}
+
+	function listar()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$data['header'] = 'id_vehiculo, id_usuario_propietario, id_usuario_registra, id_peaje, valor, fecha_registro, fecha_pago';
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('dhtmlxGrid', $data);
 		$this->load->view('front/footer.php');
 	}
 
@@ -45,18 +63,6 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
 		$this->load->view('cruce', $session);
-		$this->load->view('front/footer.php');
-	}
-
-	function placa()
-	{
-		$session = $this->session->userdata('peajetron');
-		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
-		$data['titulo'] = 'Usuario: '.$session['nombre'];
-		$this->load->view('front/head.php', $data);
-		$this->load->view('front/header.php');
-		$this->load->view('menu', $menu);
-		$this->load->view('placa', $session);
 		$this->load->view('front/footer.php');
 	}
 
@@ -102,6 +108,26 @@ class Cobro extends CI_Controller {
 		else
 			$this->load->view('placa', $session);
 		$this->load->view('front/footer.php');
+	}
+
+	function placa()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('placa', $session);
+		$this->load->view('front/footer.php');
+	}
+
+	function data()
+	{
+		$connector = new GridConnector($this->db, 'phpCI');
+		$connector->configure('cobro', 'id_cobro', 'id_vehiculo, id_usuario_propietario, id_usuario_registra, id_peaje, valor, fecha_registro, fecha_pago');
+		$connector->event->attach($this);
+		$connector->render();
 	}
 
 	function check_vcard($vcard)

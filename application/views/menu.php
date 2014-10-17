@@ -1,6 +1,4 @@
 			<script type="text/javascript">
-				var myMenu;
-
 				$(function() {
 					myMenu = new dhtmlXMenuObject({
 					parent: 'menuObj',

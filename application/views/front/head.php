@@ -11,5 +11,8 @@
 		?>
 		<script type="text/javascript" src="<?php echo base_url().'application/third_party/dhtmlx/codebase/dhtmlx.js'?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().'application/third_party/jquery/jquery-min.js'?>"></script>
+		<script type="text/javascript">
+			var myMenu, mygrid;
+		</script>
 	</head>
 	<body>

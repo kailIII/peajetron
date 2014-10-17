@@ -8,17 +8,21 @@ Class Cobros extends CI_Model
 
 	function insertarQR($datos)
 	{
+		$this->load->model('vehiculos', '', TRUE);
+		$this->load->model('tarifas', '', TRUE);
+
 		$placa = preg_split('/\r\n|[\r\n]/', $datos['vcard']);
 		$placa = explode(":", $placa[2]);
-    $result = $this->vehiculos->buscar($placa[1]);
-		if($result)
+    $vehiculo = $this->vehiculos->buscar($placa[1]);
+		if($vehiculo)
 		{
-      foreach($result as $row)
+			$tarifa = $this->tarifas->buscar($datos['id_peaje'], $vehiculo[0]->id_categoria);
+			if($tarifa)
 			{
-				$data = array('id_vehiculo' => $row->id_vehiculo, 'id_usuario_propietario' => $row->id_usuario, 'id_usuario_registra' => $datos['id_usuario'], 'id_peaje' => $datos['id_peaje'], 'valor' => 0);
+				$data = array('id_vehiculo' => $vehiculo[0]->id_vehiculo, 'id_usuario_propietario' => $vehiculo[0]->id_usuario, 'id_usuario_registra' => $datos['id_usuario'], 'id_peaje' => $datos['id_peaje'], 'valor' => $tarifa[0]->tarifa);
 				$this->db->insert('cobro', $data);
+				return 'Cruce registrado correctamente!';
 			}
-			return 'Cruce registrado correctamente!';
 		}
 		else
 		{
