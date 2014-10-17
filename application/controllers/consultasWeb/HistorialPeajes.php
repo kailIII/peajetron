@@ -11,9 +11,8 @@ class HistorialPeajes extends  CI_Controller
 	 */
 	public function __construct(){
 		parent::__construct();
-		$this->load->helper( array('url','form') );
-		$this->load->library('form_validation');
-		$this->load->model('consultasWeb/historialPeajesModel');
+		//$this->load->model('consultasWeb/HistorialPeajesModel');
+		
 	}
 	/*
 	 * Función que se encarga de inicializar el controlador al
@@ -21,8 +20,9 @@ class HistorialPeajes extends  CI_Controller
 	 * */ 
 	public function index()
 	{	
-
+		$session = $this->session->userdata('peajetron');
 		$data = array(
+			'user' => $session,
 			'listaAutos' => array(
 				array('placa' => '123-ABC','marca' =>'Audi', 'modelo' => 'RQS' ),
 			    array('placa' => '987-ABC','marca' =>'Audi', 'modelo' => 'TT' )

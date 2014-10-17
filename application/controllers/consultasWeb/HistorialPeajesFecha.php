@@ -40,6 +40,7 @@ class HistorialPeajesFecha extends  CI_Controller
 		);
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/historialFecha/seleccionView', $data );
+		
 	}
 	/*
 	 * Método el cual se encarga de capturar las fechas que ha seleccionado

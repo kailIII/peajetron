@@ -1,4 +1,7 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
 Class Usuarios extends CI_Model
 {
 	function login($usuario, $contrasena)
@@ -20,6 +23,15 @@ Class Usuarios extends CI_Model
 		{
 			return false;
 		}
+	}
+
+	/**
+	 * Método que permite cambiar el correo y telefono de un usuario.
+	 * 
+	 */
+	public function actualizarDatos( $idUsuario, $correo, $telefono )
+	{
+		return null;
 	}
 }
 ?>
