@@ -18,13 +18,13 @@
 					echo form_open( site_url() .'/consultasWeb/historialPeajes/mostrarPeajes');
 				?>
 				<div>
-					<label>Seleccione el automovil</label>
+					<label>Seleccione el vehículo </label>
 					<select class="selectpicker"  name="placa">
 						<?php 
 						foreach( $listaAutos as $auto )
 						{
 						    ?>
-						    	<option value="<?=$auto['placa']?>"> <?=$auto['marca']?> - <?=$auto['modelo']?>  </option>
+						    	<option value="<?=$auto['id']?>"> <?=$auto['placa']?> -  <?=$auto['marca']?> - <?=$auto['modelo']?>  </option>
 						    <?php
 						}
 						?>
@@ -32,12 +32,13 @@
 				</div>
 				<div id="botones-lista">
 					<button class="btn btn-success" type="submit" accesskey="a">Aceptar</button>
-					<button class="btn btn-danger"  accesskey="c">Cancelar</button>
+					
 					<?php
-						//echo form_submit(array('value' => 'Aceptar'));
+
 						echo form_close();
 					?>
 				</div>	
+				<button class="btn btn-danger"  accesskey="c">Cancelar</button>
 			</div>
 		</div>
 	</body>

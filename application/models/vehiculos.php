@@ -33,9 +33,11 @@ Class Vehiculos extends CI_Model
 	 * @return Obtiene un result en caso que se obtengas resultados de lo contrario
 	 *		   se retorna un false. 
 	 */
-	public function vehiculosPropietario( $idusuario )
+	function vehiculosPropietario( $idusuario )
 	{
-		$sql = "SELECT v FROM vehiculo as v, usuario as u WHERE v.id_usuario = u.id_usuario AND u.id_usuario ='id' ";
+		$sql = "SELECT * FROM vehiculo as v, usuario as u 
+						 WHERE v.id_usuario = u.id_usuario 
+						 AND u.id_usuario = ". $idusuario ;
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
 		{

@@ -10,6 +10,7 @@ class HistorialPagos extends  CI_Controller
 	 */
 	public function __construct(){
 		parent::__construct();
+		
 	}
 	/*
 	 * Método que inicializa el controlador de historial de pagos.

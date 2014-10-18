@@ -4,14 +4,19 @@
  * Clase que se encarga de generar controlar la funcionalidad de 
  * historial de peajes de un usuario registrado. 
  */
-class HistorialPeajes extends  CI_Controller
+
+include_once 'ConsultasWebController.php';
+
+class HistorialPeajes extends  ConsultasWebController
 {
+	
 	/*
 	 * Constructor de la clase.
 	 */
 	public function __construct(){
 		parent::__construct();
-		//$this->load->model('consultasWeb/HistorialPeajesModel');
+		$this->load->model('vehiculos');
+		$this->load->model('cobros');
 		
 	}
 	/*
@@ -20,16 +25,26 @@ class HistorialPeajes extends  CI_Controller
 	 * */ 
 	public function index()
 	{	
-		$session = $this->session->userdata('peajetron');
-		$data = array(
-			'user' => $session,
-			'listaAutos' => array(
-				array('placa' => '123-ABC','marca' =>'Audi', 'modelo' => 'RQS' ),
-			    array('placa' => '987-ABC','marca' =>'Audi', 'modelo' => 'TT' )
-			),
-        );
+		//$this->session = $this->session->userdata('peajetron');
+		//$idUsuario = $this->session['id_usuario'];
+
+		$listaAutos = $this->getListaAutos();
+
+		if( empty( $listaAutos ) ){
+			$data = array(
+					'status' => FALSE,
+			);
+		}
+		else
+		{
+			$data = array(
+					'listaAutos' => $listaAutos,
+					'status' => TRUE,
+			);
+		}
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/historial/seleccionView', $data );
+		
 	}
 	/*
 	 * Función que se encarga de obtener una lista de los
@@ -38,15 +53,34 @@ class HistorialPeajes extends  CI_Controller
 	 */
 	 public function mostrarPeajes()
 	 {
-	 	$placa =  $this->input->post('placa');
-	 	$data = array(
-	 		'placa' => $placa,
-	 		'peajes' => array(
-	 			array('peaje' => 'Bogotá', 		  'ruta' => 'Ruta 1', 'fechaCruce'=>'2014-12-04', 'valor'=> '$8.000' ),
-	 			array('peaje' => 'Villavicencio', 'ruta' => 'Ruta 2', 'fechaCruce'=>'2014-12-04', 'valor'=> '$5.000' ),
-	 			array('peaje' => 'Cartagena', 	  'ruta' => 'Ruta 3', 'fechaCruce'=>'2014-12-04', 'valor'=> '$18.000' ),		
-	 		)
-	 	);
+	 	$idVehiculo =  $this->input->post('placa');
+	    $results = $this->cobros->listarPeajesCruzados( $idVehiculo, $this->getIdUsuario()  );
+
+	    if( $results == FALSE  )
+	    {
+	    	$data = array(
+				'status' => FALSE,
+			);
+	    }
+	    else
+		{
+			$listaCobros = array();
+			foreach( $results as $cobro )
+			{
+				$cruce = array();
+				$cruce[ 'peaje' ]  = $cobro->peaje;
+				$cruce[ 'ruta' ]  = $cobro->ruta ;
+				$cruce[ 'fechaCruce' ] = $cobro->fecha;
+				$cruce[ 'valor' ]  = $cobro->valor ;
+				$listaCobros [] = $cruce;
+			}
+			$data = array(
+				'status' => TRUE,
+	 			'peajes' => $listaCobros,
+	 		);
+	 		
+		}	
+		$this->load->view( 'consultasWeb/templateMenuView'); 	
 	 	$this->load->view( 'consultasWeb/historial/mostrarView', $data );
 	 }
 }	
