@@ -140,7 +140,14 @@ Class Cobros extends CI_Model
 					AND u.id_usuario = v.id_usuario
 					AND v.id_vehiculo = " . $idVehiculo. "
 					AND u.id_usuario  = ". $idUsuario  . "
-					AND c.id_usuario_propietario = u.id_usuario";
+					AND c.id_usuario_propietario = u.id_usuario
+					AND DATE_PART('MONTH',c.fecha_registro)  = DATE_PART('MONTH',NOW() ) 
+					AND DATE_PART('YEAR',c.fecha_registro) = DATE_PART('YEAR',NOW()) ";
+
+		/**
+		  * FALTA SUMARLE SI DEBE ALGO DEL MES ANTERIOR, PARA LO CUAL SE DEBE BUSCAR EN LA FACTURA DEL
+		  * MES ANTERIOR Y VERIFICAR SI ESTA PAGA O NO, SI NO ESTA PAGA SE DEBE SUMAR A ESTE RESULTADO.
+		*/			
 					
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
