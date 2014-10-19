@@ -24,7 +24,8 @@ class HistorialPagos extends  CI_Controller
 						array('placa' => '987-ABC','marca' =>'Audi', 'modelo' => 'TT' )
 				),
 		);
-	
+		
+		$this->load->view( 'consultasWeb/templateHeaderView' );
 		$this->load->view( 'consultasWeb/templateMenuView' );
 		$this->load->view( 'consultasWeb/historialPagos/seleccionView', $data );	
 	}

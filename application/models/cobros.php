@@ -43,12 +43,13 @@ Class Cobros extends CI_Model
 	 */
 	public function listarPeajesCruzados( $idVehiculo, $idUsuario  )
 	{
-		$sql = "SELECT p.peaje, r.ruta, c.fecha_registro as fecha, c.valor 
+		$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,  to_char(c.fecha_registro, 'HH24:MI') as hora,c.valor 
 					FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r 
 					WHERE  u.id_usuario = v.id_usuario 
 					AND c.id_vehiculo = v.id_vehiculo
 					AND c.id_peaje  = p.id_peaje
-					AND p.id_ruta = r.id_ruta";
+					AND p.id_ruta = r.id_ruta
+					ORDER BY c.fecha_registro DESC";
 
 		$query = $this->db->query( $sql );
 
@@ -70,10 +71,15 @@ Class Cobros extends CI_Model
 	 */
 	public function listarPeajesCruzadosFecha( $idVehiculo, $idUsuario , $fechaInicial, $fechaFinal )
 	{
-		$sql = "SELECT * FROM cobro as c, usuario as u, vehiculo as v 
-				WHERE  u.id_usuario = v.id_usuario 
-				  	   AND c.id_vehiculo = v.id_vehiculo 
-				  	   AND c.fecha BETWEEN " .$fechaInicial . " AND " . $fechaFinal;
+		$this->db->query( 'SET DateStyle TO European' );
+		$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha, to_char(c.fecha_registro, 'HH24:MI') as hora, c.valor 
+					FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r 
+					WHERE  u.id_usuario = v.id_usuario 
+					AND c.id_vehiculo = v.id_vehiculo
+					AND c.id_peaje  = p.id_peaje
+					AND p.id_ruta = r.id_ruta
+				  	AND DATE(c.fecha_registro) BETWEEN '" .$fechaInicial . "' AND '" . $fechaFinal . 
+				  	"' ORDER BY c.fecha_registro DESC";
 
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )

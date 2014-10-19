@@ -42,6 +42,7 @@ class HistorialPeajes extends  ConsultasWebController
 					'status' => TRUE,
 			);
 		}
+		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/historial/seleccionView', $data );
 		
@@ -71,15 +72,24 @@ class HistorialPeajes extends  ConsultasWebController
 				$cruce[ 'peaje' ]  = $cobro->peaje;
 				$cruce[ 'ruta' ]  = $cobro->ruta ;
 				$cruce[ 'fechaCruce' ] = $cobro->fecha;
+				$cruce[ 'hora' ] = $cobro->hora;
 				$cruce[ 'valor' ]  = $cobro->valor ;
 				$listaCobros [] = $cruce;
 			}
+			$vehiculo = $this->vehiculos->buscarById( $idVehiculo );
+			$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo; 
+	
 			$data = array(
 				'status' => TRUE,
 	 			'peajes' => $listaCobros,
+	 			'auto'   => $string_vehiculo,
+	 			'placa'  => $vehiculo->placa,
+	 			'marca'  => $vehiculo->marca ,
+	 			'modelo' => $vehiculo->modelo,
 	 		);
 	 		
-		}	
+		}
+		$this->load->view( 'consultasWeb/templateHeaderView'); 		
 		$this->load->view( 'consultasWeb/templateMenuView'); 	
 	 	$this->load->view( 'consultasWeb/historial/mostrarView', $data );
 	 }

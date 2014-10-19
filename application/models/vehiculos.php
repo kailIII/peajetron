@@ -25,6 +25,17 @@ Class Vehiculos extends CI_Model
 		}
 	}
 
+	function buscarById( $idVehiculo )
+	{
+		$sql = "SELECT * FROM vehiculo as v WHERE v.id_vehiculo=" .$idVehiculo ;
+		$query = $this->db->query( $sql );
+		if( $query->num_rows() > 0 )
+		{
+			return $query->result()[0];
+		}
+		return false;
+	}
+
 	/**
 	 * Método que se encarga de buscar los vehículos que le 
 	 * pertenecen a un usuario en especifico. 

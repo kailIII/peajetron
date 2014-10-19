@@ -3,8 +3,12 @@
 /*s
  * Clase que se encarga de Controlar los eventos generados
  * en la vista Historial de peajes cruzados por fechas.
- * */
-class HistorialPeajesFecha extends  CI_Controller
+ * 
+ */
+
+include_once 'ConsultasWebController.php';
+
+class HistorialPeajesFecha  extends  ConsultasWebController
 {
 	/*
 	 * Variable en la cual se aloja el facha inicial seleccionada
@@ -18,13 +22,18 @@ class HistorialPeajesFecha extends  CI_Controller
 	 * los peajes cruzados de un vehículo.
 	 */
 	private $fechaFinal;
+
+	/*
+	 * Identificador del vehículo que se ha seleccionado para generar el reporte.
+	*/
+	public $idVehiculo;
 	/*
 	 * Constructor de la clase.
 	 */
 	public function __construct(){
 		parent::__construct();
-		$this->load->helper( array('url','form') );
-		$this->load->library('form_validation');
+		$this->load->model('vehiculos');
+		$this->load->model('cobros');
 	}
 	/*
 	 * Función que se encarga de inicializar el controlador al
@@ -32,12 +41,22 @@ class HistorialPeajesFecha extends  CI_Controller
 	 * */
 	public function index()
 	{
-		$data = array(
-				'listaAutos' => array(
-						array('placa' => '123-ABC','marca' =>'Audi', 'modelo' => 'RQS' ),
-						array('placa' => '987-ABC','marca' =>'Audi', 'modelo' => 'TT' )
-				),
-		);
+		$listaAutos = $this->getListaAutos();
+
+		if( empty( $listaAutos ) ){
+			$data = array(
+					'status' => FALSE,
+			);
+		}
+		else
+		{
+			$data = array(
+					'listaAutos' => $listaAutos,
+					'status' => TRUE,
+			);
+		}
+
+		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/historialFecha/seleccionView', $data );
 		
@@ -48,10 +67,11 @@ class HistorialPeajesFecha extends  CI_Controller
 	 * */
 	public function seleccioneFecha()
 	{
-		$this->fechaInicial = $this->input->post('fechaInicial');
-		$this->fechaFinal   = $this->input->post('fechaFinal');
-		
-		$data = array();
+		$this->idVehiculo =  $this->input->post('placa');
+		$data = array(
+			'idVehiculo' => $this->idVehiculo
+		);
+		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
 		$this->load->view( 'consultasWeb/historialFecha/seleccioneFechaView', $data );
 	}
@@ -60,17 +80,55 @@ class HistorialPeajesFecha extends  CI_Controller
 	 * peajes por los cuales ha cruzado el propietario de un
 	 * automovil.
 	 */
-	public function mostrarPeajes(){
-		$placa =  $this->input->post('placa');
-		$data = array(
-				'placa' => $placa,
-				'peajes' => array(
-						array('peaje' => 'Bogotá', 		  'ruta' => 'Ruta 1', 'fechaCruce'=>'2014-12-04', 'valor'=> '$8.000' ),
-						array('peaje' => 'Villavicencio', 'ruta' => 'Ruta 2', 'fechaCruce'=>'2014-12-04', 'valor'=> '$5.000' ),
-						array('peaje' => 'Cartagena', 	  'ruta' => 'Ruta 3', 'fechaCruce'=>'2014-12-04', 'valor'=> '$18.000' ),
-				)
-		);
+	public function mostrarPeajes()
+	{
+		$this->idVehiculo =  $this->input->post('idVehiculo');
+		$this->fechaInicial = $this->input->post('fechaInicial');
+		$this->fechaFinal   = $this->input->post('fechaFinal');
+		
+
+
+	    $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
+
+	    $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
+		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
+	    if( $results == FALSE  )
+	    {
+	    	$data = array(
+				'status' => FALSE,
+				'auto'   => $string_vehiculo,
+	 			'placa'  => $vehiculo->placa,
+	 			'marca'  => $vehiculo->marca ,
+	 			'modelo' => $vehiculo->modelo,
+			);
+	    }
+	    else
+		{
+			$listaCobros = array();
+			foreach( $results as $cobro )
+			{
+				$cruce = array();
+				$cruce[ 'peaje' ]  = $cobro->peaje;
+				$cruce[ 'ruta' ]  = $cobro->ruta ;
+				$cruce[ 'fechaCruce' ] = $cobro->fecha;
+				$cruce[ 'hora' ] = $cobro->hora;
+				$cruce[ 'valor' ]  = $cobro->valor ;
+				$listaCobros [] = $cruce;
+			}
+			$data = array(
+				'status' => TRUE,
+	 			'peajes' => $listaCobros,
+	 			'auto'   => $string_vehiculo,
+	 			'placa'  => $vehiculo->placa,
+	 			'marca'  => $vehiculo->marca ,
+	 			'modelo' => $vehiculo->modelo,
+	 			'fechaInicial' => $this->fechaInicial,
+	 			'fechaFinal' => $this->fechaFinal
+	 		);
+	 		
+		}
+		$this->load->view( 'consultasWeb/templateHeaderView'); 
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
-		$this->load->view( 'consultasWeb/historial/mostrarView', $data );
+		$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );
 	}
 }
