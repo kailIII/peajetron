@@ -3,7 +3,9 @@
  * Controlador que se encarga de generar el historial de pagos 
  * de un usuario 
  * */
-class HistorialPagos extends  CI_Controller
+include_once 'ConsultasWebController.php';
+
+class HistorialPagos extends  ConsultasWebController
 {
 	/*
 	 * Constructor de la clase.
@@ -18,16 +20,7 @@ class HistorialPagos extends  CI_Controller
 	 * */
 	public function index()
 	{
-		$data = array(
-				'listaAutos' => array(
-						array('placa' => '123-ABC','marca' =>'Audi', 'modelo' => 'RQS' ),
-						array('placa' => '987-ABC','marca' =>'Audi', 'modelo' => 'TT' )
-				),
-		);
-		
-		$this->load->view( 'consultasWeb/templateHeaderView' );
-		$this->load->view( 'consultasWeb/templateMenuView' );
-		$this->load->view( 'consultasWeb/historialPagos/seleccionView', $data );	
+		$this->inicializar('consultasWeb/historialPagos/seleccionView');	
 	}
 	/*
 	 * Función que se encarga de mostrar los pagos que ha realizado una persona

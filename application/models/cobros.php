@@ -123,7 +123,7 @@ Class Cobros extends CI_Model
 	}
 
 	/**
-	 * Se obtiene el valor que debe pagar un propietar de un vehículo específico respecto al último mes 
+	 * Se obtiene el valor que debe pagar un propietar de un vehículo específico respecto al último mes. 
 	 * se realiza un cálculo parcial hasta la fecha.
      *
 	 * @param $idVehiculo Identificador del vehículo. 
@@ -134,11 +134,18 @@ Class Cobros extends CI_Model
 	 */
 	public function valorUlitmoMes( $idVehiculo, $idUsuario )
 	{
-		$sql = '';
+		$sql = "SELECT SUM(c.valor) 
+					FROM  cobro as c , vehiculo as v , usuario as u 
+					WHERE v.id_vehiculo = c.id_vehiculo
+					AND u.id_usuario = v.id_usuario
+					AND v.id_vehiculo = " . $idVehiculo. "
+					AND u.id_usuario  = ". $idUsuario  . "
+					AND c.id_usuario_propietario = u.id_usuario";
+					
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
 		{
-			return $query->result();
+			return $query->result()[0];
 		}
 		return false;	
 	}

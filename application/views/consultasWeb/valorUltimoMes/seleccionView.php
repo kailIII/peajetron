@@ -1,8 +1,8 @@
 
-			<h1> Historial de peajes Cruzados  </h1>
+			<h1> Valor último mes a pagar  </h1>
 		    <div>
 				<?php 
-					echo form_open( site_url() .'/consultasWeb/historialPagos/mostrarPagos');
+					echo form_open( site_url() .'/consultasWeb/valorUltimoMes/mostrar');
 				?>
 				<div>
 					<label>Seleccione el automovil</label>
@@ -11,7 +11,7 @@
 						foreach( $listaAutos as $auto )
 						{
 						    ?>
-							    	<option value="<?=$auto['id']?>"> <?=$auto['placa']?> -  <?=$auto['marca']?> - <?=$auto['modelo']?>  </option>
+							    <option value="<?=$auto['id']?>"> <?=$auto['placa']?> -  <?=$auto['marca']?> - <?=$auto['modelo']?>  </option>
 						    <?php
 						}
 						?>
