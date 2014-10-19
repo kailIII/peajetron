@@ -147,7 +147,7 @@ Class Cobros extends CI_Model
 		/**
 		  * FALTA SUMARLE SI DEBE ALGO DEL MES ANTERIOR, PARA LO CUAL SE DEBE BUSCAR EN LA FACTURA DEL
 		  * MES ANTERIOR Y VERIFICAR SI ESTA PAGA O NO, SI NO ESTA PAGA SE DEBE SUMAR A ESTE RESULTADO.
-		*/			
+		  */			
 					
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
