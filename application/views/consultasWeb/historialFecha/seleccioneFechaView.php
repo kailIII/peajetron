@@ -13,11 +13,13 @@
 			                <div class='input-group date' >
 			                    <input 
 			                    	name="fechaInicial"
-			                    	type='input' 
+			                    	id="fechaInicial"
+			                    	type='date' 
 			                    	class="form-control datetimepicker fecha" 
 			                    	required="required" 
 			                    	data-date-format="YYYY-MM-DD"
 			                    	placeholder="YYYY-MM-DD"
+			                    	max="<?php echo date("Y-m-d")?>"
 			                    />
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 			                    </span>
@@ -31,11 +33,13 @@
 			                <div class='input-group date'>
 			                    <input 
 			                    	name="fechaFinal"
-			                    	type='input' 
+			                    	id="fechaFinal"
+			                    	type='date' 
 			                    	class="form-control datetimepicker fecha"  
 			                    	required="required"
 			                    	data-date-format="YYYY-MM-DD"
 			                    	placeholder="YYYY-MM-DD"
+			                    	max="<?php echo date("Y-m-d")?>"	
 			                    />
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 			                    </span>
@@ -45,7 +49,7 @@
 			</div> <!--  fin de candelarios -->
 			<input type="hidden" name="idVehiculo" value="<?php echo $idVehiculo; ?>"> 
 			<div class='col-md-5' id="botones-lista">
-				<button class="btn btn-success" type="submit" accesskey="a">Continuar</button>
+				<button id="continuar" class="btn btn-success" type="submit" accesskey="a">Continuar</button>
 				
 			</div>
 			<?php
@@ -85,6 +89,20 @@
 	                pickTime:false, 
 	                language: 'es'
 	            });
+
+	            $("#fechaInicial").click(function () {
+                    $(this).data("DateTimePicker").setMaxDate(new Date() );
+                });
+                $("#fechaFinal").click(function () {
+                    $(this).data("DateTimePicker").setMaxDate(new Date() );
+                });
+                $("#fechaInicial").blur(function(){
+               		 $("#continuar").prop('disabled', false);
+                });
+                $("#fechaFinal").blur(function(){
+               		 $("#continuar").prop('disabled', false);	
+                });
+               
 	        });
 	    </script>
 	</div>
