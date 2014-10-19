@@ -25,6 +25,11 @@ Class Vehiculos extends CI_Model
 		}
 	}
 
+	/**
+	 * Función que se encarga de obtener todas los campos de un vehículo 
+	 * @param $idVehiculo Identificación del vehículo
+	 * @return Objeto con los campos de un vehículo.
+	*/
 	function buscarById( $idVehiculo )
 	{
 		$sql = "SELECT * FROM vehiculo as v WHERE v.id_vehiculo=" .$idVehiculo ;
@@ -38,7 +43,7 @@ Class Vehiculos extends CI_Model
 
 	/**
 	 * Método que se encarga de buscar los vehículos que le 
-	 * pertenecen a un usuario en especifico. 
+	 * pertenecen a un usuario en específico. 
 	 *
 	 * @param idusuario Identificador del usuario del cual traer los vehículos. 
 	 * @return Obtiene un result en caso que se obtengas resultados de lo contrario

@@ -68,7 +68,7 @@ Class Cruce extends CI_Model
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
 		{
-			return $query->result();
+			return $query->result()[0];
 		}
 		return false;		   
 	}

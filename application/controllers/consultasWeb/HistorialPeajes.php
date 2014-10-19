@@ -25,27 +25,7 @@ class HistorialPeajes extends  ConsultasWebController
 	 * */ 
 	public function index()
 	{	
-		//$this->session = $this->session->userdata('peajetron');
-		//$idUsuario = $this->session['id_usuario'];
-
-		$listaAutos = $this->getListaAutos();
-
-		if( empty( $listaAutos ) ){
-			$data = array(
-					'status' => FALSE,
-			);
-		}
-		else
-		{
-			$data = array(
-					'listaAutos' => $listaAutos,
-					'status' => TRUE,
-			);
-		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 	
-		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( 'consultasWeb/historial/seleccionView', $data );
-		
+		$this->inicializar( 'consultasWeb/historial/seleccionView' );
 	}
 	/*
 	 * Función que se encarga de obtener una lista de los

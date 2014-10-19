@@ -7,6 +7,29 @@ Class ConsultasWebController extends  CI_Controller
 		parent::__construct();
 		$this->load->model('vehiculos');
 	}
+	/**
+	 * Función que se encarga de inicializar la vista para 
+	 * cargar en la vista la lista de placas del vehículo.
+	*/
+	public function inicializar( $pathView ){
+		$listaAutos = $this->getListaAutos();
+
+		if( empty( $listaAutos ) ){
+			$data = array(
+					'status' => FALSE,
+			);
+		}
+		else
+		{
+			$data = array(
+					'listaAutos' => $listaAutos,
+					'status' => TRUE,
+			);
+		}
+		$this->load->view( 'consultasWeb/templateHeaderView'); 	
+		$this->load->view( 'consultasWeb/templateMenuView');
+		$this->load->view( $pathView , $data );
+	}
 
 	/**
 	 * Funcionalidad que se encarga de obtener las placas de los vehículos

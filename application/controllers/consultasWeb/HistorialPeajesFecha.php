@@ -41,25 +41,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 * */
 	public function index()
 	{
-		$listaAutos = $this->getListaAutos();
-
-		if( empty( $listaAutos ) ){
-			$data = array(
-					'status' => FALSE,
-			);
-		}
-		else
-		{
-			$data = array(
-					'listaAutos' => $listaAutos,
-					'status' => TRUE,
-			);
-		}
-
-		$this->load->view( 'consultasWeb/templateHeaderView'); 	
-		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( 'consultasWeb/historialFecha/seleccionView', $data );
-		
+		$this->inicializar( 'consultasWeb/historialFecha/seleccionView' );		
 	}
 	/*
 	 * Método el cual se encarga de capturar las fechas que ha seleccionado
