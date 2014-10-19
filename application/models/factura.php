@@ -16,8 +16,9 @@ Class Factura extends CI_Model
 	 * @return Obtiene un result en caso que se obtengas resultados de lo contrario
 	 *		   se retorna un false. 
 	 */
-	public function listarHistorialPagos(){
-		$sql = '';
+	public function listarHistorialPagos( $idUsuario )
+	{
+		$sql = 'SELECT * FROM  factura as f WHERE  f.id_usuario= ' . $idUsuario;
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
 		{

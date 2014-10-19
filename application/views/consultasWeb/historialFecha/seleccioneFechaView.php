@@ -3,7 +3,7 @@
 		
 		<div id="formulario-seleccion-fechas">
 			<?php 
-						echo form_open( site_url() .'/consultasWeb/historialPeajesFecha/mostrarPeajes');
+						echo form_open( site_url() .'/consultasWeb/historialPeajesFecha/mostrarPeajes', $attributesForm);
 			?>
 			
 			<div id="calendarios">
@@ -17,6 +17,7 @@
 			                    	class="form-control datetimepicker fecha" 
 			                    	required="required" 
 			                    	data-date-format="YYYY-MM-DD"
+			                    	placeholder="YYYY-MM-DD"
 			                    />
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 			                    </span>
@@ -34,6 +35,7 @@
 			                    	class="form-control datetimepicker fecha"  
 			                    	required="required"
 			                    	data-date-format="YYYY-MM-DD"
+			                    	placeholder="YYYY-MM-DD"
 			                    />
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 			                    </span>
@@ -69,7 +71,11 @@
 		<script asyn type="text/javascript" src="<?php echo base_url('assets/js/bootstrap-datetimepicker.min.js');?>"></script>
 		<script asyn type="text/javascript" src="<?php echo base_url('assets/js/validaciones/validate-calendar.js');?>"></script>
 		
-		
+		<script asyn type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.min.js');?>"></script>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+		<script asyn type="text/javascript" src="<?php echo base_url('assets/js/validaciones/historialFecha.validar.js');?>"></script>
+
 		
 		<link href="<?php echo base_url('assets/css/menu.css');?>" rel="stylesheet" type="text/css">
 		<script asyn type="text/javascript" src="<?php echo base_url('assets/js/fecha.js');?>"></script>

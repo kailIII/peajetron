@@ -51,7 +51,8 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	{
 		$this->idVehiculo =  $this->input->post('placa');
 		$data = array(
-			'idVehiculo' => $this->idVehiculo
+			'idVehiculo' => $this->idVehiculo,
+			'attributesForm' => array('id' => 'form_seleccion_fecha'),
 		);
 		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
