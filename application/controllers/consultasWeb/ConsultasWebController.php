@@ -12,58 +12,55 @@ Class ConsultasWebController extends  CI_Controller
 	 * cargar en la vista la lista de placas del vehículo.
 	*/
 	public function inicializar( $pathView ){
-		$listaAutos = $this->getListaAutos();
-
-		if( empty( $listaAutos ) ){
+		$listaAutos = $this->getListaAutos(); 
+		if( empty( $listaAutos ) ){ //1 
 			$data = array(
-					'status' => FALSE,
-			);
+				'status' => FALSE,
+			); //2
 		}
 		else
-		{
+		{  //3
 			$data = array(
 					'listaAutos' => $listaAutos,
 					'status' => TRUE,
-			);
+			); 
 		}
 		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( $pathView , $data );
+		$this->load->view( $pathView , $data ); //4
 	}
 
 	/**
 	 * Funcionalidad que se encarga de obtener las placas de los vehículos
 	 * asociadas a un usuario.
 	*/
-	protected function getListaAutos()
+	public function getListaAutos()
 	{
-		//$this->session = $this->session->userdata('peajetron');
-		//$idUsuario = $this->session['id_usuario'];
 		$this->load->model('vehiculos');
-		$results = $this->vehiculos->vehiculosPropietario( 1032 ) ;
-
+		$results = $this->vehiculos->vehiculosPropietario( $this->getIdUsuario()  ) ;
 		$listaAutos = array();
-		if( $results !=FALSE )
+		if( $results !=FALSE )//1
 		{
-			
-			foreach( $results as $vehiculo ){
+			foreach( $results as $vehiculo ){//2
 				$auto = array();
 			 	$auto[ 'id' ] 	  = $vehiculo->id_vehiculo;
 				$auto[ 'placa' ]  = $vehiculo->placa ;
 				$auto[ 'marca' ]  = $vehiculo->marca ;
 				$auto[ 'modelo' ] = $vehiculo->modelo;
-				$listaAutos [] = $auto;
+				$listaAutos [] = $auto;//3
 			}
 		}
-		return $listaAutos;
+		return $listaAutos;//4
 	}
 	/**
 	 * Función que se encarga de obtener el identificador del usuario  sesión en el sistema.
 	 *
 	 * @return Identificador del usuario.
 	*/
-	protected function getIdUsuario(){
-		return 1032;
+	public  function getIdUsuario(){
+		$this->session = $this->session->userdata('peajetron');
+		$idUsuario = $this->session['id_usuario'];//1
+		return $idUsuario;//2
 	}
 
 

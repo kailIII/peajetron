@@ -28,7 +28,6 @@ class HistorialPagos extends  ConsultasWebController
 	 * */
 	public function mostrarPagos()
 	{
-		
 		$data = array(
 				'pagos' => array(
 					array('fechaCorte' => '20-01-2014','fechaPago' =>'10-01-2014', 'codigo' => '001', 'valor' => '10000' ),

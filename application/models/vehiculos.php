@@ -54,6 +54,7 @@ Class Vehiculos extends CI_Model
 		$sql = "SELECT * FROM vehiculo as v, usuario as u 
 						 WHERE v.id_usuario = u.id_usuario 
 						 AND u.id_usuario = ". $idusuario ;
+						 
 		$query = $this->db->query( $sql );
 		if( $query->num_rows() > 0 )
 		{

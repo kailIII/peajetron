@@ -56,7 +56,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 		);
 		$this->load->view( 'consultasWeb/templateHeaderView'); 	
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
-		$this->load->view( 'consultasWeb/historialFecha/seleccioneFechaView', $data );
+		$this->load->view( 'consultasWeb/historialFecha/seleccioneFechaView', $data );//1
 	}
 	/*
 	 * Función que se encarga de obtener una lista de los
@@ -68,14 +68,10 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 		$this->idVehiculo =  $this->input->post('idVehiculo');
 		$this->fechaInicial = $this->input->post('fechaInicial');
 		$this->fechaFinal   = $this->input->post('fechaFinal');
-		
-
-
 	    $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
-
 	    $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
-		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
-	    if( $results == FALSE  )
+		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo; 
+	    if( $results == FALSE  )//1
 	    {
 	    	$data = array(
 				'status' => FALSE,
@@ -83,12 +79,12 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 			'placa'  => $vehiculo->placa,
 	 			'marca'  => $vehiculo->marca ,
 	 			'modelo' => $vehiculo->modelo,
-			);
+			);//2
 	    }
 	    else
 		{
-			$listaCobros = array();
-			foreach( $results as $cobro )
+			$listaCobros = array();//3
+			foreach( $results as $cobro )//4
 			{
 				$cruce = array();
 				$cruce[ 'peaje' ]  = $cobro->peaje;
@@ -96,7 +92,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 				$cruce[ 'fechaCruce' ] = $cobro->fecha;
 				$cruce[ 'hora' ] = $cobro->hora;
 				$cruce[ 'valor' ]  = $cobro->valor ;
-				$listaCobros [] = $cruce;
+				$listaCobros [] = $cruce;//5
 			}
 			$data = array(
 				'status' => TRUE,
@@ -107,11 +103,11 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 			'modelo' => $vehiculo->modelo,
 	 			'fechaInicial' => $this->fechaInicial,
 	 			'fechaFinal' => $this->fechaFinal
-	 		);
+	 		);//6
 	 		
 		}
 		$this->load->view( 'consultasWeb/templateHeaderView'); 
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
-		$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );
+		$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );//7
 	}
 }

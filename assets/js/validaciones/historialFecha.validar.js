@@ -23,12 +23,13 @@ $(function(){
                     callback: {
                         message: 'La fecha inicial no puede ser superior a la fecha final',
                         callback: function(value, validator) {
-                            var m = new moment(value, 'YYYY-MM-DD', true);
-                            var fechaFinal = $('#fechaFinal').val();
-                            if (!m.isValid()) {
+                            var fechaInicial = new moment(value, 'YYYY-MM-DD', true);
+                            var fecha= $('#fechaFinal').val();
+                            var fechaFinal  = new moment(fecha, 'YYYY-MM-DD', true);
+                            if (!fechaInicial.isValid()) {
                                 return false;
                             }
-                            //return m.isBefore(fechaFinal) || m.isSame(fechaFinal) ;
+                            //return fechaInicial.diff(fechaFinal)<=0;
                             return true;
                         }
                     }
@@ -46,13 +47,13 @@ $(function(){
                     callback: {
                         message: 'La fecha final no puede ser inferior a la fecha inicial',
                         callback: function(value, validator) {
-                            var m = new moment(value, 'YYYY-MM-DD', true);
-                            var fechaInicial = $('#fechaInicial').val();
-                            var f =new moment(fechaInicial, 'YYYY-MM-DD', true) 
-                            if (!m.isValid()) {
+                            var fechaFinal = new moment(value, 'YYYY-MM-DD', true);
+                            var fecha = $('#fechaInicial').val();
+                            var fechaInicial =new moment(fecha, 'YYYY-MM-DD', true) 
+                            if (!fechaFinal.isValid()) {
                                 return false;
                             }
-                            //return m.isAfter(fechaInicial) || m.isSame(fechaInicial) ;
+                            //return fechaInicial.diff(fechaFinal)>=0;
                             return true;
                         }
                     }

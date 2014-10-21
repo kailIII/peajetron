@@ -36,17 +36,16 @@ class HistorialPeajes extends  ConsultasWebController
 	 {
 	 	$idVehiculo =  $this->input->post('placa');
 	    $results = $this->cobros->listarPeajesCruzados( $idVehiculo, $this->getIdUsuario()  );
-
-	    if( $results == FALSE  )
+	    if( $results == FALSE  )//1
 	    {
 	    	$data = array(
 				'status' => FALSE,
-			);
+			);//2
 	    }
 	    else
 		{
-			$listaCobros = array();
-			foreach( $results as $cobro )
+			$listaCobros = array();//3
+			foreach( $results as $cobro )//4
 			{
 				$cruce = array();
 				$cruce[ 'peaje' ]  = $cobro->peaje;
@@ -54,7 +53,7 @@ class HistorialPeajes extends  ConsultasWebController
 				$cruce[ 'fechaCruce' ] = $cobro->fecha;
 				$cruce[ 'hora' ] = $cobro->hora;
 				$cruce[ 'valor' ]  = $cobro->valor ;
-				$listaCobros [] = $cruce;
+				$listaCobros [] = $cruce;//5
 			}
 			$vehiculo = $this->vehiculos->buscarById( $idVehiculo );
 			$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo; 
@@ -66,11 +65,11 @@ class HistorialPeajes extends  ConsultasWebController
 	 			'placa'  => $vehiculo->placa,
 	 			'marca'  => $vehiculo->marca ,
 	 			'modelo' => $vehiculo->modelo,
-	 		);
+	 		);//6
 	 		
 		}
 		$this->load->view( 'consultasWeb/templateHeaderView'); 		
 		$this->load->view( 'consultasWeb/templateMenuView'); 	
-	 	$this->load->view( 'consultasWeb/historial/mostrarView', $data );
+	 	$this->load->view( 'consultasWeb/historial/mostrarView', $data );//7
 	 }
 }	

@@ -33,16 +33,16 @@ class ValorUltimoMes extends  ConsultasWebController{
 	 		'modelo' => $vehiculo->modelo,
 		);
 	    $valor = $this->cobros->valorUlitmoMes( $idVehiculo, $this->getIdUsuario()  );
-	    if( $valor == FALSE )
+	    if( $valor == FALSE )//1
 	    {
-	    	$data[ 'status' ] = FALSE;
+	    	$data[ 'status' ] = FALSE;//2
 	    }
 	    else{
 	    	$data[ 'status' ] = TRUE;
-	    	$data[ 'valor' ] = $valor->sum;
+	    	$data[ 'valor' ] = $valor->sum;//3
 	    }
 	   	$this->load->view( 'consultasWeb/templateHeaderView'); 
 		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( 'consultasWeb/valorUltimoMes/mostrarView', $data );
+		$this->load->view( 'consultasWeb/valorUltimoMes/mostrarView', $data );//4
 	}
 }

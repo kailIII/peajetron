@@ -38,8 +38,8 @@ class UltimoPeaje extends   ConsultasWebController
 	 		'modelo' => $vehiculo->modelo,
 		);
 		$cobro = $this->cobros->ultimoPeajeCruzado( $idVehiculo , $this->getIdUsuario() );
-		if( $cobro == FALSE ){
-			$data['status'] =  FALSE;
+		if( $cobro == FALSE ){//1
+			$data['status'] =  FALSE; //2
 		}
 		else
 		{
@@ -51,10 +51,10 @@ class UltimoPeaje extends   ConsultasWebController
 			$cruce[ 'valor' ]      = $cobro->valor;
 			
 			$data['status'] =  TRUE;
-			$data['peaje'] =  $cruce;
+			$data['peaje'] =  $cruce;//3
 		}
 		$this->load->view( 'consultasWeb/templateHeaderView'); 
 		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( 'consultasWeb/ultimoPeaje/mostrarView', $data );
+		$this->load->view( 'consultasWeb/ultimoPeaje/mostrarView', $data );//4
 	}
 }
