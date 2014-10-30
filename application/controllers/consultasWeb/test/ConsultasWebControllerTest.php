@@ -1,7 +1,7 @@
 <?php
 
-include_once 'ConsultasWebController.php';
 
+include_once( '../consultasWebController.php' ); 
 class ConsultasWebControllerTest extends  CI_Controller{
 
 	private $controller;
@@ -14,19 +14,19 @@ class ConsultasWebControllerTest extends  CI_Controller{
 	public function testGetIdUsuario()
 	{
 		$sess_array = array(
-			'id_usuario' => '1032', 
-			'id_perfil' => '3', 
-			'nombre' => 'cristian', 
-			'correo' => 'cristianchaparroa@gmail.com', 
-			'activo' => TRUE, 
+			'id_usuario' => '1032',
+			'id_perfil' => '3',
+			'nombre' => 'cristian',
+			'correo' => 'cristianchaparroa@gmail.com',
+			'activo' => TRUE,
 			'controlador' => 'controlador' );
 
-        $this->session->set_userdata('peajetron', $sess_array);
-		$controller = new ConsultasWebController();
+    $this->session->set_userdata('peajetron', $sess_array);
+		$controller = new  ConsultasWebController();
 		$test = $controller->getIdUsuario();
 		echo $this->unit->run($test, '1032', 'Test de identificacion en el sistema');
 	}
 	public function index(){
-		//$this->testGetIdUsuario();
+		$this->testGetIdUsuario();
 	}
 }

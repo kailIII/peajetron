@@ -1,13 +1,13 @@
 
-			<h1> Historial de peajes Cruzados  </h1>
+			<h1> Ultimo peaje Cruzado </h1>
 		    <div>
-				<?php 
+				<?php
 					echo form_open( site_url() .'/consultasWeb/ultimoPeaje/mostrarUltimoPeaje');
 				?>
 				<div>
 					<label>Seleccione el automovil</label>
 					<select class="selectpicker"  name="placa">
-						<?php 
+						<?php
 						foreach( $listaAutos as $auto )
 						{
 						    ?>
@@ -18,13 +18,11 @@
 					</select>
 				</div>
 				<div id="botones-lista">
-					<button class="btn btn-success" type="submit" accesskey="a">Aceptar</button>					
+					<button class="btn btn-success" type="submit" accesskey="a">Aceptar</button>
 				</div>
 				<?php
 					echo form_close();
-				?>	
+				?>
 			</div>
 	</body>
 </html>
-
-

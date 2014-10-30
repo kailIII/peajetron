@@ -51,30 +51,60 @@
 								type: "POST",
 								url: "http://localhost/peajetron/index.php/consultasWeb/historialPeajes/getDataSource",
 								success:function(data){
-									console.log(data);
-									//https://github.com/bpampuch/pdfmake/blob/master/examples/tables.js
-									  var docDefinition =
-										{
-										  content: [
-										    {
-										      table: {
-										        // headers are automatically repeated if the table spans over multiple pages
-										        // you can declare how many rows should be treated as headers
-										        headerRows: 1,
-										        widths: [ '*', 'auto', 100, '*' ],
+									var peajes = JSON.parse( data );
 
-										        body: [
-										          [ 'First', 'Second', 'Third', 'The last one' ],
-										          [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-										          [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-										        ]
-										      }//end table
-										    }//end content {
-										  ]//end content[
-										};
-										pdfMake.createPdf(docDefinition).open();
+									var body = [];
+									body.push( [ { text: 'PEAJE', bold: true,alignment: 'center' },
+										{ text: 'RUTA', bold: true ,alignment: 'center' },
+									  { text: 'FECHA CRUCE', bold: true, alignment: 'center'  },
+										{ text: 'VALOR', bold: true , alignment: 'center' },
+								  ]);
+									for (key in peajes)
+									{
+									    if (peajes.hasOwnProperty(key))
+											{
+									        var peaje = peajes[key];
+													var fila = new Array();
+													fila.push( { text: peaje.peaje.toString() ,alignment: 'center' } );
+													fila.push( { text: peaje.ruta.toString() ,alignment: 'center' }  );
+													fila.push( { text: peaje.fechaCruce.toString() + '  '+ peaje.hora.toString() ,alignment: 'center' }  );
+													fila.push( { text: peaje.valor.toString(),alignment: 'center' }   );
+											    body.push(fila);
+									    }
 									}
-						  });
+									var docDefinition = {
+										 header: {
+								        margin: 10,
+								        columns: [
+
+								            {
+								                alignment: 'center',
+								                text: 'PAGO DE PEAJES',
+																bold:true,
+								            }
+								        ]
+								    },
+										footer: {
+								        stack: [
+								            {text: 'Universidad Distrital Francisco José de Caldas - Seminario Ingeniería de Software - 2014 ', alignment: 'center'}
+								        ]
+								    },
+									  content: [
+									    {
+									      table: {
+									        headerRows: 1,
+									        widths: [ '*', 'auto', 100, '*' ],
+
+									        body: body
+									      }
+									    }
+									  ]
+									};//end docDefinition
+									pdfMake.createPdf(docDefinition).open();
+
+								}//end success
+
+							});
 
 						});
 				});
