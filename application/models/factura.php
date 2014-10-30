@@ -1,4 +1,9 @@
 <?php
+/**
+ * Clase que se encarga de obtener toda la informacion de la entidad
+ * Factura.
+ * @author: Cristian Camilo Chaparro A.
+*/
 Class Factura extends CI_Model
 {
 	function __construct()
@@ -9,22 +14,26 @@ Class Factura extends CI_Model
 	/**
 	 * Lista todas las facturas emitidas para un usuario respecto
 	 * a un vehículo en específico.
-	 * 
-	 * @param $idVehiculo Identificador del vehículo. 
+	 *
+	 * @param $idVehiculo Identificador del vehículo.
 	 * @param $idUsuario Identificador del usuario.
 	 *
 	 * @return Obtiene un result en caso que se obtengas resultados de lo contrario
-	 *		   se retorna un false. 
+	 *		   se retorna un false.
 	 */
-	public function listarHistorialPagos( $idUsuario )
+	public function listarHistorialPagos( $idVehiculo,$idUsuario )
 	{
-		$sql = 'SELECT * FROM  factura as f WHERE  f.id_usuario= ' . $idUsuario;
-		$query = $this->db->query( $sql );
+
+		$this->db->select('*');
+		$this->db->from('factura');
+		$this->db->where('factura.id_usuario', $idUsuario  );
+		$this->db->join( 'vehiculo','vehiculo.id_usuario = factura.id_usuario' );
+		$this->db->where('vehiculo.id_vehiculo', $idVehiculo );
+		$query = $this->db->get();
 		if( $query->num_rows() > 0 )
 		{
-			return $query->result();
+			return $query->result()[0];
 		}
-		return false;	
+		return false;
 	}
 }
-

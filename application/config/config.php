@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://aracniastudios.net/aracniabs/';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
@@ -177,10 +177,10 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 |	4 = All Messages
 |
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
-| your log files will fill up very fast.
+| your log files will fill up very fast. 2 = debug mode
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 2;
 
 /*
 |--------------------------------------------------------------------------
@@ -191,7 +191,7 @@ $config['log_threshold'] = 0;
 | application/logs/ folder. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+$config['log_path'] = '/Library/log/peajetron';
 
 /*
 |--------------------------------------------------------------------------

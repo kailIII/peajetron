@@ -29,28 +29,31 @@ Class Usuarios extends CI_Model
 	 * Función que se encarga de obtener toda la información de un  usuario
 	 * en especifico.
 	 * @param $idUsuario Identificador del usuario.
-	 * @return Objeto con todas las propiedades del usuario. 
+	 * @return Objeto con todas las propiedades del usuario.
 	*/
 	function getUsuario( $idUsuario )
 	{
-		$sql = 'SELECT * FROM usuario as u WHERE u.id_usuario = ' . $idUsuario . ' LIMIT 1 ';
-		$query = $this->db->query( $sql );
+		$this->db->select('*');
+		$this->db->from('usuario');
+		$this->db->where('id_vehiculo', $idUsuario );
+		$this->db->limit(1);
+		$query = $this->db->get();
 		if( $query->num_rows() > 0 )
 		{
 			return $query->result()[0];
 		}
-		return false; 
+		return false;
 	}
 	/**
 	 * Método que permite cambiar el correo y teléfono de un usuario.
-	 * 
+	 *
 	 */
 	public function actualizarDatos( $idUsuario, $correo, $telefono )
 	{
 		$sql= "UPDATE usuario set telefono='". $telefono ."', correo='".$correo."'
   			   WHERE id_usuario='".$idUsuario."'";
 		$query = $this->db->query( $sql );
-		return $query; 
+		return $query;
 	}
 }
 ?>

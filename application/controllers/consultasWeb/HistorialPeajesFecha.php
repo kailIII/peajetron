@@ -1,13 +1,13 @@
 <?php
 
-/*s
- * Clase que se encarga de Controlar los eventos generados
- * en la vista Historial de peajes cruzados por fechas.
- * 
- */
 
 include_once 'ConsultasWebController.php';
 
+/*s
+ * Clase que se encarga de Controlar los eventos generados
+ * en la vista Historial de peajes cruzados por fechas.
+ *
+ */
 class HistorialPeajesFecha  extends  ConsultasWebController
 {
 	/*
@@ -41,7 +41,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 * */
 	public function index()
 	{
-		$this->inicializar( 'consultasWeb/historialFecha/seleccionView' );		
+		$this->inicializar( 'consultasWeb/historialFecha/seleccionView' );
 	}
 	/*
 	 * Método el cual se encarga de capturar las fechas que ha seleccionado
@@ -54,7 +54,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 			'idVehiculo' => $this->idVehiculo,
 			'attributesForm' => array('id' => 'form_seleccion_fecha'),
 		);
-		$this->load->view( 'consultasWeb/templateHeaderView'); 	
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
 		$this->load->view( 'consultasWeb/historialFecha/seleccioneFechaView', $data );//1
 	}
@@ -70,7 +70,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 		$this->fechaFinal   = $this->input->post('fechaFinal');
 	    $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
 	    $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
-		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo; 
+		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
 	    if( $results == FALSE  )//1
 	    {
 	    	$data = array(
@@ -104,9 +104,9 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 			'fechaInicial' => $this->fechaInicial,
 	 			'fechaFinal' => $this->fechaFinal
 	 		);//6
-	 		
+
 		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView', $data );
 		$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );//7
 	}

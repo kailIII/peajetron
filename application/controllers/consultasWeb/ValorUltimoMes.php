@@ -1,10 +1,11 @@
 <?php
 
-/**
- * Clase que se encarga de  generar la funcionalidad 
- * para mostrar el último valor a pagar del mes. 
-*/
 include_once 'ConsultasWebController.php';
+/**
+ * Clase que se encarga de  generar la funcionalidad
+ * para mostrar el último valor a pagar del mes.
+*/
+
 
 class ValorUltimoMes extends  ConsultasWebController{
 	/*
@@ -41,7 +42,7 @@ class ValorUltimoMes extends  ConsultasWebController{
 	    	$data[ 'status' ] = TRUE;
 	    	$data[ 'valor' ] = $valor->sum;//3
 	    }
-	   	$this->load->view( 'consultasWeb/templateHeaderView'); 
+	   	$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/valorUltimoMes/mostrarView', $data );//4
 	}

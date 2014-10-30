@@ -1,19 +1,38 @@
 <?php
-
-Class ConsultasWebController extends  CI_Controller
-{	
+/**
+  * Clase que se encarga de proveer de las funcionalidades básicas para el
+	* módulo de consultas web.
+	*
+	* @author: Fabian Danilo Caicedo.
+	* @author: Cristian Camilo Chaparro A.
+ */
+Class ConsultasWebController extends   MY_Controller
+{
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('vehiculos');
+		$sess_array = array(
+			'id_usuario' => '1032',
+			'id_perfil' => '3',
+			'nombre' => 'cristian',
+			'correo' => 'cristianchaparroa@gmail.com',
+			'activo' => TRUE,
+			'controlador' => 'controlador' );
+		$this->session->set_userdata('peajetron', $sess_array);
+
+	}
+
+	public function index(){
+
 	}
 	/**
-	 * Función que se encarga de inicializar la vista para 
+	 * Función que se encarga de inicializar la vista para
 	 * cargar en la vista la lista de placas del vehículo.
 	*/
 	public function inicializar( $pathView ){
-		$listaAutos = $this->getListaAutos(); 
-		if( empty( $listaAutos ) ){ //1 
+		$listaAutos = $this->getListaAutos();
+		if( empty( $listaAutos ) ){ //1
 			$data = array(
 				'status' => FALSE,
 			); //2
@@ -23,9 +42,9 @@ Class ConsultasWebController extends  CI_Controller
 			$data = array(
 					'listaAutos' => $listaAutos,
 					'status' => TRUE,
-			); 
+			);
 		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 	
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( $pathView , $data ); //4
 	}
@@ -63,5 +82,14 @@ Class ConsultasWebController extends  CI_Controller
 		return $idUsuario;//2
 	}
 
+	/**
+	 * Funcion que se encarga de retornar la fuente de información a generar en
+   * formato PDF.
+	 * @return dataSource en formato json.
+	*/
+	public function getDataSource()
+	{
+		 echo	$_COOKIE['dataSource'];
+	}
 
 }

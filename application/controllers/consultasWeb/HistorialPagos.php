@@ -1,10 +1,9 @@
 <?php
-/*
- * Controlador que se encarga de generar el historial de pagos 
- * de un usuario 
- * */
 include_once 'ConsultasWebController.php';
-
+/*
+ * Controlador que se encarga de generar el historial de pagos
+ * de un usuario
+ **/
 class HistorialPagos extends  ConsultasWebController
 {
 	/*
@@ -12,15 +11,16 @@ class HistorialPagos extends  ConsultasWebController
 	 */
 	public function __construct(){
 		parent::__construct();
-		
+		$this->load->model( 'factura' );
+
 	}
 	/*
 	 * Método que inicializa el controlador de historial de pagos.
-	 * 
+	 *
 	 * */
 	public function index()
 	{
-		$this->inicializar('consultasWeb/historialPagos/seleccionView');	
+		$this->inicializar('consultasWeb/historialPagos/seleccionView');
 	}
 	/*
 	 * Función que se encarga de mostrar los pagos que ha realizado una persona
@@ -28,13 +28,40 @@ class HistorialPagos extends  ConsultasWebController
 	 * */
 	public function mostrarPagos()
 	{
+		$idVehiculo =  $this->input->post('placa');
+	  $results = $this->factura->listarHistorialPagos( $idVehiculo, $this->getIdUsuario()  );
+
+		$vehiculo = $this->vehiculos->buscarById( $idVehiculo );
+		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
+
 		$data = array(
-				'pagos' => array(
-					array('fechaCorte' => '20-01-2014','fechaPago' =>'10-01-2014', 'codigo' => '001', 'valor' => '10000' ),
-					array('fechaCorte' => '20-02-2014','fechaPago' =>'10-01-2014', 'codigo' => '002', 'valor' => '50000' ),
-				),
-		);
-		$this->load->view( 'consultasWeb/historialPagos/mostrarView', $data );
-		
+			'auto'   => $string_vehiculo,
+			'placa'  => $vehiculo->placa,
+			'marca'  => $vehiculo->marca ,
+			'modelo' => $vehiculo->modelo,
+		);//
+		if( $results == FALSE  )//1
+		{
+				$data ['status'] = FALSE;
+		}
+		else
+		{
+				$listaFacturas = array();//3
+				foreach( $results as $factura )//4
+				{
+					$facture = array();
+					$facture[ 'fechaCorte' ]  = $factura->fechaCorte;
+					$facture[ 'fechaPago' ]  = $factura->fechaPago ;
+					$facture[ 'codigo' ] = $factura->codigo;
+					$facture[ 'valor' ] = $factura->valor;
+					$listaFacturas [] = $facture;//5
+				}
+				$data ['status'] = TRUE;
+				$data ['facturas'] = $listaFacturas;
+		}
+		$this->load->view( 'consultasWeb/templateHeaderView' );
+		$this->load->view( 'consultasWeb/templateMenuView' );
+		$this->load->view( 'consultasWeb/historialPagos/mostrarView', $data );//7
+
 	}
 }

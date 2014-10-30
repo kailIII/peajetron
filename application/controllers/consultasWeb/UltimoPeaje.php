@@ -1,12 +1,11 @@
 <?php
 
-/*
- * Clase que se encarga de mostrar la información acerca del 
- * último peaje por el cual cruzo un vehículo en especifico.
- * 
-*/
 include_once 'ConsultasWebController.php';
-
+/*
+ * Clase que se encarga de mostrar la información acerca del
+ * último peaje por el cual cruzo un vehículo en especifico.
+ *
+*/
 class UltimoPeaje extends   ConsultasWebController
 {
 	/*
@@ -26,8 +25,8 @@ class UltimoPeaje extends   ConsultasWebController
 	}
 	/*
 	 * Función que se encarga de mostrar el último peaje por el cual cruzo
-	 * un vehículo. 
-	 * 
+	 * un vehículo.
+	 *
 	 * */
 	public function mostrarUltimoPeaje(){
 		$idVehiculo =  $this->input->post('placa');
@@ -49,11 +48,11 @@ class UltimoPeaje extends   ConsultasWebController
 			$cruce[ 'fechaCruce' ] = $cobro->fecha;
 			$cruce[ 'hora' ]       = $cobro->hora;
 			$cruce[ 'valor' ]      = $cobro->valor;
-			
+
 			$data['status'] =  TRUE;
 			$data['peaje'] =  $cruce;//3
 		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/ultimoPeaje/mostrarView', $data );//4
 	}
