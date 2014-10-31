@@ -35,7 +35,7 @@ Class Usuarios extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('usuario');
-		$this->db->where('id_vehiculo', $idUsuario );
+		$this->db->where('id_usuario', $idUsuario );
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if( $query->num_rows() > 0 )

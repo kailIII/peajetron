@@ -56,7 +56,7 @@
 		          <span class="glyphicon glyphicon-cog
 		          "></span><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#">Actualizar Datos</a></li>
+		            <li><a href="<?php echo base_url('index.php/consultasWeb/actualizarDatos'); ?>">Actualizar Datos</a></li>
 		            <li class="divider"></li>
 		            <li><a href="#">Salir</a></li>
 		          </ul>

@@ -12,12 +12,12 @@ class ActualizarDatos extends  CI_Controller{
 		$this->load->model('usuarios');
 	}
 	/**
-	 * Método que se encarga de inicializar la  información necesaria 
+	 * Método que se encarga de inicializar la  información necesaria
 	 * para ser enviada a la vista
 	 */
 	public function index()
 	{
-		$idUsuario = $this->idUsuario();
+		$idUsuario = $this->getIdUser();
 		$user = $this->usuarios->getUsuario( $idUsuario );
 		if( $user !=FALSE ){//1
 			$data = array(
@@ -35,9 +35,9 @@ class ActualizarDatos extends  CI_Controller{
 			$data = array(
 				'status'  => FALSE,
 				'message' => 'El usuario no existe en el sistema'
-			)://3
+			);//3
 		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 	
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/actualizarDatos/mostrarDatosView' , $data );//4
 	}
@@ -61,9 +61,9 @@ class ActualizarDatos extends  CI_Controller{
 				'telefono'   => $user->telefono,
 				'direccion'  => $user->direccion,
 				'status' 	 => $result,
-			);	//4 
+			);	//4
 		}
-		$this->load->view( 'consultasWeb/templateHeaderView'); 
+		$this->load->view( 'consultasWeb/templateHeaderView');
 		$this->load->view( 'consultasWeb/templateMenuView');
 		$this->load->view( 'consultasWeb/actualizarDatos/actualizarView', $data );//5
 	}
