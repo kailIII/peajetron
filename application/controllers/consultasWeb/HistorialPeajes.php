@@ -33,7 +33,8 @@ class HistorialPeajes extends  ConsultasWebController
 	 public function mostrarPeajes()
 	 {
 		  $idVehiculo =  $this->input->post('placa');
-	    $results = $this->cobros->listarPeajesCruzados( $idVehiculo, $this->getIdUsuario()  );
+			$idUsuario =  $this->getIdUsuario();
+	    $results = $this->cobros->listarPeajesCruzados( $idVehiculo,$idUsuario   );
 	    if( $results == FALSE  )//1
 	    {
 		    	$data = array(

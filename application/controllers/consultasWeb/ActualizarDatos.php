@@ -68,7 +68,7 @@ class ActualizarDatos extends  CI_Controller{
 		$this->load->view( 'consultasWeb/actualizarDatos/actualizarView', $data );//5
 	}
 
-	private function validateField($data) {
+	public function validateField($data) {
 	  $data = trim($data);
 	  $data = stripslashes($data);
 	  $data = htmlspecialchars($data);//1

@@ -65,12 +65,16 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 */
 	public function mostrarPeajes()
 	{
-		$this->idVehiculo =  $this->input->post('idVehiculo');
-		$this->fechaInicial = $this->input->post('fechaInicial');
-		$this->fechaFinal   = $this->input->post('fechaFinal');
-	    $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
-	    $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
-		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
+			$this->idVehiculo =  $this->input->post('idVehiculo');
+			$this->fechaInicial = $this->input->post('fechaInicial');
+			$this->fechaFinal   = $this->input->post('fechaFinal');
+
+			echo $this->idVehiculo .  "</br>";
+			echo $this->fechaInicial. "</br>";
+			echo $this->fechaFinal. "</br>";
+		  $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
+		  $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
+			$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
 	    if( $results == FALSE  )//1
 	    {
 	    	$data = array(
@@ -82,32 +86,32 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 			);//2
 	    }
 	    else
-		{
-			$listaCobros = array();//3
-			foreach( $results as $cobro )//4
 			{
-				$cruce = array();
-				$cruce[ 'peaje' ]  = $cobro->peaje;
-				$cruce[ 'ruta' ]  = $cobro->ruta ;
-				$cruce[ 'fechaCruce' ] = $cobro->fecha;
-				$cruce[ 'hora' ] = $cobro->hora;
-				$cruce[ 'valor' ]  = $cobro->valor ;
-				$listaCobros [] = $cruce;//5
-			}
-			$data = array(
-				'status' => TRUE,
-	 			'peajes' => $listaCobros,
-	 			'auto'   => $string_vehiculo,
-	 			'placa'  => $vehiculo->placa,
-	 			'marca'  => $vehiculo->marca ,
-	 			'modelo' => $vehiculo->modelo,
-	 			'fechaInicial' => $this->fechaInicial,
-	 			'fechaFinal' => $this->fechaFinal
-	 		);//6
+				$listaCobros = array();//3
+				foreach( $results as $cobro )//4
+				{
+					$cruce = array();
+					$cruce[ 'peaje' ]  = $cobro->peaje;
+					$cruce[ 'ruta' ]  = $cobro->ruta ;
+					$cruce[ 'fechaCruce' ] = $cobro->fecha;
+					$cruce[ 'hora' ] = $cobro->hora;
+					$cruce[ 'valor' ]  = $cobro->valor ;
+					$listaCobros [] = $cruce;//5
+				}
+				$data = array(
+					'status' => TRUE,
+		 			'peajes' => $listaCobros,
+		 			'auto'   => $string_vehiculo,
+		 			'placa'  => $vehiculo->placa,
+		 			'marca'  => $vehiculo->marca ,
+		 			'modelo' => $vehiculo->modelo,
+		 			'fechaInicial' => $this->fechaInicial,
+		 			'fechaFinal' => $this->fechaFinal
+		 		);//6
 
-		}
-		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView', $data );
-		$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );//7
+			}
+			$this->load->view( 'consultasWeb/templateHeaderView');
+			$this->load->view( 'consultasWeb/templateMenuView', $data );
+			$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );//7
 	}
 }

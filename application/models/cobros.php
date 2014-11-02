@@ -43,19 +43,27 @@ Class Cobros extends CI_Model
 	 */
 	public function listarPeajesCruzados( $idVehiculo, $idUsuario  )
 	{
-		$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,  to_char(c.fecha_registro, 'HH24:MI') as hora,c.valor
-					FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
-					WHERE  u.id_usuario = v.id_usuario
-					AND c.id_vehiculo = v.id_vehiculo
-					AND c.id_peaje  = p.id_peaje
-					AND p.id_ruta = r.id_ruta
-					ORDER BY c.fecha_registro DESC";
-
-		$query = $this->db->query( $sql );
-
-		if( $query->num_rows() > 0 )
+		if(  $idVehiculo !='' && $idUsuario!='' )
 		{
-			return $query->result();
+			$sql = "SELECT p.peaje, r.ruta,
+									DATE(c.fecha_registro) as fecha,
+									to_char(c.fecha_registro, 'HH24:MI') as hora,
+									c.valor
+								FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
+								WHERE  u.id_usuario = v.id_usuario
+								AND c.id_vehiculo = v.id_vehiculo
+								AND c.id_peaje  = p.id_peaje
+								AND p.id_ruta = r.id_ruta
+								AND c.id_usuario_propietario = u.id_usuario
+								AND c.id_usuario_propietario = " .$idUsuario. "
+								AND c.id_vehiculo = ". $idVehiculo ."
+								ORDER BY c.fecha_registro DESC";
+			$query = $this->db->query( $sql );
+
+			if( $query->num_rows() > 0 )
+			{
+				return $query->result();
+			}
 		}
 		return false;
 	}
@@ -71,21 +79,25 @@ Class Cobros extends CI_Model
 	 */
 	public function listarPeajesCruzadosFecha( $idVehiculo, $idUsuario , $fechaInicial, $fechaFinal )
 	{
-		$this->db->query( 'SET DateStyle TO European' );
-		$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,
-					to_char(c.fecha_registro, 'HH24:MI') as hora, c.valor
-					FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
-					WHERE  u.id_usuario = v.id_usuario
-					AND c.id_vehiculo = v.id_vehiculo
-					AND c.id_peaje  = p.id_peaje
-					AND p.id_ruta = r.id_ruta
-				  AND DATE(c.fecha_registro) BETWEEN '" .$fechaInicial . "' AND '" . $fechaFinal .
-				  	"' ORDER BY c.fecha_registro DESC";
 
-		$query = $this->db->query( $sql );
-		if( $query->num_rows() > 0 )
+		if( $idVehiculo !='' && $idUsuario !='' && $fechaInicial !='' && $fechaFinal != '' )
 		{
-			return $query->result();
+				$this->db->query( 'SET DateStyle TO European' );
+				$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,
+							to_char(c.fecha_registro, 'HH24:MI') as hora, c.valor
+							FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
+							WHERE  u.id_usuario = v.id_usuario
+							AND c.id_vehiculo = v.id_vehiculo
+							AND c.id_peaje  = p.id_peaje
+							AND p.id_ruta = r.id_ruta
+							AND DATE(c.fecha_registro) BETWEEN '" .$fechaInicial . "' AND '" . $fechaFinal .
+								"' ORDER BY c.fecha_registro DESC";
+
+				$query = $this->db->query( $sql );
+				if( $query->num_rows() > 0 )
+				{
+					return $query->result();
+				}
 		}
 		return false;
 	}
@@ -103,21 +115,24 @@ Class Cobros extends CI_Model
 	*/
 	public function ultimoPeajeCruzado( $idVehiculo, $idUsuario )
 	{
-		$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,
-						to_char(c.fecha_registro, 'HH24:MI') as hora,
-						c.valor
-						FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
-						 WHERE c.id_vehiculo = v.id_vehiculo
-						 AND v.id_usuario = u.id_usuario
-						 AND c.id_peaje  = p.id_peaje
-						 AND p.id_ruta = r.id_ruta
-						 AND v.id_vehiculo = " . $idVehiculo. "
-						 AND u.id_usuario  = ". $idUsuario."
-						 ORDER BY c.fecha_registro DESC LIMIT 1 ";
-		$query = $this->db->query( $sql );
-		if( $query->num_rows() > 0 )
-		{
-			return $query->result()[0];
+
+		if( $idVehiculo!='' &&  $idUsuario!='' ){
+				$sql = "SELECT p.peaje, r.ruta, DATE(c.fecha_registro) as fecha,
+								to_char(c.fecha_registro, 'HH24:MI') as hora,
+								c.valor
+								FROM cobro as c, usuario as u, vehiculo as v, peaje as p, ruta as r
+								WHERE c.id_vehiculo = v.id_vehiculo
+								AND v.id_usuario = u.id_usuario
+								AND c.id_peaje  = p.id_peaje
+								AND p.id_ruta = r.id_ruta
+								AND v.id_vehiculo = " . $idVehiculo. "
+								AND u.id_usuario  = ". $idUsuario."
+								ORDER BY c.fecha_registro DESC LIMIT 1 ";
+				$query = $this->db->query( $sql );
+				if( $query->num_rows() > 0 )
+				{
+					return $query->result()[0];
+				}
 		}
 		return false;
 	}

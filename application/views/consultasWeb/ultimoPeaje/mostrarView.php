@@ -5,7 +5,7 @@
 		<?php if ( $status ) : ?>
 		<div class="well">
 			<p>
-				A continuación se muestra el último peaje por el cual cruzó el vehículo 
+				A continuación se muestra el último peaje por el cual cruzó el vehículo
 				<?php echo $marca . " " .$modelo ; ?> con placa <b> <?php echo $placa;?> </b>
 			</p>
 		</div>
@@ -19,15 +19,15 @@
 			      <th>Valor </th>
 			    </tr>
 			</thead>
-			<?php 
+			<?php
 				echo "<tr class='odd gradeX'>
 					<td>".$peaje['peaje']."</td>
-					<td>".$peaje['ruta']."</td> 
-					<td>".$peaje['fechaCruce']."</td> 
-					<td>".$peaje['hora']."</td> 
-					<td>".$peaje['valor']."</td> 
-					</tr>";	
-			?>	
+					<td>".$peaje['ruta']."</td>
+					<td>".$peaje['fechaCruce']."</td>
+					<td>".$peaje['hora']."</td>
+					<td>".$peaje['valor']."</td>
+					</tr>";
+			?>
 		</table>
 		<?php else : ?>
 			<div class="alert alert-info">

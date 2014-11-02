@@ -32,15 +32,19 @@ Class Vehiculos extends CI_Model
 	*/
 	function buscarById( $idVehiculo )
 	{
-		$this->db->select('*');
-		$this->db->from('vehiculo');
-		$this->db->where('id_vehiculo', $idVehiculo);
-		$this->db->limit(1);
-		$query = $this->db->get();
-		if( $query->num_rows() > 0 )
+		if( $idVehiculo !='' )
 		{
-			return $query->result()[0];
+				$this->db->select('*');
+				$this->db->from('vehiculo');
+				$this->db->where('id_vehiculo', $idVehiculo);
+				$this->db->limit(1);
+				$query = $this->db->get();
+				if( $query->num_rows() > 0 )
+				{
+					return $query->result()[0];
+				}
 		}
+
 		return false;
 	}
 

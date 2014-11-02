@@ -1,6 +1,6 @@
 <?php
 
-include_once 'ConsultasWebController.php';
+include_once 'consultasWebController.php';
 /*
  * Clase que se encarga de mostrar la información acerca del
  * último peaje por el cual cruzo un vehículo en especifico.

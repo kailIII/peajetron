@@ -36,7 +36,9 @@
 					<button class="btn btn-success" id="descargar" value="Descargar PDF" > Descargar PDF</button>
 			</div>
 		<?php else : ?>
-			El usuario no presenta ningún registro  de cruce por peaje del vehículo seleccionado
+			<div class="alert alert-info">
+				El usuario no presenta ningún registro  de cruce por peaje del vehículo seleccionado
+		  </div>
 		<?php endif; ?>
 	</div><!--END CONTAINTER DIV-->
 
