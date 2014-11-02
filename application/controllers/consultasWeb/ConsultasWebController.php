@@ -20,23 +20,32 @@ Class ConsultasWebController extends   MY_Controller
 	 * Función que se encarga de inicializar la vista para
 	 * cargar en la vista la lista de placas del vehículo.
 	*/
-	public function inicializar( $pathView ){
-		$listaAutos = $this->getListaAutos();
-		if( empty( $listaAutos ) ){ //1
-			$data = array(
-				'status' => FALSE,
-			); //2
-		}
-		else
-		{  //3
-			$data = array(
-					'listaAutos' => $listaAutos,
-					'status' => TRUE,
-			);
-		}
-		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView');
-		$this->load->view( $pathView , $data ); //4
+	public function inicializar( $pathView=null )
+	{
+			if( $pathView != '' )
+			{
+				  $listaAutos = $this->getListaAutos();
+					if( empty( $listaAutos ) )
+					{ //1
+						$data = array(
+							'status' => FALSE,
+						); //2
+					}
+					else
+					{  //3
+						$data = array(
+								'listaAutos' => $listaAutos,
+								'status' => TRUE,
+						);
+					}
+					$this->load->view( 'consultasWeb/templateHeaderView');
+					$this->load->view( 'consultasWeb/templateMenuView');
+					$this->load->view( $pathView , $data ); //4
+			}
+			else{
+					echo "No se puede renderizar";
+			}
+
 	}
 
 	/**

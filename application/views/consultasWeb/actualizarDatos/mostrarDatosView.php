@@ -1,5 +1,5 @@
 		<h2>Actualizar Datos</h2>
-		
+
 		<?php if ( $status ) : ?>
 			<p> A continuación se muestra la información del usuario. </p>
 			<div id="datos-usuario" class="well">
@@ -34,7 +34,7 @@
 			<div class="alert alert-danger">
 				$message
 			</div>
-		<?php endif; ?>	
+		<?php endif; ?>
 
 	</div><!--END CONTAINTER DIV-->
 

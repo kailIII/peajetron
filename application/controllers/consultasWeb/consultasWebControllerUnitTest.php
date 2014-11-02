@@ -53,9 +53,12 @@ class ConsultasWebControllerUnitTest extends  CI_Controller
 			'controlador' => 'controlador' );
 		$this->session->set_userdata( 'peajetron', $sess_array );
 		$this->controller = new  ConsultasWebController();
-	//1	$test = $this->controller->inicializar(  );
-	//2	$test = $this->controller->inicializar( '' );
-	//3	$test = $this->controller->inicializar( 'consultasWeb/historial/seleccionView' );
+	/*1*/
+	//$test = $this->controller->inicializar(  );
+	/*2*/
+	//$test = $this->controller->inicializar( '' );
+	/*3*/
+		$test = $this->controller->inicializar( 'consultasWeb/valorUltimoMes/seleccionView' );
 	}
 	/**
 	 *@cover: 4,5,6,
@@ -120,7 +123,7 @@ class ConsultasWebControllerUnitTest extends  CI_Controller
 	*/
 	public function index()
 	{
-		//$this->testInicializar1();
+		$this->testInicializar1();
 		//$this->testInicializar2();
 		//$this->testGetListaAutos();
 	}

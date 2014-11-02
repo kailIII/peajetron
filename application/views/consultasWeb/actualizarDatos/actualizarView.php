@@ -1,5 +1,5 @@
 
-	
+
 	<!-- </div>  Esta en el menu-->
 		<h2>Actualizar Datos de Usuario </h2>
 
