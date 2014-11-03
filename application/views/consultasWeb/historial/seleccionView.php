@@ -25,7 +25,6 @@
 						<?php
 							echo form_close();
 						?>
-
 						<button class="btn btn-danger"  accesskey="c">Cancelar</button>
 					</div>
 				<?php else : ?>
