@@ -41,11 +41,10 @@ class Cobro extends CI_Controller {
 		$session = $this->session->userdata('peajetron');
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
-		$data['header'] = 'id_vehiculo, id_usuario_propietario, id_usuario_registra, id_peaje, valor, fecha_registro, fecha_pago';
 		$this->load->view('front/head.php', $data);
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
-		$this->load->view('dhtmlxGrid', $data);
+		$this->load->view('administrar_cobros', $data);
 		$this->load->view('front/footer.php');
 	}
 
@@ -122,12 +121,15 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/footer.php');
 	}
 
-	function data()
+	function datos()
 	{
 		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('cobro', 'id_cobro', 'id_vehiculo, id_usuario_propietario, id_usuario_registra, id_peaje, valor, fecha_registro, fecha_pago');
-		$connector->event->attach($this);
-		$connector->render();
+		$connector->render_sql("SELECT id_cobro, placa, pr.nombre AS propietario, re.nombre AS registra, peaje, valor, cobro.fecha_registro, fecha_pago
+                            FROM cobro
+                            LEFT JOIN vehiculo ON vehiculo.id_vehiculo = cobro.id_vehiculo
+                            LEFT JOIN usuario pr ON pr.id_usuario = cobro.id_usuario_propietario
+                            LEFT JOIN usuario re ON re.id_usuario = cobro.id_usuario_registra
+                            LEFT JOIN peaje ON peaje.id_peaje = cobro.id_peaje", "id_cobro", "placa, propietario, registra, peaje, valor, fecha_registro, fecha_pago");
 	}
 
 	function check_vcard($vcard)
