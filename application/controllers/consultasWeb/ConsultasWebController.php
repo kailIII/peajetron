@@ -11,6 +11,15 @@ Class ConsultasWebController extends   MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$sess_array = array(
+			'id_usuario' => '1032',
+			'id_perfil' => '3',
+			'nombre' => 'cristian',
+			'correo' => 'cristianchaparroa@gmail.com',
+			'activo' => TRUE,
+			'controlador' => 'controlador' );
+
+		$this->session->set_userdata( 'peajetron', $sess_array );
 	}
 
 	public function index(){

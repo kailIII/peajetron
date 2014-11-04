@@ -45,77 +45,8 @@
 	<div class="css-js">
 			<script asyn type="text/javascript" src="<?php echo base_url('assets/js/pdfmake.js');?>"></script>
 			<script asyn type="text/javascript" src="<?php echo base_url('assets/js/vfs_fonts.js');?>"></script>
-			<script type="text/javascript">
-				$(function(){
-						$( '#descargar' ).bind( 'click',function(){
-
-							$.ajax({
-								type: "POST",
-								url: "http://localhost/peajetron/index.php/consultasWeb/historialPeajes/getDataSource",
-								success:function(data){
-									var peajes = JSON.parse( data );
-
-									var body = [];
-									body.push( [
-										{ text: 'PEAJE', bold: true,alignment: 'center' },
-										{ text: 'RUTA', bold: true ,alignment: 'center' },
-									  { text: 'FECHA CRUCE', bold: true, alignment: 'center'  },
-										{ text: 'HORA', bold: true, alignment: 'center'  },
-										{ text: 'VALOR', bold: true , alignment: 'center' },
-								  ]);
-									for (key in peajes)
-									{
-									    if (peajes.hasOwnProperty(key))
-											{
-									        var peaje = peajes[key];
-													var fila = new Array();
-													fila.push( { text: peaje.peaje.toString() ,alignment: 'center', fontSize: 10 } );
-													fila.push( { text: peaje.ruta.toString() ,alignment: 'center' ,fontSize: 10}  );
-													fila.push( { text: peaje.fechaCruce.toString(),alignment: 'center' ,fontSize: 10}  );
-													fila.push( { text: peaje.hora.toString(),alignment: 'center',fontSize: 10 }   );
-													fila.push( { text: peaje.valor.toString(),alignment: 'center',fontSize: 10 }   );
-											    body.push(fila);
-									    }
-									}
-									var docDefinition = {
-										 header: {
-								        margin: 10,
-								        columns: [
-
-								            {
-								                alignment: 'center',
-								                text: 'PAGO DE PEAJES',
-																bold:true,
-								            }
-								        ]
-								    },
-										footer: {
-								        stack: [
-								            { text: 'Universidad Distrital Francisco José de Caldas - Seminario Ingeniería de Software - 2014 ',
-														  alignment: 'center',
-															fontSize:10
-														}
-								        ]
-								    },
-									  content: [
-									    {
-									      table: {
-									        headerRows: 1,
-									        widths: [ '*', '*', 'auto', '*', '*' ],
-									        body: body
-									      }
-									    }
-									  ]
-									};//end docDefinition
-									pdfMake.createPdf(docDefinition).open();
-
-								}//end success
-
-							});
-
-						});
-				});
-			</script>
+			<script asyn type="text/javascript" src="<?php echo base_url('assets/js/reportes/exporter.js');?>"></script>
+			<script type="text/javascript" src="<?php echo base_url('assets/js/reportes/historialPeajes.js');?>" > </script>
 	</div>
 	</body>
 

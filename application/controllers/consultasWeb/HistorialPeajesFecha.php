@@ -68,10 +68,6 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 			$this->idVehiculo =  $this->input->post('idVehiculo');
 			$this->fechaInicial = $this->input->post('fechaInicial');
 			$this->fechaFinal   = $this->input->post('fechaFinal');
-
-			echo $this->idVehiculo .  "</br>";
-			echo $this->fechaInicial. "</br>";
-			echo $this->fechaFinal. "</br>";
 		  $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
 		  $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
 			$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
@@ -98,6 +94,7 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 					$cruce[ 'valor' ]  = $cobro->valor ;
 					$listaCobros [] = $cruce;//5
 				}
+				setcookie( 'dataSource', json_encode($listaCobros) );
 				$data = array(
 					'status' => TRUE,
 		 			'peajes' => $listaCobros,

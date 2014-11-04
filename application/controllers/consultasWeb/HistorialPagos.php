@@ -56,6 +56,7 @@ class HistorialPagos extends  ConsultasWebController
 					$facture[ 'valor' ] = $factura->valor;
 					$listaFacturas [] = $facture;//5
 				}
+				setcookie( 'dataSource', json_encode($listaFacturas) );
 				$data ['status'] = TRUE;
 				$data ['facturas'] = $listaFacturas;
 		}

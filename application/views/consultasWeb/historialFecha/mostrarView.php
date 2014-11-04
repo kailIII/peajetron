@@ -22,19 +22,31 @@
 				{
 					echo "<tr class='odd gradeX'>
 							<td>".$peaje['peaje']."</td>
-							<td>".$peaje['ruta']."</td> 
-							<td>".$peaje['fechaCruce']."</td> 
-							<td>".$peaje['hora']."</td> 
-							<td>".$peaje['valor']."</td> 
-						</tr>";	
-				} 
+							<td>".$peaje['ruta']."</td>
+							<td>".$peaje['fechaCruce']."</td>
+							<td>".$peaje['hora']."</td>
+							<td>".$peaje['valor']."</td>
+						</tr>";
+				}
 			?>
 			</table>
+			<div>
+					<button class="btn btn-success" id="descargar" value="Descargar PDF" > Descargar PDF</button>
+			</div>
 		<?php else : ?>
 			<div class="alert alert-info">
 				El usuario no presenta ningún registro  de cruce por peaje del vehículo <?php echo $marca . " " .$modelo ; ?> con placa <b> <?php echo $placa;?> </b>
 			</div>
 		<?php endif; ?>
 		</div>
+
+		<div class="css-js">
+				<script asyn type="text/javascript" src="<?php echo base_url('assets/js/pdfmake.js');?>"></script>
+				<script asyn type="text/javascript" src="<?php echo base_url('assets/js/vfs_fonts.js');?>"></script>
+				<script asyn type="text/javascript" src="<?php echo base_url('assets/js/reportes/exporter.js');?>"></script>
+				<script type="text/javascript" src="<?php echo base_url('assets/js/reportes/historialPeajesFecha.js');?>" > </script>
+		</div>
+
+
 	</body>
 </html>
