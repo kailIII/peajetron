@@ -34,10 +34,18 @@ class Categoria extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('categoria', 'id_categoria', 'categoria,descripcion');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('categoria', 'id_categoria', 'categoria,descripcion');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

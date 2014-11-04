@@ -35,10 +35,18 @@ class Menus extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('menu', 'id_menu', 'id_menu_padre,menu,url,icono,orden');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('menu', 'id_menu', 'id_menu_padre,menu,url,icono,orden');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

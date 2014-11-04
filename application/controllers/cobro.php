@@ -75,7 +75,7 @@ class Cobro extends CI_Controller {
 			$result = $this->cobros->insertarQR($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
-		$session['mensaje'] = $result;
+		$session['mensaje'] = ($result == 0) ? "Cruce registrado correctamente" : "Error: ".$result;
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -96,7 +96,7 @@ class Cobro extends CI_Controller {
 			$result = $this->cobros->insertarPlaca($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
-		$session['mensaje'] = $result;
+		$session['mensaje'] = ($result) ? "Cruce registrado correctamente" : "Error: 002";
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -123,13 +123,22 @@ class Cobro extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->render_sql("SELECT id_cobro, placa, pr.nombre AS propietario, re.nombre AS registra, peaje, valor, cobro.fecha_registro, fecha_pago
-                            FROM cobro
-                            LEFT JOIN vehiculo ON vehiculo.id_vehiculo = cobro.id_vehiculo
-                            LEFT JOIN usuario pr ON pr.id_usuario = cobro.id_usuario_propietario
-                            LEFT JOIN usuario re ON re.id_usuario = cobro.id_usuario_registra
-                            LEFT JOIN peaje ON peaje.id_peaje = cobro.id_peaje", "id_cobro", "placa, propietario, registra, peaje, valor, fecha_registro, fecha_pago");
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->render_sql("SELECT id_cobro, placa, pr.nombre AS propietario, re.nombre AS registra, peaje, valor, cobro.fecha_registro, fecha_pago
+                              FROM cobro
+                              LEFT JOIN vehiculo ON vehiculo.id_vehiculo = cobro.id_vehiculo
+                              LEFT JOIN usuario pr ON pr.id_usuario = cobro.id_usuario_propietario
+                              LEFT JOIN usuario re ON re.id_usuario = cobro.id_usuario_registra
+                              LEFT JOIN peaje ON peaje.id_peaje = cobro.id_peaje", "id_cobro", "placa, propietario, registra, peaje, valor, fecha_registro, fecha_pago
+                             ");
+		}
+		catch(Exception $e)
+		{
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 
 	function check_vcard($vcard)

@@ -23,12 +23,12 @@ Class Vehiculos extends CI_Model
 	{
 		try
 		{
+			$this->db->trans_begin();
 			unset($datos['envia']);
 			$datos['id_estado_vehiculo'] = 1;
 			foreach($datos as $key => $value)
 				if($datos[$key] == "")
 					unset($datos[$key]);
-			$this->db->trans_begin();
 			$this->db->insert('vehiculo', $datos);
 			$this->db->trans_commit();
 
@@ -37,10 +37,8 @@ Class Vehiculos extends CI_Model
 		catch(Exception $e)
 		{
 			$this->db->trans_rollback();
-
 			return false;
 		}
 	}
-
 }
 ?>

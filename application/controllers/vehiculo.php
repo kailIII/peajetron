@@ -124,10 +124,18 @@ class Vehiculo extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('vehiculo', 'id_vehiculo', 'id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('vehiculo', 'id_vehiculo', 'id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

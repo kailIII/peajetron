@@ -24,24 +24,32 @@ class VerifyLogin extends CI_Controller {
 
   function check_database($contrasena)
   {
-    $usuario = $this->input->post('usuario');
-    $result = $this->usuarios->login($usuario, $contrasena);
+		try
+		{
+			$usuario = $this->input->post('usuario');
+			$result = $this->usuarios->login($usuario, $contrasena);
 
-    if($result)
-    {
-      $sess_array = array();
-      foreach($result as $row)
-      {
-        $sess_array = array('id_usuario' => $row->id_usuario, 'id_perfil' => $row->id_perfil, 'nombre' => $row->nombre, 'correo' => $row->correo, 'activo' => $row->activo, 'controlador' => $row->controlador);
-        $this->session->set_userdata('peajetron', $sess_array);
-      }
-      return true;
-    }
-    else
-    {
-      $this->form_validation->set_message('check_database', 'Nombre de usuario o contraseña incorrecta');
-      return false;
-    }
+			if($result)
+			{
+				$sess_array = array();
+				foreach($result as $row)
+				{
+					$sess_array = array('id_usuario' => $row->id_usuario, 'id_perfil' => $row->id_perfil, 'nombre' => $row->nombre, 'correo' => $row->correo, 'activo' => $row->activo, 'controlador' => $row->controlador);
+					$this->session->set_userdata('peajetron', $sess_array);
+				}
+				return true;
+			}
+			else
+			{
+				$this->form_validation->set_message('check_database', 'Nombre de usuario o contraseña incorrecta');
+				return false;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
   }
 }
 ?>

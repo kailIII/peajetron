@@ -121,10 +121,18 @@ class Usuario extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('usuario', 'id_usuario', 'id_perfil, id_tipo_documento, id_ubicacion, documento, nombre, correo, telefono, direccion, activo, fecha_registro, fecha_modificacion');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('usuario', 'id_usuario', 'id_perfil, id_tipo_documento, id_ubicacion, documento, nombre, correo, telefono, direccion, activo, fecha_registro, fecha_modificacion');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

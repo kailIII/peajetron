@@ -33,10 +33,18 @@ class Documento extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('tipo_documento', 'id_tipo_documento', 'tipo_documento');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('tipo_documento', 'id_tipo_documento', 'tipo_documento');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

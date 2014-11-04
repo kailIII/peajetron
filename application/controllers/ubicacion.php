@@ -36,10 +36,18 @@ class Ubicacion extends CI_Controller {
 
 	function datos()
 	{
-		$connector = new GridConnector($this->db, 'phpCI');
-		$connector->configure('ubicacion', 'id_ubicacion', 'id_ubicacion_padre,ubicacion');
-		$connector->event->attach($this);
-		$connector->render();
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->configure('ubicacion', 'id_ubicacion', 'id_ubicacion_padre,ubicacion');
+			$connector->event->attach($this);
+			$connector->render();
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>
