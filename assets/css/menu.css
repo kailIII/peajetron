@@ -1,0 +1,59 @@
+#menu-top{
+	width:100%;
+}
+#menu-imagenes{
+	margin-top:40px;
+	margin-bottom: 40px;
+	width: 50%;
+
+}
+
+#menu-informacion{
+	float: rigth;
+	width: 40%;
+	margin-left:87%;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus 
+{
+	color: #000;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >   
+a:hover, .navbar-default .navbar-nav > .active > a:focus 
+{
+	color: white; /*BACKGROUND color for active*/
+	background-color: #ffa71f;
+}
+
+.navbar-default 
+{
+    background-color: #eb971b;
+    border-color: #c5c5c5;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus 
+{
+    
+    text-decoration: none;
+    background-color: #ffa71f;  /*change color of links in drop down here*/
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus 
+{
+    text-decoration: none;
+    background-color: #ffa71f; /*Change rollover cell color here*/
+}
+
+
+.navbar-default .navbar-nav > li > a 
+{
+   color: white; /*Change active text color here*/
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background-color: #ffffff;
+    color: #555;
+}

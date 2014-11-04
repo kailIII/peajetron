@@ -48,11 +48,21 @@
 $active_group = 'default';
 $active_record = TRUE;
 
+
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'peajetron';
 $db['default']['password'] = 'peajetron';
 $db['default']['database'] = 'peajetron';
 $db['default']['dbdriver'] = 'postgre';
+
+/*
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '1032';
+$db['default']['database'] = 'peajes';
+$db['default']['dbdriver'] = 'mysql';
+*/
+
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;

@@ -20,6 +20,7 @@ class Inicio extends CI_Controller {
 		$session = $this->session->userdata('peajetron');
 		if($session['controlador'] != '')
 			redirect($session['controlador'], 'refresh');
+		
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);

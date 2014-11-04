@@ -253,8 +253,9 @@ if ( ! function_exists('get_config'))
 				}
 			}
 		}
-
-		return $_config[0] =& $config;
+		//BUG: https://ellislab.com/forums/viewthread/244510/
+		$_config[0] =& $config;
+		return $_config[0];
 	}
 }
 
