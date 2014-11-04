@@ -3,20 +3,28 @@ Class Usuarios extends CI_Model
 {
 	function login($usuario, $contrasena)
 	{
-		$this->db->select('id_usuario, usuario.id_perfil, nombre, correo, activo, controlador');
-		$this->db->from('usuario');
-		$this->db->join('perfil', 'perfil.id_perfil = usuario.id_perfil');
-		$this->db->where(array('correo' => $usuario, 'contrasena' => $contrasena));
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		if($query->num_rows() == 1)
+		try
 		{
-			return $query->result();
+			$this->db->select('id_usuario, usuario.id_perfil, nombre, correo, activo, controlador');
+			$this->db->from('usuario');
+			$this->db->join('perfil', 'perfil.id_perfil = usuario.id_perfil');
+			$this->db->where(array('correo' => $usuario, 'contrasena' => $contrasena));
+			$this->db->limit(1);
+
+			$query = $this->db->get();
+			if($query->num_rows() == 1)
+			{
+				return json_encode(array("status" => true, "content" => $query->result()));
+			}
+			else
+			{
+				return json_encode(array("status" => false));
+			}
 		}
-		else
+		catch(Exception $e)
 		{
+			$this->db->trans_rollback();
+			log_message('error', $e->getMessage());
 			return false;
 		}
 	}
@@ -35,31 +43,54 @@ Class Usuarios extends CI_Model
 		catch(Exception $e)
 		{
 			$this->db->trans_rollback();
+			return false;
+		}
+	}
 
+	function listar()
+	{
+		try
+		{
+			$query  = $this->db->get('usuario');
+			$result = $query->result();
+
+			return json_encode($result);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
 			return false;
 		}
 	}
 
 	function combo()
 	{
-		$query = $this->db->get('usuario');
-		foreach($query->result() as $row)
-			$combo[] = array("value" => $row->id_usuario, "text" => $row->nombre);
+		try
+		{
+			$query = $this->db->get('usuario');
+			foreach($query->result() as $row)
+				$combo[] = array("value" => $row->id_usuario, "text" => $row->nombre);
 
-		return json_encode(array("options" => $combo));
-	}
-
-	function listar()
-	{
-		$query  = $this->db->get('usuario');
-		$result = $query->result();
-
-		return json_encode($result);
+			return json_encode(array("options" => $combo));
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 
 	function contrasena()
 	{
-		return substr(str_shuffle('abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789|!#$%¡+()=[]{}_'), 0, 8);
+		try
+		{
+			return substr(str_shuffle('abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789|!#$%¡+()=[]{}_'), 0, 8);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 }
 ?>

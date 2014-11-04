@@ -8,13 +8,21 @@ Class Tarifas extends CI_Model
 
 	function buscar($id_peaje, $id_categoria)
 	{
-		$query = $this->db->get_where('tarifa', array('id_peaje' => $id_peaje, 'id_categoria' => $id_categoria));
-		if($query->num_rows() > 0)
+		try
 		{
-			return $query->result();
+			$query = $this->db->get_where('tarifa', array('id_peaje' => $id_peaje, 'id_categoria' => $id_categoria));
+			if($query->num_rows() > 0)
+			{
+				return $query->result();
+			}
+			else
+			{
+				return false;
+			}
 		}
-		else
-		{
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
 			return false;
 		}
 	}

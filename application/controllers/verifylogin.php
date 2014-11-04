@@ -27,16 +27,12 @@ class VerifyLogin extends CI_Controller {
 		try
 		{
 			$usuario = $this->input->post('usuario');
-			$result = $this->usuarios->login($usuario, $contrasena);
+			$result = json_decode($this->usuarios->login($usuario, $contrasena));
 
-			if($result)
+			if($result->status)
 			{
-				$sess_array = array();
-				foreach($result as $row)
-				{
-					$sess_array = array('id_usuario' => $row->id_usuario, 'id_perfil' => $row->id_perfil, 'nombre' => $row->nombre, 'correo' => $row->correo, 'activo' => $row->activo, 'controlador' => $row->controlador);
-					$this->session->set_userdata('peajetron', $sess_array);
-				}
+				$sess_array = array('id_usuario' => $result->content[0]->id_usuario, 'id_perfil' => $result->content[0]->id_perfil, 'nombre' => $result->content[0]->nombre, 'correo' => $result->content[0]->correo, 'activo' => $result->content[0]->activo, 'controlador' => $result->content[0]->controlador);
+				$this->session->set_userdata('peajetron', $sess_array);
 				return true;
 			}
 			else
