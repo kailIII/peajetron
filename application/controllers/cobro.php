@@ -1,6 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 session_start();
+require_once('application/third_party/dhtmlx/sources/dhtmlxConnector/codebase/grid_connector.php');
+require_once('application/third_party/dhtmlx/sources/dhtmlxConnector/codebase/db_phpci.php');
+DataProcessor::$action_param = 'dhx_editor_status';
+
 class Cobro extends CI_Controller {
 	function __construct()
 	{
@@ -10,7 +14,6 @@ class Cobro extends CI_Controller {
 			$this->load->model('menu', '', TRUE);
 			$this->load->model('cobros', '', TRUE);
 			$this->load->model('peajes', '', TRUE);
-			$this->load->model('vehiculos', '', TRUE);
 		}
 		else
 		{
@@ -22,12 +25,26 @@ class Cobro extends CI_Controller {
 	{
 		$session = $this->session->userdata('peajetron');
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
-		$select['peaje'] = json_decode($this->peajes->listar(), true);
+		$peajes = json_decode($this->peajes->listar(), true);
+		foreach($peajes as $value)
+			$select['peaje'][$value['id_peaje']] = $value['peaje'];
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
 		$this->load->view('cobros', $select);
+		$this->load->view('front/footer.php');
+	}
+
+	function listar()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('administrar_cobros', $data);
 		$this->load->view('front/footer.php');
 	}
 
@@ -48,18 +65,6 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/footer.php');
 	}
 
-	function placa()
-	{
-		$session = $this->session->userdata('peajetron');
-		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
-		$data['titulo'] = 'Usuario: '.$session['nombre'];
-		$this->load->view('front/head.php', $data);
-		$this->load->view('front/header.php');
-		$this->load->view('menu', $menu);
-		$this->load->view('placa', $session);
-		$this->load->view('front/footer.php');
-	}
-
 	function registrarQR()
 	{
 		$result = null;
@@ -70,7 +75,7 @@ class Cobro extends CI_Controller {
 			$result = $this->cobros->insertarQR($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
-		$session['mensaje'] = $result;
+		$session['mensaje'] = ($result == 0) ? "Cruce registrado correctamente" : "Error: ".$result;
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -91,7 +96,7 @@ class Cobro extends CI_Controller {
 			$result = $this->cobros->insertarPlaca($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
-		$session['mensaje'] = $result;
+		$session['mensaje'] = ($result) ? "Cruce registrado correctamente" : "Error: 002";
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -102,6 +107,38 @@ class Cobro extends CI_Controller {
 		else
 			$this->load->view('placa', $session);
 		$this->load->view('front/footer.php');
+	}
+
+	function placa()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('placa', $session);
+		$this->load->view('front/footer.php');
+	}
+
+	function datos()
+	{
+		try
+		{
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->render_sql("SELECT id_cobro, placa, pr.nombre AS propietario, re.nombre AS registra, peaje, valor, cobro.fecha_registro, fecha_pago
+                              FROM cobro
+                              LEFT JOIN vehiculo ON vehiculo.id_vehiculo = cobro.id_vehiculo
+                              LEFT JOIN usuario pr ON pr.id_usuario = cobro.id_usuario_propietario
+                              LEFT JOIN usuario re ON re.id_usuario = cobro.id_usuario_registra
+                              LEFT JOIN peaje ON peaje.id_peaje = cobro.id_peaje", "id_cobro", "placa, propietario, registra, peaje, valor, fecha_registro, fecha_pago
+                             ");
+		}
+		catch(Exception $e)
+		{
+			log_message('error', $e->getMessage());
+			return false;
+		}
 	}
 
 	function check_vcard($vcard)

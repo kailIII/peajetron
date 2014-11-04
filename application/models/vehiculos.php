@@ -6,21 +6,45 @@ Class Vehiculos extends CI_Model
 		parent::__construct();
 	}
 
-	function buscar($placa = null, $id_vehiculo = null)
+	function buscar($placa = null)
 	{
-		$this->db->select('*');
-		$this->db->from('vehiculo');
-		$this->db->where('placa', $placa);
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		if($query->num_rows() == 1)
+		try
 		{
-			return $query->result();
+			$query = $this->db->get_where('vehiculo', array('placa' => $placa));
+			if($query->num_rows() > 0)
+			{
+				return $query->result();
+			}
+			else
+			{
+				return false;
+			}
 		}
-		else
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function insertar($datos)
+	{
+		try
 		{
+			$this->db->trans_begin();
+			unset($datos['envia']);
+			$datos['id_estado_vehiculo'] = 1;
+			foreach($datos as $key => $value)
+				if($datos[$key] == "")
+					unset($datos[$key]);
+			$this->db->insert('vehiculo', $datos);
+			$this->db->trans_commit();
+
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$this->db->trans_rollback();
 			return false;
 		}
 	}
