@@ -12,7 +12,7 @@ class UltimoPeajeService extends  CI_Controller{
     {
 
 
-        if( !isset( $_REQUEST['id'])  )
+        if( isset( $_REQUEST['id'])  )
         {
             $idUser  = $_REQUEST['id'];
             $result =  $this->vehiculos->vehiculosPropietario( $idUser );
