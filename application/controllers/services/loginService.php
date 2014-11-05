@@ -1,6 +1,6 @@
 <?php
 
-class ActualizarDatos extends  CI_Controller{
+class LoginService extends  CI_Controller{
     public function __construct()
     {
       parent::__construct();
@@ -11,10 +11,6 @@ class ActualizarDatos extends  CI_Controller{
     {
         $pass  = $_REQUEST['pass'];
         $email = $_REQUEST['email'];
-
-        echo $pass;
-        echo $email;
-        return true;
-
+        echo $this->usuarios->login( $email, $pass );
     }
 }
