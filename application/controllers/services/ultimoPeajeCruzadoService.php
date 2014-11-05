@@ -10,11 +10,12 @@ class UltimoPeajeService extends  CI_Controller{
     }
     public function index()
     {
-        $idUser  = $_REQUEST['id'];
-        $result =  $this->vehiculos->vehiculosPropietario( $idUser );
+
 
         if( !isset( $_REQUEST['id'])  )
         {
+            $idUser  = $_REQUEST['id'];
+            $result =  $this->vehiculos->vehiculosPropietario( $idUser );
             if( $result!=FALSE)
             {
                $placas = array();
