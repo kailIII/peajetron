@@ -33,7 +33,7 @@ class UltimoPeajeService extends  CI_Controller{
                        'ruta'      => $cobro->ruta,
                        'hora'      => $cobro->hora,
                        'fecha'     => $cobro->fecha,
-                       'ubicacion' => $cobro->peaje,
+                       'ubicacion' => $cobro->peaje
                      );
                      $placas [] = $placa;
                     
