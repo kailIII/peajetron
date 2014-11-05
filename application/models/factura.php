@@ -36,4 +36,16 @@ Class Factura extends CI_Model
 		}
 		return false;
 	}
+
+	public function ultimoPago($idUsuario)
+	{
+
+			$sql = 'SELECT * FROM  factura WHERE factura.id_usuario = '.$idUsuario;
+			$query = $this->db->query( $sql );
+			if( $query->num_rows() > 0 )
+			{
+				return $query->result();
+			}
+			return false;
+	}
 }
