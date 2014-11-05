@@ -10,6 +10,7 @@ class ActualizarDatos extends  CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('usuarios');
+		#
 	}
 	/**
 	 * Método que se encarga de inicializar la  información necesaria

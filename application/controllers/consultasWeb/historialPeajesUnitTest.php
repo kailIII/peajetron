@@ -52,7 +52,7 @@ class HistorialPeajesUnitTest extends  CI_Controller
       $test = $this->controller->mostrarPeajes();
     }
 
-    
+
     /**
      * Función que se encarga de correr las pruebas.
     */

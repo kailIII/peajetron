@@ -15,6 +15,7 @@ class UltimoPeaje extends   ConsultasWebController
 		parent::__construct();
 		$this->load->model('vehiculos');
 		$this->load->model('cobros');
+		#
 	}
 	/*
 	 * Función que se encarga de inicializar el controlador

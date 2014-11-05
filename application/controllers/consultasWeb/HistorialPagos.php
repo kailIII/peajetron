@@ -12,7 +12,7 @@ class HistorialPagos extends  ConsultasWebController
 	public function __construct(){
 		parent::__construct();
 		$this->load->model( 'factura' );
-
+    #
 	}
 	/*
 	 * Método que inicializa el controlador de historial de pagos.
