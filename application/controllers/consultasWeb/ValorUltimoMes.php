@@ -1,6 +1,6 @@
 <?php
 
-include_once 'ConsultasWebController.php';
+include_once 'consultasWebController.php';
 /**
  * Clase que se encarga de  generar la funcionalidad
  * para mostrar el último valor a pagar del mes.

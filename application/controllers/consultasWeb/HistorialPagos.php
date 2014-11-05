@@ -1,5 +1,5 @@
 <?php
-include_once 'ConsultasWebController.php';
+include_once 'consultasWebController.php';
 /*
  * Controlador que se encarga de generar el historial de pagos
  * de un usuario

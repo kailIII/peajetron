@@ -3,6 +3,8 @@
  * Clase se que se encarga de controlaro los eventos que se generar en la
  * vista  para actualizar los datos de un usuario registrado.
  * */
+
+include_once 'consultasWebController.php';
 class ActualizarDatos extends  CI_Controller{
 	/*
 	 * Constructor de la clase.

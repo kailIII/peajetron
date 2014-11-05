@@ -1,7 +1,6 @@
 <?php
 
-
-include_once 'ConsultasWebController.php';
+include_once 'consultasWebController.php';
 
 /*s
  * Clase que se encarga de Controlar los eventos generados
