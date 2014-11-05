@@ -12,32 +12,36 @@ class UltimoPeajeService extends  CI_Controller{
     {
         $idUser  = $_REQUEST['id'];
         $result =  $this->vehiculos->vehiculosPropietario( $idUser );
-        if( $result!=FALSE)
+
+        if( isset( $_REQUEST['id'])  )
         {
-           $placas = array();
-           foreach( $results as $vehiculo )
-           {
-              $id = $vehiculo->id_vehiculo;
-              $placa = $vehiculo->placa;
-              $cobro = $this->cobros->ultimPeajeCruzado( $id, $idUser );
-             
-              if( $cobro != FALSE )
-	      {  
-                 $placa = array(
-                   'placa'     => $placa,
-                   'valor'     => $cobro->valor,
-                   'matricula' => $placa,
-                   'ruta'      => $cobro->hora,
-                   'fecha'     => $cobro->fecha,
-                   'ubicacion' => 'nose'
-                 );
-                 $placas [] = $placa;
-                 $placas['status'] = TRUE;
-	      }//fin if cobro false
-           }//endforeach
-           echo json_encode($placas );
-        }//endif
-         $json =  array( 'status'=>FALSE );
-         echo json_encode( $json );
+            if( $result!=FALSE)
+            {
+               $placas = array();
+               foreach( $results as $vehiculo )
+               {
+                  $id = $vehiculo->id_vehiculo;
+                  $placa = $vehiculo->placa;
+                  $cobro = $this->cobros->ultimPeajeCruzado( $id, $idUser );
+
+                  if( $cobro != FALSE )
+                  {
+                     $placa = array(
+                       'placa'     => $placa,
+                       'valor'     => $cobro->valor,
+                       'matricula' => $placa,
+                       'ruta'      => $cobro->hora,
+                       'fecha'     => $cobro->fecha,
+                       'ubicacion' => 'nose'
+                     );
+                     $placas [] = $placa;
+                     $placas['status'] = TRUE;
+                  }//fin if cobro false
+               }//endforeach
+               echo json_encode($placas );
+            }//endif
+        }
+        $json =  array( 'status'=>FALSE );
+        echo json_encode( $json );
     }
 }
