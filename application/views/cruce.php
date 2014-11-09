@@ -1,91 +1,44 @@
-<!-- Import de la libreria HTML5-QRCode -->
+			<div id="botones">
+				<input type="button" value="Registrar QR" onclick="$('#cruceForm').submit();">
+				<input type="button" value="Registrar Placa" onclick="window.location='../placa'">
+			</div>
+			<div id="dhtmlx">
+				<table>
+					<tbody>
+						<tr>
+							<td><div id="lectura"></div></td>
+							<td>
+								
+<?php
+echo validation_errors();
+echo $mensaje;
+echo form_open('cobro/registrarQR', array('id' => 'cruceForm'));
+echo form_label('Vcard:', 'vcard');
+echo form_textarea(array('id' => 'vcard', 'name' => 'vcard'));
+echo form_hidden('id_usuario', $id_usuario);
+echo form_hidden('id_peaje', $id_peaje);
+echo form_close();
+?>
 
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="<?php echo base_url('js/html5-qrcode.min.js');?>"></script>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<script type="text/javascript">
+				$("#vcard").change(function(event) {
+		        $("#cruceForm").submit();
+				});
 
-
-
-<!-- Submit del form #cruceForm cuando cambia el texto del text_area #vcard -->
-<script type="text/javascript">
-	$("#vcard").change(function(event) {
-    $("#cruceForm").submit();
-	});
-</script>
-
-
-<div id="contenido">
-	<h3>Lectura códigos QR</h3>
-	<p>A continuación encontrará un prototipo del módulo de lectura de códigos QR
-	para el paso de peajes del proyecto "Movilidad Inteligente"</p>
-
-
-	<div style="float: right;">
-
-		<?php
-			echo validation_errors();
-			echo $mensaje;
-			echo form_open('cobro/registrarQR', array('id' => 'cruceForm'));
-			echo form_label('Vcard:', 'vcard');
-			echo form_textarea(array('id' => 'vcard', 'name' => 'vcard', 'cols' => 70, 'rows' => 5, 'value' => "BEGIN:VCARD\nVERSION:4.0\nN:AAA111\nNOTE:46793D66609EFA224DADA69EBBAB331CBF6B3E588618B7858318429FB8FEE6E1\nREV:20140901T222710Z\nEND:VCARD"));
-			echo br();
-			echo form_label('Usuario:', 'id_usuario');
-			echo form_input(array('id' => 'id_usuario', 'name' => 'id_usuario', 'value' => $id_usuario));
-			echo br();
-			echo form_label('Peaje:', 'id_peaje');
-			echo form_input(array('id' => 'id_peaje', 'name' => 'id_peaje', 'value' => $id_peaje));
-			echo br();
-			echo br();
-			echo form_submit('envia', 'Registrar QR');
-			echo br();
-			echo br();
-			echo form_button('placa', 'Registrar Placa', 'onClick="javascript:window.location=\'placa\'"');
-			echo form_close();
-		?>
-
-	</div>
-
-
-	<div id="lectura" style="float: left; width:300px; height:300px;">
-
-		<!-- Actualización del text area vcard con los datos de la lectura del código QR -->
-		<script>
-	        $('#lectura').html5_qrcode(function(data){
-	        	/**
-				 * Captura el código QR leido por la camara en forma de string.
-				 * @param {string} [data] Contiene el String del código qr.
-				 */
-	        	$('#vcard').val(data);
-				alert('Lectura Exitosa');
-	       	},
-	       	function(error){
-	      		/**
-				 * Envia a la consola de logs un mensaje con el error
-				 * pertinente en caso de que haya errores de lectura
-				 * del código qr.
-				 * @param {string} [error] Contiene el mensaje de error
-				 * de lectura.
-				 */
-				 console.log(error);
-	      	}, function(videoError){
-	      		/**
-				 * Envia a la consola de logs un mensaje con el error
-				 * pertinente en caso de que haya problemas abriendo
-				 * el stream del video.
-				 * @param {string} [videoError] Contiene el mensaje de error.
-				 */
-				 console.log(videoError);
-	      	}
-	        );
-	    </script>
-	</div><!-- lectura -->
-</div>
-
-
-
-
-
-
-
-
-
-
+				$('#lectura').html5_qrcode(
+					function(data){
+						$('#vcard').val(data);
+					},
+					function(error){
+						console.log(error);
+					},
+					function(videoError){
+						console.log(videoError);
+					}
+				);
+			</script>

@@ -48,14 +48,15 @@ class Cobro extends CI_Controller {
 		$this->load->view('front/footer.php');
 	}
 
-	function capturar()
+	function capturar($id_peaje)
 	{
 		$session = $this->session->userdata('peajetron');
-		$session['id_peaje'] = $this->input->post('id_peaje');
-		$session['mensaje'] = null;
+		if($id_peaje == 'true')
+			$session['id_peaje'] = $this->input->post('id_peaje');
+		$this->session->set_userdata('peajetron', $session);
 		if($session['id_peaje'] == "")
 			redirect('cobro', 'refresh');
-		$this->session->set_userdata('peajetron', $session);
+		$session['mensaje'] = null;
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);
@@ -75,7 +76,7 @@ class Cobro extends CI_Controller {
 			$result = $this->cobros->insertarQR($this->input->post());
 
   	$session = $this->session->userdata('peajetron');
-		$session['mensaje'] = ($result == 0) ? "Cruce registrado correctamente" : "Error: ".$result;
+		$session['mensaje'] = (is_null($result)) ? '' : (($result == 0) ? "Cruce registrado correctamente" : ("Error: ".$result));
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
 		$this->load->view('front/head.php', $data);

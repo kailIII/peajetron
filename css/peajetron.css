@@ -191,6 +191,10 @@ header table {
 	z-index: 89;
 }
 
+#contenido table {
+	width: 70%;
+}
+
 #botones {
 	top: 50px;
 	position: absolute;
@@ -202,5 +206,10 @@ header table {
 	top: 80px;
 	position: absolute;
 	width: 90%;
+	height: 300px;
+}
+
+#lectura {
+	width: 300px;
 	height: 300px;
 }

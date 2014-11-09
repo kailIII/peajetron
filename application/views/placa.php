@@ -1,20 +1,15 @@
-			<div id="contenido">
+			<div id="botones">
+				<input type="button" value="Volver" onclick="window.location='capturar/false'">
+				<input type="button" value="Registrar Placa" onclick="$('#cruceForm').submit();">
+			</div>
+			<div id="dhtmlx">
 <?php
 echo validation_errors();
-$attributes = array('id' => 'cruceForm');
-echo form_open('cobro/registrarPlaca',  $attributes);
+echo form_open('cobro/registrarPlaca', array('id' => 'cruceForm'));
 echo form_label('Placa:', 'placa');
 echo form_input(array('id' => 'placa', 'name' => 'placa'));
-echo br();
-echo form_label('Usuario:', 'id_usuario');
-echo form_input(array('id' => 'id_usuario', 'name' => 'id_usuario', 'value' => $id_usuario));
-echo br();
-echo form_label('Peaje:', 'id_peaje');
-echo form_input(array('id' => 'id_peaje', 'name' => 'id_peaje', 'value' => $id_peaje));
-echo br();
-echo form_submit('envia', 'Registrar Placa');
-//echo br();
-//echo form_button('volvar', 'Volver', 'onClick="javascript:window.location=\'capturar/volver\'"');
+echo form_hidden('id_usuario', $id_usuario);
+echo form_hidden('id_peaje', $id_peaje);
 echo form_close();
 ?>
 
