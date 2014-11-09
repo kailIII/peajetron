@@ -1,7 +1,7 @@
 <?php
 
 
-include_once 'ConsultasWebController.php';
+include_once 'consultasWebController.php';
 
 /**
  * Clase que se encarga de generar controlar la funcionalidad de

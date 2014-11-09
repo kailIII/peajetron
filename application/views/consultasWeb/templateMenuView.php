@@ -71,3 +71,19 @@
 </div>
 Esta en la vista body
 -->
+
+
+			<script type="text/javascript">
+				$(function() {
+					myMenu = new dhtmlXMenuObject({
+					parent: 'menu-bar',
+					icons_path: '<?php echo base_url()?>images/icons/',
+					json: '<?php echo $menu;?>'
+					});
+
+					myMenu.attachEvent("onClick", function(id, zoneId, cas) {
+						window.location = '<?php echo base_url()?>' + id;
+					});
+				});
+			</script>
+
