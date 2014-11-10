@@ -30,9 +30,7 @@
 				}
 			?>
 			</table>
-			<div>
-					<button class="btn btn-success" id="descargar" value="Descargar PDF" > Descargar PDF</button>
-			</div>
+			
 		<?php else : ?>
 			<div class="alert alert-info">
 				El usuario no presenta ningún registro  de cruce por peaje del vehículo <?php echo $marca . " " .$modelo ; ?> con placa <b> <?php echo $placa;?> </b>
