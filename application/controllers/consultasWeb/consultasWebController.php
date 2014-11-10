@@ -11,9 +11,12 @@ Class ConsultasWebController extends   MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('usuarios');
+		$this->load->model('menu');
 	}
 
-	public function index(){
+	public function index()
+	{
 
 	}
 	/**
@@ -38,8 +41,10 @@ Class ConsultasWebController extends   MY_Controller
 								'status' => TRUE,
 						);
 					}
+				
+
 					$this->load->view( 'consultasWeb/templateHeaderView');
-					$this->load->view( 'consultasWeb/templateMenuView');
+					$this->load->view( 'consultasWeb/templateMenuView', $this->getMenu() );
 					$this->load->view( $pathView , $data ); //4
 			}
 			else{
@@ -78,6 +83,7 @@ Class ConsultasWebController extends   MY_Controller
 	public  function getIdUsuario(){
 		$this->session = $this->session->userdata('peajetron');
 		$idUsuario = $this->session['id_usuario'];//1
+		setcookie( 'iduser', $idUsuario );
 		return $idUsuario;//2
 	}
 
@@ -89,6 +95,15 @@ Class ConsultasWebController extends   MY_Controller
 	public function getDataSource()
 	{
 		 echo	$_COOKIE['dataSource'];
+	}
+
+	public function getMenu(){
+		$user  = $this->usuarios->getUsuario( $_COOKIE['iduser'] );
+		$menu = array(
+			'menu'  =>  $this->menu->ensamblar($user->id_perfil ),
+			'usuario' =>$user->nombre,
+		);
+    	return $menu;
 	}
 
 }

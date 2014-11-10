@@ -16,6 +16,7 @@ class HistorialPeajes extends  ConsultasWebController
 		parent::__construct();
 		$this->load->model('vehiculos');
 		$this->load->model('cobros');
+		$this->load->model('menu');
 		#
 	}
 	/*
@@ -33,8 +34,8 @@ class HistorialPeajes extends  ConsultasWebController
 	 */
 	 public function mostrarPeajes()
 	 {
-		  $idVehiculo =  $this->input->post('placa');
-			$idUsuario =  $this->getIdUsuario();
+		$idVehiculo =  $this->input->post('placa');
+		$idUsuario =  $this->getIdUsuario();
 	    $results = $this->cobros->listarPeajesCruzados( $idVehiculo,$idUsuario   );
 	    if( $results == FALSE  )//1
 	    {

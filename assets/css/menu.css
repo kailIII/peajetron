@@ -23,12 +23,12 @@
 a:hover, .navbar-default .navbar-nav > .active > a:focus 
 {
 	color: white; /*BACKGROUND color for active*/
-	background-color: #ffa71f;
+	background-color: #f69831;
 }
 
 .navbar-default 
 {
-    background-color: #eb971b;
+    background-color: #f69831;
     border-color: #c5c5c5;
 }
 
@@ -37,7 +37,7 @@ a:hover, .navbar-default .navbar-nav > .active > a:focus
 {
     
     text-decoration: none;
-    background-color: #ffa71f;  /*change color of links in drop down here*/
+    background-color: #f69831;  /*change color of links in drop down here*/
 }
 
 .nav > li > a:hover,
@@ -56,4 +56,26 @@ a:hover, .navbar-default .navbar-nav > .active > a:focus
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
     background-color: #ffffff;
     color: #555;
+}
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected{
+	position:relative;float:left;font-family:Arial;
+	font-size:13px;
+	color:#333;
+	border:0px solid #f69831 !important;
+	background-color:#f69831 !important;
+	cursor:default;white-space:nowrap;
+	-webkit-user-select:none;-khtml-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;height:22px;
+	line-height:22px;vertical-align:middle;margin-top:2px;
+	padding:3px 5px;
+}
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal 
+div.top_level_text,div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled 
+div.top_level_text,div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected 
+div.top_level_text{
+	float:left;margin:0 5px;
 }

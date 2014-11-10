@@ -66,12 +66,12 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 	 */
 	public function mostrarPeajes()
 	{
-			$this->idVehiculo =  $this->input->post('idVehiculo');
-			$this->fechaInicial = $this->input->post('fechaInicial');
-			$this->fechaFinal   = $this->input->post('fechaFinal');
-		  $results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
-		  $vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
-			$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
+		$this->idVehiculo =  $this->input->post('idVehiculo');
+		$this->fechaInicial = $this->input->post('fechaInicial');
+		$this->fechaFinal   = $this->input->post('fechaFinal');
+		$results = $this->cobros->listarPeajesCruzadosFecha( $this->idVehiculo,  $this->getIdUsuario() , $this->fechaInicial, $this->fechaFinal );
+		$vehiculo = $this->vehiculos->buscarById( $this->idVehiculo );
+		$string_vehiculo = $vehiculo->placa. " "  . $vehiculo->marca ." ". $vehiculo->modelo;
 	    if( $results == FALSE  )//1
 	    {
 	    	$data = array(
