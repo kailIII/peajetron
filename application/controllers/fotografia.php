@@ -60,11 +60,17 @@ class Fotografia extends CI_Controller {
 		$result =  $this->cobros->insertarPlaca($datos);
 		if($result)
 		{
-			echo "bien";
+			return "OK";
 		}else
 		{
-			echo "mal";
+			return "ERROR";
 		}
+	}
+
+
+	public function test()
+	{
+		$this->load->view('fotografia/test');
 	}
 }
 

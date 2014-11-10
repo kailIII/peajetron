@@ -1,12 +1,12 @@
 function DespachadorRegistro()
 {
-  this.confs = new Configuration("http://localhost/peajetron/index.php/fotografia/registrarPaso", "POST");
+  this.confs = new Configuration("http://104.131.178.140/peajetron/index.php/fotografia/registrarPaso", "POST");
 }
 
 DespachadorRegistro.prototype.sendRequest = function(processedText)
 {
   var nd = new Date();
-  var month = nd.getMonth() + 1;
+  var month = nd.getMonth() + 1; 
   var time = nd.getDate() + "-" + month + "-" + nd.getFullYear() + " " + nd.getHours() + ":" + nd.getMinutes() + ":" + nd.getSeconds();
   var cabine = $('#identificador_cabina').val();
   //var sha1Text = processedText + "" + time + "" + cabine;
@@ -16,7 +16,7 @@ DespachadorRegistro.prototype.sendRequest = function(processedText)
   if(this.confs.method == "POST")
   {
     //DO POST
-    $.post(this.confs.url, { text: 'AAA111',cabine:cabine},function( data ) {
+    $.post(this.confs.url, { text: processedText,cabine:cabine},function( data ) {
 //       alert(data.status+": "+data.message);
       $("#message").empty();
       $("#message").html(data.message);
