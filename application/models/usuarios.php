@@ -126,5 +126,19 @@ Class Usuarios extends CI_Model
 		$query = $this->db->query( $sql );
 		return $query;
 	}
+
+	public function getUsuarioService($idUsuario)
+	{
+
+		$sql = 'SELECT * FROM  usuario WHERE usuario.id_usuario = '.$idUsuario;
+		$query = $this->db->query( $sql );
+		if( $query->num_rows() > 0 )
+		{
+			return $query->result()[0];
+		}
+		return false;
+	}
+
+
 }
 ?>

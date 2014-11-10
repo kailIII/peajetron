@@ -36,7 +36,7 @@ Class Factura extends CI_Model
 		}
 		return false;
 	}
-
+/*
 	public function ultimoPago($idUsuario)
 	{
 
@@ -48,4 +48,33 @@ Class Factura extends CI_Model
 			}
 			return false;
 	}
+
+*/
+	public function ultimoPago($idUsuario)
+	{
+
+	$sql = 'SELECT * FROM  factura WHERE id_usuario = '.$idUsuario.' AND "fechaPagado" IS NOT NULL';
+
+
+		$query = $this->db->query( $sql );
+		if( $query->num_rows() > 0 )
+		{
+			return $query->result();
+		}
+		return false;
+	}
+
+		public function ultimoMes($idUsuario, $idVehiculo)
+	{
+
+	    $sql = 'SELECT * FROM  factura WHERE id_usuario = '.$idUsuario.' AND id_vehiculo = '.$idVehiculo.' AND "fechaPagado" IS NULL';
+
+
+		$query = $this->db->query( $sql );
+		if( $query->num_rows() > 0 )
+		{
+			return $query->result()[0];
+		}
+		return false;
+}
 }

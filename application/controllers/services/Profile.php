@@ -10,14 +10,18 @@ class Profile extends  CI_Controller{
     }
     public function index()
     {
-
- $json =  array( 
-    "nombre"=>"Cesar Andres Hernandez Penagos",
-    "cedula"=>"1014239597",
-    "direccion"=>"av cra 91 n 131",
-    "telefono"=>"3115216023",
-    "correo"=>"ceimox19@gmail.com",
-    "state"=>true);
+      if( isset($_REQUEST['id']) &&  $_REQUEST['id']!=''  )
+        {
+            
+           $idUser  = $_REQUEST['id'];
+           $result= $this->usuarios->getUsuarioService( $idUser);
+           echo json_encode(array("status" => true, "nombre" =>$result->nombre,"cedula" =>$result->documento,"telefono" =>$result->telefono,"direccion" =>$result->direccion,"correo" =>$result->correo));
+        }
+        else{
+            $json =  array( 'status'=>FALSE );
             echo json_encode( $json );
-    }
+        }
+
 }
+}
+

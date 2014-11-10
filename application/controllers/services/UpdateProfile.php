@@ -10,9 +10,20 @@ class UpdateProfile extends  CI_Controller{
     }
     public function index()
     {
+      if( isset($_REQUEST['id']) &&  $_REQUEST['id']!='' && isset($_REQUEST['email']) &&  $_REQUEST['email']!='' && isset($_REQUEST['cellPhone']) &&  $_REQUEST['cellPhone']!='' )
+        {
+            
+           $idUser  = $_REQUEST['id'];
+           $correo  = $_REQUEST['email'];
+           $telefono = $_REQUEST['cellPhone'];
 
- $json =  array( 
-    "state"=>true);
+           $result= $this->usuarios->actualizarDatos( $idUser, $correo, $telefono);
+           echo json_encode(array("status" => true));
+        }
+        else{
+            $json =  array( 'status'=>FALSE );
             echo json_encode( $json );
-    }
+        }
+
+}
 }
