@@ -152,6 +152,9 @@ Class Cobros extends CI_Model
 							AND c.id_vehiculo = v.id_vehiculo
 							AND c.id_peaje  = p.id_peaje
 							AND p.id_ruta = r.id_ruta
+							AND c.id_usuario_propietario = u.id_usuario
+							AND c.id_usuario_propietario = " .$idUsuario. "
+							AND c.id_vehiculo = ". $idVehiculo ."
 							AND DATE(c.fecha_registro) BETWEEN '" .$fechaInicial . "' AND '" . $fechaFinal .
 								"' ORDER BY c.fecha_registro DESC";
 
