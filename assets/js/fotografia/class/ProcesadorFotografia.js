@@ -4,13 +4,17 @@ function ProcesadorFotografia(){
 
 ProcesadorFotografia.prototype.processImage =  function(imageData)
 {
-  var regexp = "[^a-zA-Z0-9]";
+  var regexp = "^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$"; 
   this.image = imageData;
-//   alert(OCRAD(this.image.ctx));
   text = $.trim(OCRAD(this.image.ctx));
-  
-  return $.trim(OCRAD(this.image.ctx));
-//   return "Welcome to the Ocrad.js Demo! ";
+  if (text.match(regexp))
+  {
+    return text;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 ProcesadorFotografia.prototype.setImage = function(nImage)

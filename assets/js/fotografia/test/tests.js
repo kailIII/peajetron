@@ -93,14 +93,29 @@ function testPOSTERROR()
 function testInsertOK()
 {
   var despachador = new DespachadorRegistro();
-  despachador.setConfigurations("http://104.131.178.140/peajetron/index.php/fotografia/registrarPaso", "POST");
+  despachador.setConfigurations("../fotografia/registrarPaso", "POST");
   return(despachador.sendRequest("RFT453"));
 }
 
 function testInsertError()
 {
   var despachador = new DespachadorRegistro();
-  despachador.setConfigurations("http://104.131.178.140/peajetron/index.php/fotografia/registrarPaso", "POST");
+  despachador.setConfigurations("../fotografia/registrarPaso", "POST");
+  return (despachador.sendRequest("RFT45345_3"));
+}
+
+//integración?
+function testInsertOKI()
+{
+  var despachador = new DespachadorRegistro();
+  despachador.setConfigurations("../fotografia/registrarPaso", "POST");
+  return(despachador.sendRequest("RFT453"));
+}
+
+function testInsertErrorI()
+{
+  var despachador = new DespachadorRegistro();
+  despachador.setConfigurations("../fotografia/registrarPaso", "POST");
   return (despachador.sendRequest("RFT45345_3"));
 }
 
@@ -122,6 +137,9 @@ QUnit.test( "OCR Test", function( assert ) {
   
   assert.equal( testPOSTOK(), "OK" );
   assert.equal( testPOSTERROR(), "ERROR" );
+
+    assert.equal( testInsertOKI(), "OK" ); 
+  assert.equal( testInsertErrorI(), "ERROR" );
   
   
   });

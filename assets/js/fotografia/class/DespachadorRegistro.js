@@ -1,32 +1,41 @@
 function DespachadorRegistro()
 {
-  this.confs = new Configuration("http://104.131.178.140/peajetron/index.php/fotografia/registrarPaso", "POST");
+  this.confs = new Configuration("../fotografia/registrarPaso", "POST");
+}
+
+DespachadorRegistro.prototype.setConfigurations = function(url,method)
+{
+  this.confs = new Configuration(url,method);
 }
 
 DespachadorRegistro.prototype.sendRequest = function(processedText)
 {
-  var nd = new Date();
-  var month = nd.getMonth() + 1; 
-  var time = nd.getDate() + "-" + month + "-" + nd.getFullYear() + " " + nd.getHours() + ":" + nd.getMinutes() + ":" + nd.getSeconds();
+  var dt = new Date();
+  var month = dt.getMonth() + 1; 
+  var time = dt.getDate() + "-" + month + "-" + dt.getFullYear() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   var cabine = $('#identificador_cabina').val();
-  //var sha1Text = processedText + "" + time + "" + cabine;
-  var sha1Text = processedText + ""  + cabine;
-  alert(sha1Text);
-  //var hash = CryptoJS.SHA1("Message");
+  var sha1Text = processedText + "" + time + "" + cabine;
+//   alert(sha1Text);
+  GLOBAL_STATUS = "OK";
+//   var hash = CryptoJS.SHA1("Message");
   if(this.confs.method == "POST")
   {
     //DO POST
-    $.post(this.confs.url, { text: processedText,cabine:cabine},function( data ) {
+    $.post(this.confs.url, { text: processedText, time: time, cabine:cabine},function( data ) {
 //       alert(data.status+": "+data.message);
       $("#message").empty();
       $("#message").html(data.message);
+      GLOBAL_STATUS = data;
     },"json");
   }
   if(this.confs.method == "GET")
   {
     //DO GET
-    $.get(this.confs.url,{ text: processedText, time: time, cabine:cabine, sha1: hash },function( data ) {
+    $.get(this.confs.url,{ text: processedText, time: time, cabine:cabine},function( data ) {
       alert(data.status+": "+data.message);
+      GLOBAL_STATUS = data;
     },"json");
   }
+  alert("recibido "+ GLOBAL_STATUS);
+  return GLOBAL_STATUS;
 }
