@@ -43,8 +43,9 @@ class ValorUltimoMes extends  ConsultasWebController{
 	    	$data[ 'status' ] = TRUE;
 	    	$data[ 'valor' ] = $valor->sum;//3
 	    }
-	   	$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView');
+	   	$menu = $this->getMenu();
+		$this->load->view( 'consultasWeb/templateHeaderView');
+		$this->load->view( 'consultasWeb/templateMenuView', $menu );
 		$this->load->view( 'consultasWeb/valorUltimoMes/mostrarView', $data );//4
 	}
 }

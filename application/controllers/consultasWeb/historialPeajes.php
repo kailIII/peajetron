@@ -68,8 +68,9 @@ class HistorialPeajes extends  ConsultasWebController
 							'modelo' => $vehiculo->modelo,
 					);//6
 			}
+			$menu = $this->getMenu(); 
 			$this->load->view( 'consultasWeb/templateHeaderView');
-			$this->load->view( 'consultasWeb/templateMenuView');
+			$this->load->view( 'consultasWeb/templateMenuView', $menu );
 			$this->load->view( 'consultasWeb/historial/mostrarView', $data );//7
 	 }
 }

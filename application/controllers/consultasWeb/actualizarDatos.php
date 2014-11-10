@@ -38,8 +38,9 @@ class ActualizarDatos extends  CI_Controller{
 				'message' => 'El usuario no existe en el sistema'
 			);//3
 		}
+		$menu = $this->getMenu();
 		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView');
+		$this->load->view( 'consultasWeb/templateMenuView', $menu );
 		$this->load->view( 'consultasWeb/actualizarDatos/mostrarDatosView' , $data );//4
 	}
 	/**
@@ -64,8 +65,9 @@ class ActualizarDatos extends  CI_Controller{
 				'status' 	 => $result,
 			);	//4
 		}
+		$menu = $this->getMenu();
 		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView');
+		$this->load->view( 'consultasWeb/templateMenuView', $menu );
 		$this->load->view( 'consultasWeb/actualizarDatos/actualizarView', $data );//5
 	}
 
@@ -85,5 +87,18 @@ class ActualizarDatos extends  CI_Controller{
 		$this->session = $this->session->userdata('peajetron');
 		$idUsuario = $this->session['id_usuario'];//1
 		return $idUsuario;//2
+	}
+
+	public function getMenu(){
+		if( isset($_COOKIE['iduser'])) 
+		{
+		   $user  = $this->usuarios->getUsuario( $_COOKIE['iduser'] );
+			$menu = array(
+				'menu'  =>  $this->menu->ensamblar($user->id_perfil ),
+				'usuario' =>$user->nombre,
+			); 
+			return $menu;
+		}
+		return  array(  'usuario'=>  '' );
 	}
 }

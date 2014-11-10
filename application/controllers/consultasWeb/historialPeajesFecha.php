@@ -55,8 +55,9 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 			'idVehiculo' => $this->idVehiculo,
 			'attributesForm' => array('id' => 'form_seleccion_fecha'),
 		);
+		$menu = $this->getMenu();
 		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView', $data );
+		$this->load->view( 'consultasWeb/templateMenuView', $menu );
 		$this->load->view( 'consultasWeb/historialFecha/seleccioneFechaView', $data );//1
 	}
 	/*
@@ -108,8 +109,9 @@ class HistorialPeajesFecha  extends  ConsultasWebController
 		 		);//6
 
 			}
+			$menu = $this->getMenu();
 			$this->load->view( 'consultasWeb/templateHeaderView');
-			$this->load->view( 'consultasWeb/templateMenuView', $data );
+			$this->load->view( 'consultasWeb/templateMenuView', $menu );
 			$this->load->view( 'consultasWeb/historialFecha/mostrarView', $data );//7
 	}
 }

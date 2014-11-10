@@ -98,12 +98,16 @@ Class ConsultasWebController extends   MY_Controller
 	}
 
 	public function getMenu(){
-		$user  = $this->usuarios->getUsuario( $_COOKIE['iduser'] );
-		$menu = array(
-			'menu'  =>  $this->menu->ensamblar($user->id_perfil ),
-			'usuario' =>$user->nombre,
-		);
-    	return $menu;
+		if( isset($_COOKIE['iduser'])) 
+		{
+		   $user  = $this->usuarios->getUsuario( $_COOKIE['iduser'] );
+			$menu = array(
+				'menu'  =>  $this->menu->ensamblar($user->id_perfil ),
+				'usuario' =>$user->nombre,
+			); 
+			return $menu;
+		}
+		return  array(  'usuario'=>  '' );
 	}
 
 }

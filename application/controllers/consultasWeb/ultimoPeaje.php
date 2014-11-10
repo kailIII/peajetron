@@ -53,8 +53,9 @@ class UltimoPeaje extends   ConsultasWebController
 			$data['status'] =  TRUE;
 			$data['peaje'] =  $cruce;//3
 		}
+			$menu = $this->getMenu();
 		$this->load->view( 'consultasWeb/templateHeaderView');
-		$this->load->view( 'consultasWeb/templateMenuView');
+		$this->load->view( 'consultasWeb/templateMenuView', $menu );
 		$this->load->view( 'consultasWeb/ultimoPeaje/mostrarView', $data );//4
 	}
 }
