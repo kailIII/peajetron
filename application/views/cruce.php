@@ -1,6 +1,6 @@
 			<div id="botones">
 				<input type="button" value="Registrar QR" onclick="$('#cruceForm').submit();">
-				<input type="button" value="Registrar Placa" onclick="window.location='../placa'">
+				<input type="button" value="Registrar Placa" onclick="window.location='../../fotografia/tomarFoto'">
 			</div>
 			<div id="dhtmlx">
 				<table>

@@ -57,7 +57,10 @@ class Fotografia extends CI_Controller {
 		$datos['placa'] = $placa;
 		$datos['id_peaje'] = $peaje;
 		$datos['id_usuario'] = $idUsuario;
+		echo "ERROR";
 		$result =  $this->cobros->insertarPlaca($datos);
+		return; 
+		
 		if($result)
 		{
 			return "OK";

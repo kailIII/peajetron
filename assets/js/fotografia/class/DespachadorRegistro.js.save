@@ -20,7 +20,7 @@ DespachadorRegistro.prototype.sendRequest = function(processedText)
   GLOBAL_STATUS = "OK";
 //   var hash = CryptoJS.SHA1("Message");
 //processedText = "RSQ912";
-processedText = processedText.replace("lll", "111"); 
+processedText = processedText.replace("lll", "111f"); 
 if(processedText){
 
   if(this.confs.method == "POST")

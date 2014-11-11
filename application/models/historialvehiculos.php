@@ -37,21 +37,19 @@ class historialVehiculos extends CI_Model{
      */
     public function obtenerHistorialByRangoFechaAndPlaca($fechaInicio, 
                                                   $fechaFin, $placa){       
-        $query = $this->db->query('SELECT p.name, '
-                                       . 'p.address, '
-                                       . 'p.lat, '
-                                       . 'p.lng, '
-                                       . 'hv.fecha '
+       $result = $this->db->query('SELECT p.peaje, '
+                                       . 'p.latitud, '
+                                       . 'p.longitud, '
+                                       . 'hv.fecha_registro '
                                 . 'FROM vehiculo v, '
-                                     . 'historialvehiculo hv, '
+                                     . 'cobro hv, '
                                      . 'peaje p '
-                                . 'WHERE hv.idPeaje = p.idPeaje '
-                                    . 'AND hv.idVehiculo = v.idVehiculo '
-                                    . 'AND v.placa LIKE \''.$placa.'%\' '
-                                    . 'AND DATE(hv.fecha) '
+                                . 'WHERE hv.id_peaje = p.id_peaje '
+                                    . 'AND hv.id_vehiculo = v.id_vehiculo '
+                                    . 'AND v.placa = \''.$placa.'\' '
+                                    . 'AND DATE(hv.fecha_registro) '
                                     . 'BETWEEN \''.$fechaInicio.'\' '
                                     . 'AND \''. $fechaFin . '\'');
-        $result = $this->db->query($query);
         if($result->num_rows() > 0){      
             return $result->result_array();
         } else {

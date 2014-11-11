@@ -1,5 +1,5 @@
 	<div class="inicio">
-        <?php echo form_open('index.php/mapas'); ?>
+        <?php echo form_open('mapas'); ?>
         <label for="fechaInicio">Fecha Inicio</label>
         <input type="date" id="fechaInicio" name="fechaInicio" required></input>
         <label for="fechaFin">Fecha Fin</label>
@@ -30,3 +30,4 @@
             <?php echo $historialVehiculo; ?>
         <?php } ?>
     </div>
+<?php echo $map['js']; ?>

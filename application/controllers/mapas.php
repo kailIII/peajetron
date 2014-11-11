@@ -48,13 +48,13 @@ class Mapas extends CI_Controller {
             $fechaFin = $this->input->post('fechaFin');
             $placa = $this->input->post('placa');
             $historialVehiculo = 
-                    $this->historialvehiculos_model->obtenerHistorialByRangoFechaAndPlaca($fechaInicio, 
+                    $this->historialVehiculos->obtenerHistorialByRangoFechaAndPlaca($fechaInicio, 
                                                                                           $fechaFin, 
                                                                                           $placa);
             if ($historialVehiculo != '61006' && $historialVehiculo != '61002') {
                 foreach ($historialVehiculo as $registro) {
                     $marker = array();
-                    $marker['position'] = $registro['lat'] . ',' . $registro['lng'];
+                    $marker['position'] = $registro['latitud'] . ',' . $registro['longitud'];
                     $this->googlemaps->add_marker($marker);
                 }
             }
