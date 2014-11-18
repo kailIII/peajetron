@@ -10,7 +10,7 @@ class VerifyLogin extends CI_Controller {
   function index()
   {
     $this->form_validation->set_rules('usuario', 'Usuario', 'required|valid_email');
-    $this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|xss_clean|callback_check_database');
+    $this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|xss_clean|md5|callback_check_database');
 
     if($this->form_validation->run() == false)
     {

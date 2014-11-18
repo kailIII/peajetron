@@ -1,7 +1,5 @@
-    <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-    /*
-        Extended the core Router class to allow for sub-sub-folders in the controllers directory.
-    */
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
     class MY_Router extends CI_Router {
         function __construct()
         {
@@ -90,5 +88,4 @@
             $this->directory = str_replace('.', '', $dir).'/';
         }
     }
-    /* End of file MY_Router.php */
-    /* Location: ./application/core/MY_Router.php */
+?>

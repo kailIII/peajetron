@@ -1,4 +1,4 @@
- <?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
      /**
       * Clase generada con el objetivo de mantener la variables a traves
       * de los diferentes controladores.
