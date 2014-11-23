@@ -28,10 +28,12 @@ class Vehiculo extends CI_Controller {
 		$session = $this->session->userdata('peajetron');
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];
+		$data['categorias'] = $this->categorias->combo();
+
 		$this->load->view('front/head.php', $data);
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
-		$this->load->view('vehiculos');
+		$this->load->view('mis_vehiculos', $data);
 		$this->load->view('front/footer.php');
 	}
 
@@ -137,5 +139,26 @@ class Vehiculo extends CI_Controller {
 			return false;
 		}
 	}
+
+	function datos2()
+	{
+		try
+		{
+			$session = $this->session->userdata('peajetron');
+			$connector = new GridConnector($this->db, 'phpCI');
+			$connector->render_sql("SELECT id_vehiculo, vehiculo_estado, categoria, placa, marca, color, modelo, fecha_registro
+                                                FROM vehiculo
+                                                LEFT JOIN vehiculo_estado ON vehiculo_estado.id_vehiculo_estado = vehiculo.id_estado_vehiculo
+                                                LEFT JOIN categoria ON categoria.id_categoria = vehiculo.id_categoria
+                                                WHERE id_usuario = $session[id_usuario]", "id_vehiculo", "vehiculo_estado, categoria, placa, marca, color, modelo, fecha_registro
+                                               ");
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
 }
 ?>

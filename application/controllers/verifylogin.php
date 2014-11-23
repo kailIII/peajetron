@@ -31,7 +31,7 @@ class VerifyLogin extends CI_Controller {
 
 			if($result->status)
 			{
-				$sess_array = array('id_usuario' => $result->content[0]->id_usuario, 'id_perfil' => $result->content[0]->id_perfil, 'nombre' => $result->content[0]->nombre, 'correo' => $result->content[0]->correo, 'activo' => $result->content[0]->activo, 'controlador' => $result->content[0]->controlador);
+				$sess_array = array('id_usuario' => $result->content[0]->id_usuario, 'id_perfil' => $result->content[0]->id_perfil, 'id_tipo_documento' => $result->content[0]->id_tipo_documento, 'id_ubicacion' => $result->content[0]->id_ubicacion, 'documento' => $result->content[0]->documento, 'nombre' => $result->content[0]->nombre, 'correo' => $result->content[0]->correo, 'telefono' => $result->content[0]->telefono, 'direccion' => $result->content[0]->direccion, 'activo' => $result->content[0]->activo, 'controlador' => $result->content[0]->controlador);
 				$this->session->set_userdata('peajetron', $sess_array);
 				return true;
 			}

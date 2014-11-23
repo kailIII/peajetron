@@ -8,7 +8,7 @@ Class Usuarios extends CI_Model
 	{
 		try
 		{
-			$this->db->select('id_usuario, usuario.id_perfil, nombre, correo, activo, controlador');
+			$this->db->select('id_usuario, usuario.id_perfil, id_tipo_documento, id_ubicacion, documento, nombre, correo, telefono, direccion, activo, controlador');
 			$this->db->from('usuario');
 			$this->db->join('perfil', 'perfil.id_perfil = usuario.id_perfil');
 			$this->db->where(array('correo' => $usuario, 'contrasena' => $contrasena));
@@ -49,6 +49,28 @@ Class Usuarios extends CI_Model
 			return false;
 		}
 	}
+
+	function actualizar($id_usuario, $datos)
+	{
+		try
+		{
+			$this->db->trans_begin();
+			$data = array('id_tipo_documento' => $datos['id_tipo_documento'], 'id_ubicacion' => $datos['id_ubicacion'], 'documento' => $datos['documento'], 'nombre' => $datos['nombre'], 'correo' => $datos['correo'], 'telefono' => $datos['telefono'], 'direccion' => $datos['direccion']);
+			if($datos['contrasena'] != '')
+				$data['contrasena'] = $datos['contrasena'];
+			$this->db->set('fecha_modificacion', 'NOW()');
+			$this->db->update('usuario', $data, 'id_usuario = '.$id_usuario);
+			$this->db->trans_commit();
+
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$this->db->trans_rollback();
+			return false;
+		}
+	}
+
 
 	function listar()
 	{

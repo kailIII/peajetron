@@ -23,18 +23,6 @@ class Usuario extends CI_Controller {
 		}
 	}
 
-	function index()
-	{
-		$session = $this->session->userdata('peajetron');
-		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
-		$data['titulo'] = 'Usuario: '.$session['nombre'];
-		$this->load->view('front/head.php', $data);
-		$this->load->view('front/header.php');
-		$this->load->view('menu', $menu);
-		$this->load->view('perfil');
-		$this->load->view('front/footer.php');
-	}
-
 	function crear()
 	{
 		$session = $this->session->userdata('peajetron');
@@ -55,6 +43,26 @@ class Usuario extends CI_Controller {
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
 		$this->load->view('crear_usuarios', $select);
+		$this->load->view('front/footer.php');
+	}
+
+	function modificar()
+	{
+		$session = $this->session->userdata('peajetron');
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+
+		$documento = json_decode($this->documentos->listar(), true);
+		foreach($documento as $value)
+			$session['sdocumento'][$value['id_tipo_documento']] = $value['tipo_documento'];
+		$ubicacion = json_decode($this->ubicaciones->listar(), true);
+		foreach($ubicacion as $value)
+			$session['ubicacion'][$value['id_ubicacion']] = $value['ubicacion'];
+
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('modificar_usuarios', $session);
 		$this->load->view('front/footer.php');
 	}
 
@@ -116,6 +124,40 @@ class Usuario extends CI_Controller {
 		$this->load->view('front/header.php');
 		$this->load->view('menu', $menu);
 		$this->load->view('crear_usuarios', $select);
+		$this->load->view('front/footer.php');
+	}
+
+	function actualizar()
+	{
+		$session = $this->session->userdata('peajetron');
+		$correo = ($session['correo'] != $this->input->post('correo')) ? '|is_unique[usuario.correo]' : '';
+		$this->form_validation->set_rules('documento', 'Documento', 'trim|required|xss_clean|integer');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('correo', 'Correo', 'trim|required|xss_clean|valid_email'.$correo);
+		$this->form_validation->set_rules('telefono', 'Teléfono', 'trim|required|xss_clean|integer');
+		$this->form_validation->set_rules('direccion', 'Dirección', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|matches[contrasena2]|md5');
+
+		if($this->form_validation->run() == true) {
+			$result = $this->usuarios->actualizar($session['id_usuario'], $this->input->post());
+			$sess_array = array('id_usuario' => $session['id_usuario'], 'id_perfil' => $session['id_perfil'], 'id_tipo_documento' => $this->input->post('id_tipo_documento'), 'id_ubicacion' => $this->input->post('id_ubicacion'), 'documento' => $this->input->post('documento'), 'nombre' => $this->input->post('nombre'), 'correo' => $this->input->post('correo'), 'telefono' => $this->input->post('telefono'), 'direccion' => $this->input->post('direccion'), 'activo' => $session['activo'], 'controlador' => $session['controlador']);
+			$this->session->set_userdata('peajetron', $sess_array);
+			$session = $this->session->userdata('peajetron');
+		}
+		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
+		$data['titulo'] = 'Usuario: '.$session['nombre'];
+
+		$documento = json_decode($this->documentos->listar(), true);
+		foreach($documento as $value)
+			$session['sdocumento'][$value['id_tipo_documento']] = $value['tipo_documento'];
+		$ubicacion = json_decode($this->ubicaciones->listar(), true);
+		foreach($ubicacion as $value)
+			$session['ubicacion'][$value['id_ubicacion']] = $value['ubicacion'];
+
+		$this->load->view('front/head.php', $data);
+		$this->load->view('front/header.php');
+		$this->load->view('menu', $menu);
+		$this->load->view('modificar_usuarios', $session);
 		$this->load->view('front/footer.php');
 	}
 
