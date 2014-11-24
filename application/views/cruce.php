@@ -6,7 +6,7 @@
 				<table>
 					<tbody>
 						<tr>
-							<td><div id="lectura"></div></td>
+							<td><div id="lectura" style="width: 300px; height: 300px;"></div></td>
 							<td>
 								
 <?php
