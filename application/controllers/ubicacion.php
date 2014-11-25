@@ -11,8 +11,8 @@ class Ubicacion extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
-	    $this->load->model('ubicaciones', '', TRUE);
+			$this->load->model('menu', '', TRUE);
+			$this->load->model('ubicaciones', '', TRUE);
 		}
 		else
 		{

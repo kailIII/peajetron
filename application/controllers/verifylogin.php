@@ -1,29 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class VerifyLogin extends CI_Controller {
-  function __construct()
-  {
-    parent::__construct();
-    $this->load->model('usuarios', '', TRUE);
-  }
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('usuarios', '', TRUE);
+	}
  
-  function index()
-  {
-    $this->form_validation->set_rules('usuario', 'Usuario', 'required|valid_email');
-    $this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|xss_clean|md5|callback_check_database');
+	function index()
+	{
+		$this->form_validation->set_rules('usuario', 'Usuario', 'required|valid_email');
+		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|xss_clean|md5|callback_check_database');
 
-    if($this->form_validation->run() == false)
-    {
-			$this->load->view('login');
-    }
-    else
-    {
-      redirect('inicio', 'refresh');
-    }
-  }
+		if($this->form_validation->run() == false)
+		{
+			$data['titulo'] = 'Pago de Peajes';
+			$this->load->view('front/head.php', $data);
+			$this->load->view('front/header.php');
+			$this->load->view('login.php');
+			$this->load->view('front/footer.php');
+		}
+		else
+		{
+			redirect('inicio', 'refresh');
+		}
+	}
 
-  function check_database($contrasena)
-  {
+	function check_database($contrasena)
+	{
 		try
 		{
 			$usuario = $this->input->post('usuario');
@@ -46,6 +50,6 @@ class VerifyLogin extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
-  }
+	}
 }
 ?>

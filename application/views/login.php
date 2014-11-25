@@ -10,7 +10,7 @@
 	?>
 <p>
 <?php
-	echo anchor('#', 'Olvidaste tu contraseña?');
+	echo anchor('login/olvido', 'Olvidaste tu contraseña?');
 ?>
 </p>
 

@@ -1,7 +1,4 @@
 <?php
-error_reporting(-1);
-ini_set('display_errors', 'On');
-
 Class Usuarios extends CI_Model
 {
 	function login($usuario, $contrasena)
@@ -71,6 +68,24 @@ Class Usuarios extends CI_Model
 		}
 	}
 
+	function cambiar($correo, $contrasena)
+	{
+		try
+		{
+			$this->db->trans_begin();
+			$this->db->set('contrasena', 'MD5(\''.$contrasena.'\')', false);
+			$this->db->where('correo', $correo);
+			$this->db->update('usuario');
+			$this->db->trans_commit();
+
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$this->db->trans_rollback();
+			return false;
+		}
+	}
 
 	function listar()
 	{
@@ -110,6 +125,27 @@ Class Usuarios extends CI_Model
 		try
 		{
 			return substr(str_shuffle('abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789|!#$%¡+()=[]{}_'), 0, 8);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function correo($correo)
+	{
+		try
+		{
+			$query = $this->db->get_where('usuario', array('correo' => $correo));
+			if($query->num_rows() == 1)
+			{
+				return json_encode(array("status" => true, "content" => $query->result()));
+			}
+			else
+			{
+				return json_encode(array("status" => false));
+			}
 		}
 		catch(Exception $e)
 		{		
