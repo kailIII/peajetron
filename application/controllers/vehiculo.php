@@ -11,10 +11,10 @@ class Vehiculo extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
-	    $this->load->model('vehiculos', '', TRUE);
+			$this->load->model('menu', '', TRUE);
+			$this->load->model('vehiculos', '', TRUE);
 			$this->load->model('usuarios', '', TRUE);
-	    $this->load->model('vehiculo_estado', '', TRUE);
+			$this->load->model('vehiculo_estado', '', TRUE);
 			$this->load->model('categorias', '', TRUE);
 		}
 		else
@@ -129,9 +129,9 @@ class Vehiculo extends CI_Controller {
 		try
 		{
 			$connector = new GridConnector($this->db, 'phpCI');
-			$connector->configure('vehiculo', 'id_vehiculo', 'id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion');
-			$connector->event->attach($this);
-			$connector->render();
+			$connector->render_sql("SELECT ('/peajetron/images/qr.gif^Codigo QR^javascript:mostrar(\"' || placa || '\")^_self') AS imagen, id_vehiculo, id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion
+                                                FROM vehiculo", "id_vehiculo", "imagen, id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion"
+                                              );
 		}
 		catch(Exception $e)
 		{		
