@@ -69,13 +69,13 @@ class Cobro extends CI_Controller {
 	function registrarQR()
 	{
 		$result = null;
-    $this->form_validation->set_rules('vcard', 'Vcard', 'required|xss_clean|callback_check_vcard');
-    $this->form_validation->set_rules('id_usuario', 'Usuario', 'required|xss_clean|integer');
-    $this->form_validation->set_rules('id_peaje', 'Peaje', 'required|xss_clean|integer');
+		$this->form_validation->set_rules('vcard', 'Vcard', 'required|xss_clean|callback_check_vcard');
+		$this->form_validation->set_rules('id_usuario', 'Usuario', 'required|xss_clean|integer');
+		$this->form_validation->set_rules('id_peaje', 'Peaje', 'required|xss_clean|integer');
 		if($this->form_validation->run() == true)
 			$result = $this->cobros->insertarQR($this->input->post());
 
-  	$session = $this->session->userdata('peajetron');
+		$session = $this->session->userdata('peajetron');
 		$session['mensaje'] = (is_null($result)) ? '' : (($result == 0) ? "Cruce registrado correctamente" : ("Error: ".$result));
 		$menu['menu'] = $this->menu->ensamblar($session['id_perfil']);
 		$data['titulo'] = 'Usuario: '.$session['nombre'];

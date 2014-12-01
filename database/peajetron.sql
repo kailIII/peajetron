@@ -209,6 +209,19 @@ ALTER SEQUENCE factura_valor_seq OWNED BY factura.valor;
 
 
 --
+-- Name: historialvehiculo; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+CREATE TABLE historialvehiculo (
+    "idVehiculo" integer NOT NULL,
+    "idPeaje" integer NOT NULL,
+    fecha timestamp with time zone
+);
+
+
+ALTER TABLE public.historialvehiculo OWNER TO peajetron;
+
+--
 -- Name: menu; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
 --
 
@@ -254,7 +267,8 @@ CREATE TABLE peaje (
     id_ruta integer NOT NULL,
     peaje character varying NOT NULL,
     latitud numeric NOT NULL,
-    longitud numeric NOT NULL
+    longitud numeric NOT NULL,
+    address character(50)
 );
 
 
@@ -434,6 +448,28 @@ ALTER SEQUENCE pqr_tipo_id_pqr_tipo_seq OWNED BY pqr_tipo.id_pqr_tipo;
 
 
 --
+-- Name: pqrs; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+CREATE TABLE pqrs (
+    identificador character varying(20),
+    usuarioingresa character varying(10),
+    usuarioresponde character varying(10),
+    fechaingreso date,
+    fechalectura date,
+    fecharespuesta date,
+    tiposolicitud character varying(10),
+    tematerminado bit(1),
+    ciudadsolicitud character varying(30),
+    mensajepeticion character varying(100),
+    mensajerespuesta character varying(100),
+    usuarioencargado character varying(10)
+);
+
+
+ALTER TABLE public.pqrs OWNER TO peajetron;
+
+--
 -- Name: ruta; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
 --
 
@@ -589,6 +625,18 @@ ALTER TABLE public.usuario_id_usuario_seq OWNER TO peajetron;
 
 ALTER SEQUENCE usuario_id_usuario_seq OWNED BY usuario.id_usuario;
 
+
+--
+-- Name: usuarioencargado; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+CREATE TABLE usuarioencargado (
+    identificador character varying(20) NOT NULL,
+    descripciondepartamento character varying(100)
+);
+
+
+ALTER TABLE public.usuarioencargado OWNER TO peajetron;
 
 --
 -- Name: vehiculo; Type: TABLE; Schema: public; Owner: peajetron; Tablespace: 
@@ -825,12 +873,10 @@ SELECT pg_catalog.setval('categoria_id_categoria_seq', 10, true);
 --
 
 COPY cobro (id_cobro, id_vehiculo, id_usuario_propietario, id_usuario_registra, id_peaje, valor, fecha_registro, fecha_pago) FROM stdin;
-1	1	3	2	1	0	2014-10-07 22:52:54.228146	\N
-2	1	3	2	1	0	2014-10-07 23:14:02.807217	\N
-3	1	3	2	1	0	2014-10-08 11:54:43.142125	\N
-4	1	3	2	1	0	2014-10-08 15:54:53.261258	\N
-5	1	3	2	1	0	2014-10-08 16:05:10.348839	\N
-7	1	3	2	1	1	2014-10-16 19:19:33.073525	\N
+17	1	3	7	2	7000	2014-11-10 20:24:44.758003	\N
+18	1	3	7	2	7000	2014-11-10 20:26:18.54415	\N
+19	1	3	7	3	9000	2014-11-10 20:32:47.555608	\N
+20	1	3	7	2	7000	2014-11-10 20:37:10.525288	\N
 \.
 
 
@@ -838,7 +884,7 @@ COPY cobro (id_cobro, id_vehiculo, id_usuario_propietario, id_usuario_registra, 
 -- Name: cobro_id_cobro_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('cobro_id_cobro_seq', 7, true);
+SELECT pg_catalog.setval('cobro_id_cobro_seq', 20, true);
 
 
 --
@@ -846,6 +892,10 @@ SELECT pg_catalog.setval('cobro_id_cobro_seq', 7, true);
 --
 
 COPY factura (codigofactura, "fechaCorte", "fechaPagado", valor, id_vehiculo, id_usuario) FROM stdin;
+1	2014-10-12 00:00:00	2014-05-12 00:00:00	20000	5	10
+2	2014-10-12 00:00:00	2014-04-12 00:00:00	15000	7	10
+3	2014-10-12 00:00:00	\N	30000	6	10
+4	2014-10-12 00:00:00	\N	25000	5	10
 \.
 
 
@@ -853,14 +903,22 @@ COPY factura (codigofactura, "fechaCorte", "fechaPagado", valor, id_vehiculo, id
 -- Name: factura_codigofactura_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('factura_codigofactura_seq', 1, false);
+SELECT pg_catalog.setval('factura_codigofactura_seq', 4, true);
 
 
 --
 -- Name: factura_valor_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('factura_valor_seq', 1, false);
+SELECT pg_catalog.setval('factura_valor_seq', 1, true);
+
+
+--
+-- Data for Name: historialvehiculo; Type: TABLE DATA; Schema: public; Owner: peajetron
+--
+
+COPY historialvehiculo ("idVehiculo", "idPeaje", fecha) FROM stdin;
+\.
 
 
 --
@@ -882,8 +940,6 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 10	2	Vehículo	index.php/vehiculo/crear	vehiculo.png	2
 12	3	Usuarios	index.php/usuario/listar	perfil.png	1
 13	3	Vehículos	index.php/vehiculo/listar	vehiculos.png	2
-17	4	PQRS	index.php/pqr	pqrs.png	3
-8	1	Mis PQRS	index.php/pqr/index	pqrs.png	3
 6	1	Mi perfil	index.php/usuario/index	perfil.png	1
 14	3	Pagos	index.php/cobro/listar	pagos.png	3
 25	15	Tarifas	gg	tarifas.png	6
@@ -896,6 +952,16 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 26	15	Tipo Documento	index.php/documento	documentos.png	7
 27	15	Ubicaciones	index.php/ubicacion	ubicaciones.png	8
 28	15	Estados Vehiculo	index.php/estado	estados.png	9
+29	\N	Consultas Web	a	inicio.png	1
+30	29	Historial de peajes cruzados	index.php/consultasWeb/historialPeajes		1
+32	29	Historial de pagos	index.php/consultasWeb/historialPagos		3
+31	29	Historial de peajes cruzados por fecha	index.php/consultasWeb/historialPeajesFecha		2
+33	29	Último peaje cruzado	index.php/consultasWeb/ultimoPeaje		4
+34	29	Valor último mes 	/index.php/consultasWeb/valorUltimoMes		5
+35	4	Historial Vehiculo	index.php/mapas	historialmapa.png	9
+8	4	Mis PQRS	index.php/pqr/gestorpqr/obtenerQueja	pqrs.png	3
+37	2	Registrar PQR	index.php/pqr/gestorpqr/registrarDatos		10
+17	4	PQRS	index.php/pqr/gestorpqr/obtenerQuejaInv	pqrs.png	3
 \.
 
 
@@ -903,17 +969,17 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 -- Name: menu_id_menu_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('menu_id_menu_seq', 28, true);
+SELECT pg_catalog.setval('menu_id_menu_seq', 37, true);
 
 
 --
 -- Data for Name: peaje; Type: TABLE DATA; Schema: public; Owner: peajetron
 --
 
-COPY peaje (id_peaje, id_ruta, peaje, latitud, longitud) FROM stdin;
-2	1	Chinauta	4.269469	-74.5
-3	1	Chusacá	4.537975	-74.271819
-1	1	Andes	4.830098	-74.032949
+COPY peaje (id_peaje, id_ruta, peaje, latitud, longitud, address) FROM stdin;
+2	1	Chinauta	4.269469	-74.5	\N
+3	1	Chusacá	4.537975	-74.271819	\N
+1	1	Andes	4.830098	-74.032949	\N
 \.
 
 
@@ -932,6 +998,7 @@ COPY perfil (id_perfil, perfil, controlador) FROM stdin;
 1	Administrador	\N
 2	Operario	cobro
 3	Propietario	\N
+4	Policia	
 \.
 
 
@@ -939,7 +1006,7 @@ COPY perfil (id_perfil, perfil, controlador) FROM stdin;
 -- Name: perfil_id_perfil_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('perfil_id_perfil_seq', 3, true);
+SELECT pg_catalog.setval('perfil_id_perfil_seq', 4, true);
 
 
 --
@@ -954,7 +1021,6 @@ COPY perfil_menu (id_perfil, id_menu) FROM stdin;
 1	5
 1	6
 1	7
-1	8
 1	9
 1	10
 1	11
@@ -980,6 +1046,19 @@ COPY perfil_menu (id_perfil, id_menu) FROM stdin;
 1	26
 1	27
 1	28
+3	29
+3	30
+3	31
+3	32
+3	33
+3	34
+1	35
+3	4
+3	8
+3	37
+3	2
+4	35
+4	4
 \.
 
 
@@ -1029,6 +1108,19 @@ SELECT pg_catalog.setval('pqr_tipo_id_pqr_tipo_seq', 1, false);
 
 
 --
+-- Data for Name: pqrs; Type: TABLE DATA; Schema: public; Owner: peajetron
+--
+
+COPY pqrs (identificador, usuarioingresa, usuarioresponde, fechaingreso, fechalectura, fecharespuesta, tiposolicitud, tematerminado, ciudadsolicitud, mensajepeticion, mensajerespuesta, usuarioencargado) FROM stdin;
+1231231231231	11	116	2014-11-10	2014-11-10	2014-11-10	queja	1	bogota	Mensaje de prueba de queja para code igniter en la aplicación de integración	Mensaje de respuesta a la primera queja de code igniter	116
+1231231231233	11	14	2014-11-10	2014-11-10	2014-11-10	solicitud	1	bogota	prueba prueba rpeuab	Respuesta a la solicitud	14
+1231231231232	11	116	2014-11-10	2014-11-10	1900-01-01	pregunta	0	bogota	Pregunta para code igniter del desarrollador		13
+1231231231234	11	13	2014-11-10	2014-11-10	2014-11-10	queja	1	bogota	Mensaje de prueba solicitud	Mensaje de respuesta a la primera queja de code igniter	13
+1231231231235	11	13	2014-11-10	2014-11-10	2014-11-10	queja	1	bogota	Me robaron el carro ayer	De malas como la priañana mueca	13
+\.
+
+
+--
 -- Data for Name: ruta; Type: TABLE DATA; Schema: public; Owner: peajetron
 --
 
@@ -1049,7 +1141,9 @@ SELECT pg_catalog.setval('ruta_id_ruta_seq', 1, true);
 --
 
 COPY tarifa (id_peaje, id_categoria, tarifa) FROM stdin;
-1	1	1
+1	1	5000
+2	1	7000
+3	1	9000
 \.
 
 
@@ -1092,9 +1186,19 @@ SELECT pg_catalog.setval('ubicacion_id_ubicacion_seq', 2, true);
 
 COPY usuario (id_usuario, id_perfil, id_tipo_documento, id_ubicacion, documento, nombre, correo, contrasena, telefono, direccion, activo, fecha_registro, fecha_modificacion) FROM stdin;
 2	2	1	2	123	Operario 1	o@peajetron.com	202cb962ac59075b964b07152d234b70 	123	Cra 1 2 3	t	2014-10-06 21:13:23.936951	2014-10-26 18:58:21.775838
-3	3	1	2	123	Propietario 1	p@peajetron.com	202cb962ac59075b964b07152d234b70 	123	Cra 1 2-3	t	2014-10-07 22:38:16.643962	2014-10-26 18:58:11.767688
 1	1	1	2	1234	root	a@peajetron.com	202cb962ac59075b964b07152d234b70 	123	Cra 1 2-3	t	2014-10-03 14:24:18.30237	2014-10-26 18:57:57.786137
 5	1	1	1	123	prueba 1	temp2010@msn.com	d5b1273e4dd58a2492d7732bac71f0dd 	123	cra 123	t	2014-11-02 09:24:11.882524	\N
+6	3	1	1	1073168673	Cristian Chaparro	cristianchaparroa@gmail.com	1234                             	3124388460	Calle #108	t	2014-11-04 23:35:22.436435	\N
+7	2	1	1	123456	Camilo Ospina	camilo.ospinaa@gmail.com	1234                             	123123456	cll 2234	t	2014-11-04 23:38:58.421887	\N
+8	1	1	1	1026564980	FabianDC	fayan8@hotmail.com	123                              	3123856235	calle falsa 123	t	2014-11-05 00:03:43.926847	\N
+9	3	1	1	1026564988	Fayandc	fayandcm@hotmail.com	123                              	3123890098	cra falsa 321	t	2014-11-05 00:08:10.119059	\N
+116	1	1	1	1018456029	Diego Sierra	sierralean38@gmail.com	123                              	4287105	carrera 74 a numero 56a 39	t	2014-11-10 17:38:42.486428	2014-11-10 17:38:42.486428
+11	3	1	1	92120968922	Diego Sierra Proper	sierralean38@hotmail.com	123                              	4287105	cra557 nun4 	t	2014-11-10 17:56:27.469477	2014-11-10 17:56:27.469477
+12	4	1	1	95586623	José David Moreno	josdavidmo@gmail.com	123                              	4285659	sdfsdfsdfsdfsd	t	2014-11-10 18:39:26.66447	2014-11-10 18:39:26.66447
+13	1	1	1	1018456105	Diego Sierra Sistemas	sierralean38@yahoo.com	123                              	42871000	sefgwefwe	t	2014-11-10 18:42:41.048307	2014-11-10 18:42:41.048307
+14	1	1	1	456029145	Diego Sierra Gerencia\n	sierralean38@outlook.com	123                              	14234569	dfjkwndfuiwneui	t	2014-11-10 18:45:56.07526	2014-11-10 18:45:56.07526
+3	3	1	2	123	Propietario 1	peajetron@peajetron.com	1234                             	3115216023	Cra 1 2-3	t	2014-10-07 22:38:16.643962	2014-10-26 18:58:11.767688
+10	3	1	1	1014239597	cesar Hernandez	ceimox19@gmail.co	1234                             	3115216022	av cra 91 n131	t	2014-11-05 04:35:03.277894	\N
 \.
 
 
@@ -1102,7 +1206,18 @@ COPY usuario (id_usuario, id_perfil, id_tipo_documento, id_ubicacion, documento,
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('usuario_id_usuario_seq', 5, true);
+SELECT pg_catalog.setval('usuario_id_usuario_seq', 14, true);
+
+
+--
+-- Data for Name: usuarioencargado; Type: TABLE DATA; Schema: public; Owner: peajetron
+--
+
+COPY usuarioencargado (identificador, descripciondepartamento) FROM stdin;
+116	ingreso
+13	SISTEMAS
+14	GERENCIA
+\.
 
 
 --
@@ -1110,9 +1225,15 @@ SELECT pg_catalog.setval('usuario_id_usuario_seq', 5, true);
 --
 
 COPY vehiculo (id_vehiculo, id_usuario, id_estado_vehiculo, id_categoria, placa, marca, color, modelo, fecha_registro, fecha_modificacion) FROM stdin;
-1	3	1	1	AAA111	Marca 	Color	0	2014-10-07 22:40:52.279203	\N
 2	2	1	1	AAA112	a	a	0	2014-11-02 12:24:01.582759	\N
 3	5	1	1	AAA113	\N	\N	\N	2014-11-02 12:27:36.317858	\N
+4	9	1	1	BZZ561	Reanult	gris pluton	2008	2014-11-05 00:21:30.958202	\N
+5	10	1	1	ABC123	BMW	negro	2011	2014-11-05 04:36:33.056121	\N
+6	10	1	1	XXY234	BMW	blanco	1992	2014-11-05 06:20:21.931992	\N
+7	10	1	1	PAR232	AUDI	negro	1999	2014-11-05 06:21:29.230422	\N
+8	6	1	1	RSQ912	AUDI	GRIS	2014	2014-11-10 03:31:18.948417	\N
+9	6	1	1	TML456	MASERATI	BLANCO	2014	2014-11-10 03:35:43.578008	\N
+1	3	3	1	AAA111	Marca 	Color	0	2014-10-07 22:40:52.279203	\N
 \.
 
 
@@ -1139,7 +1260,7 @@ SELECT pg_catalog.setval('vehiculo_estado_id_vehiculo_estado_seq', 4, true);
 -- Name: vehiculo_id_vehiculo_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('vehiculo_id_vehiculo_seq', 3, true);
+SELECT pg_catalog.setval('vehiculo_id_vehiculo_seq', 19, true);
 
 
 --
@@ -1188,6 +1309,14 @@ ALTER TABLE ONLY factura
 
 ALTER TABLE ONLY perfil
     ADD CONSTRAINT firstkey PRIMARY KEY (id_perfil);
+
+
+--
+-- Name: historial_vehiculo_pkey; Type: CONSTRAINT; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+ALTER TABLE ONLY historialvehiculo
+    ADD CONSTRAINT historial_vehiculo_pkey PRIMARY KEY ("idVehiculo", "idPeaje");
 
 
 --
@@ -1255,6 +1384,14 @@ ALTER TABLE ONLY pqr_tipo
 
 
 --
+-- Name: pqrs_identificador_usuarioingresa_tiposolicitud_key; Type: CONSTRAINT; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+ALTER TABLE ONLY pqrs
+    ADD CONSTRAINT pqrs_identificador_usuarioingresa_tiposolicitud_key UNIQUE (identificador, usuarioingresa, tiposolicitud);
+
+
+--
 -- Name: ruta_pkey; Type: CONSTRAINT; Schema: public; Owner: peajetron; Tablespace: 
 --
 
@@ -1316,6 +1453,14 @@ ALTER TABLE ONLY tarifa
 
 ALTER TABLE ONLY usuario
     ADD CONSTRAINT usuario_pkey PRIMARY KEY (id_usuario);
+
+
+--
+-- Name: usuarioencargado_identificador_key; Type: CONSTRAINT; Schema: public; Owner: peajetron; Tablespace: 
+--
+
+ALTER TABLE ONLY usuarioencargado
+    ADD CONSTRAINT usuarioencargado_identificador_key UNIQUE (identificador);
 
 
 --
@@ -1410,6 +1555,22 @@ ALTER TABLE ONLY factura
 
 ALTER TABLE ONLY factura
     ADD CONSTRAINT fk_id_vehiculo FOREIGN KEY (id_vehiculo) REFERENCES vehiculo(id_vehiculo);
+
+
+--
+-- Name: llaveIdPeaje; Type: FK CONSTRAINT; Schema: public; Owner: peajetron
+--
+
+ALTER TABLE ONLY historialvehiculo
+    ADD CONSTRAINT "llaveIdPeaje" FOREIGN KEY ("idPeaje") REFERENCES peaje(id_peaje);
+
+
+--
+-- Name: llaveIdVehiculo; Type: FK CONSTRAINT; Schema: public; Owner: peajetron
+--
+
+ALTER TABLE ONLY historialvehiculo
+    ADD CONSTRAINT "llaveIdVehiculo" FOREIGN KEY ("idVehiculo") REFERENCES vehiculo(id_vehiculo);
 
 
 --
