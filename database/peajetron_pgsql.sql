@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -865,7 +866,7 @@ COPY categoria (id_categoria, categoria, descripcion) FROM stdin;
 -- Name: categoria_id_categoria_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('categoria_id_categoria_seq', 10, true);
+SELECT pg_catalog.setval('categoria_id_categoria_seq', 12, true);
 
 
 --
@@ -877,6 +878,7 @@ COPY cobro (id_cobro, id_vehiculo, id_usuario_propietario, id_usuario_registra, 
 18	1	3	7	2	7000	2014-11-10 20:26:18.54415	\N
 19	1	3	7	3	9000	2014-11-10 20:32:47.555608	\N
 20	1	3	7	2	7000	2014-11-10 20:37:10.525288	\N
+21	1	3	1	1	5000	2014-11-28 14:56:53.258346	\N
 \.
 
 
@@ -884,7 +886,7 @@ COPY cobro (id_cobro, id_vehiculo, id_usuario_propietario, id_usuario_registra, 
 -- Name: cobro_id_cobro_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('cobro_id_cobro_seq', 20, true);
+SELECT pg_catalog.setval('cobro_id_cobro_seq', 21, true);
 
 
 --
@@ -926,8 +928,6 @@ COPY historialvehiculo ("idVehiculo", "idPeaje", fecha) FROM stdin;
 --
 
 COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
-18	4	Vehículo	index.php/vehiculo/index	vehiculo.png	1
-15	3	Panel de Control	b	panel.png	4
 1	\N	Inicio	a	inicio.png	1
 11	2	Cruze	index.php/cobro	cruze.png	3
 2	\N	Crear	a	crear.png	2
@@ -935,19 +935,16 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 4	\N	Consultar	a	consultar.png	4
 5	\N	Auditor	a	auditor.png	5
 16	4	Facturas	a	factura.png	2
-7	1	Mis vehículos	index.php/vehiculo	vehiculos.png	2
 9	2	Propietario	index.php/usuario/crear	perfil.png	1
 10	2	Vehículo	index.php/vehiculo/crear	vehiculo.png	2
 12	3	Usuarios	index.php/usuario/listar	perfil.png	1
 13	3	Vehículos	index.php/vehiculo/listar	vehiculos.png	2
-6	1	Mi perfil	index.php/usuario/index	perfil.png	1
 14	3	Pagos	index.php/cobro/listar	pagos.png	3
 25	15	Tarifas	gg	tarifas.png	6
 19	15	Categorias	index.php/categoria	categorias.png	0
 20	15	Menu	index.php/menus	menus.png	1
 21	15	Peajes	index.php/peaje	peajes.png	2
 22	15	Perfiles	index.php/perfil	perfiles.png	3
-23	15	Permisos	ee	permisos.png	4
 24	15	Rutas	index.php/ruta	rutas.png	5
 26	15	Tipo Documento	index.php/documento	documentos.png	7
 27	15	Ubicaciones	index.php/ubicacion	ubicaciones.png	8
@@ -957,11 +954,17 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 32	29	Historial de pagos	index.php/consultasWeb/historialPagos		3
 31	29	Historial de peajes cruzados por fecha	index.php/consultasWeb/historialPeajesFecha		2
 33	29	Último peaje cruzado	index.php/consultasWeb/ultimoPeaje		4
-34	29	Valor último mes 	/index.php/consultasWeb/valorUltimoMes		5
 35	4	Historial Vehiculo	index.php/mapas	historialmapa.png	9
 8	4	Mis PQRS	index.php/pqr/gestorpqr/obtenerQueja	pqrs.png	3
 37	2	Registrar PQR	index.php/pqr/gestorpqr/registrarDatos		10
 17	4	PQRS	index.php/pqr/gestorpqr/obtenerQuejaInv	pqrs.png	3
+34	29	Valor último mes	/index.php/consultasWeb/valorUltimoMes		5
+23	15	Permisos	index.php/permisos/index	permisos.png	4
+6	1	Mi perfil	index.php/usuario/modificar	perfil.png	1
+7	1	Mis vehículos	index.php/vehiculo/index	vehiculos.png	2
+18	4	Vehículo	index.php/vehiculo	vehiculo.png	1
+39	24	Nombre 1	index.php/aa	icono.png	0
+15	3	Panel de Control	b	panel.png	4
 \.
 
 
@@ -969,7 +972,7 @@ COPY menu (id_menu, id_menu_padre, menu, url, icono, orden) FROM stdin;
 -- Name: menu_id_menu_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('menu_id_menu_seq', 37, true);
+SELECT pg_catalog.setval('menu_id_menu_seq', 40, true);
 
 
 --
@@ -987,7 +990,7 @@ COPY peaje (id_peaje, id_ruta, peaje, latitud, longitud, address) FROM stdin;
 -- Name: peaje_id_peaje_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('peaje_id_peaje_seq', 3, true);
+SELECT pg_catalog.setval('peaje_id_peaje_seq', 5, true);
 
 
 --
@@ -1006,7 +1009,7 @@ COPY perfil (id_perfil, perfil, controlador) FROM stdin;
 -- Name: perfil_id_perfil_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('perfil_id_perfil_seq', 4, true);
+SELECT pg_catalog.setval('perfil_id_perfil_seq', 6, true);
 
 
 --
@@ -1021,6 +1024,7 @@ COPY perfil_menu (id_perfil, id_menu) FROM stdin;
 1	5
 1	6
 1	7
+1	8
 1	9
 1	10
 1	11
@@ -1031,11 +1035,6 @@ COPY perfil_menu (id_perfil, id_menu) FROM stdin;
 1	16
 1	17
 1	18
-2	2
-2	11
-2	1
-2	6
-2	5
 1	19
 1	20
 1	21
@@ -1046,19 +1045,14 @@ COPY perfil_menu (id_perfil, id_menu) FROM stdin;
 1	26
 1	27
 1	28
-3	29
-3	30
-3	31
-3	32
-3	33
-3	34
+1	29
+1	30
+1	31
+1	32
+1	33
+1	34
 1	35
-3	4
-3	8
-3	37
-3	2
-4	35
-4	4
+1	37
 \.
 
 
@@ -1133,7 +1127,7 @@ COPY ruta (id_ruta, ruta) FROM stdin;
 -- Name: ruta_id_ruta_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('ruta_id_ruta_seq', 1, true);
+SELECT pg_catalog.setval('ruta_id_ruta_seq', 3, true);
 
 
 --
@@ -1160,7 +1154,7 @@ COPY tipo_documento (id_tipo_documento, tipo_documento) FROM stdin;
 -- Name: tipo_documento_id_tipo_documento_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('tipo_documento_id_tipo_documento_seq', 1, true);
+SELECT pg_catalog.setval('tipo_documento_id_tipo_documento_seq', 3, true);
 
 
 --
@@ -1177,7 +1171,7 @@ COPY ubicacion (id_ubicacion, id_ubicacion_padre, ubicacion) FROM stdin;
 -- Name: ubicacion_id_ubicacion_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('ubicacion_id_ubicacion_seq', 2, true);
+SELECT pg_catalog.setval('ubicacion_id_ubicacion_seq', 5, true);
 
 
 --
@@ -1187,18 +1181,18 @@ SELECT pg_catalog.setval('ubicacion_id_ubicacion_seq', 2, true);
 COPY usuario (id_usuario, id_perfil, id_tipo_documento, id_ubicacion, documento, nombre, correo, contrasena, telefono, direccion, activo, fecha_registro, fecha_modificacion) FROM stdin;
 2	2	1	2	123	Operario 1	o@peajetron.com	202cb962ac59075b964b07152d234b70 	123	Cra 1 2 3	t	2014-10-06 21:13:23.936951	2014-10-26 18:58:21.775838
 1	1	1	2	1234	root	a@peajetron.com	202cb962ac59075b964b07152d234b70 	123	Cra 1 2-3	t	2014-10-03 14:24:18.30237	2014-10-26 18:57:57.786137
-5	1	1	1	123	prueba 1	temp2010@msn.com	d5b1273e4dd58a2492d7732bac71f0dd 	123	cra 123	t	2014-11-02 09:24:11.882524	\N
-6	3	1	1	1073168673	Cristian Chaparro	cristianchaparroa@gmail.com	1234                             	3124388460	Calle #108	t	2014-11-04 23:35:22.436435	\N
-7	2	1	1	123456	Camilo Ospina	camilo.ospinaa@gmail.com	1234                             	123123456	cll 2234	t	2014-11-04 23:38:58.421887	\N
-8	1	1	1	1026564980	FabianDC	fayan8@hotmail.com	123                              	3123856235	calle falsa 123	t	2014-11-05 00:03:43.926847	\N
-9	3	1	1	1026564988	Fayandc	fayandcm@hotmail.com	123                              	3123890098	cra falsa 321	t	2014-11-05 00:08:10.119059	\N
-116	1	1	1	1018456029	Diego Sierra	sierralean38@gmail.com	123                              	4287105	carrera 74 a numero 56a 39	t	2014-11-10 17:38:42.486428	2014-11-10 17:38:42.486428
-11	3	1	1	92120968922	Diego Sierra Proper	sierralean38@hotmail.com	123                              	4287105	cra557 nun4 	t	2014-11-10 17:56:27.469477	2014-11-10 17:56:27.469477
-12	4	1	1	95586623	José David Moreno	josdavidmo@gmail.com	123                              	4285659	sdfsdfsdfsdfsd	t	2014-11-10 18:39:26.66447	2014-11-10 18:39:26.66447
-13	1	1	1	1018456105	Diego Sierra Sistemas	sierralean38@yahoo.com	123                              	42871000	sefgwefwe	t	2014-11-10 18:42:41.048307	2014-11-10 18:42:41.048307
-14	1	1	1	456029145	Diego Sierra Gerencia\n	sierralean38@outlook.com	123                              	14234569	dfjkwndfuiwneui	t	2014-11-10 18:45:56.07526	2014-11-10 18:45:56.07526
-3	3	1	2	123	Propietario 1	peajetron@peajetron.com	1234                             	3115216023	Cra 1 2-3	t	2014-10-07 22:38:16.643962	2014-10-26 18:58:11.767688
-10	3	1	1	1014239597	cesar Hernandez	ceimox19@gmail.co	1234                             	3115216022	av cra 91 n131	t	2014-11-05 04:35:03.277894	\N
+6	3	1	1	1073168673	Cristian Chaparro	cristianchaparroa@gmail.com	202cb962ac59075b964b07152d234b70 	3124388460	Calle #108	t	2014-11-04 23:35:22.436435	\N
+7	2	1	1	123456	Camilo Ospina	camilo.ospinaa@gmail.com	202cb962ac59075b964b07152d234b70 	123123456	cll 2234	t	2014-11-04 23:38:58.421887	\N
+8	1	1	1	1026564980	FabianDC	fayan8@hotmail.com	202cb962ac59075b964b07152d234b70 	3123856235	calle falsa 123	t	2014-11-05 00:03:43.926847	\N
+9	3	1	1	1026564988	Fayandc	fayandcm@hotmail.com	202cb962ac59075b964b07152d234b70 	3123890098	cra falsa 321	t	2014-11-05 00:08:10.119059	\N
+116	1	1	1	1018456029	Diego Sierra	sierralean38@gmail.com	202cb962ac59075b964b07152d234b70 	4287105	carrera 74 a numero 56a 39	t	2014-11-10 17:38:42.486428	2014-11-10 17:38:42.486428
+11	3	1	1	92120968922	Diego Sierra Proper	sierralean38@hotmail.com	202cb962ac59075b964b07152d234b70 	4287105	cra557 nun4 	t	2014-11-10 17:56:27.469477	2014-11-10 17:56:27.469477
+12	4	1	1	95586623	José David Moreno	josdavidmo@gmail.com	202cb962ac59075b964b07152d234b70 	4285659	sdfsdfsdfsdfsd	t	2014-11-10 18:39:26.66447	2014-11-10 18:39:26.66447
+13	1	1	1	1018456105	Diego Sierra Sistemas	sierralean38@yahoo.com	202cb962ac59075b964b07152d234b70 	42871000	sefgwefwe	t	2014-11-10 18:42:41.048307	2014-11-10 18:42:41.048307
+3	3	1	2	123	Propietario 1	peajetron@peajetron.com	202cb962ac59075b964b07152d234b70 	3115216023	Cra 1 2-3	t	2014-10-07 22:38:16.643962	2014-10-26 18:58:11.767688
+10	3	1	1	1014239597	cesar Hernandez	ceimox19@gmail.co	202cb962ac59075b964b07152d234b70 	3115216022	av cra 91 n131	t	2014-11-05 04:35:03.277894	\N
+5	1	1	1	123	prueba 1	temp2010@msn.com	a9fbe5dbdea40ebc6d6999d1a6bf2cc3 	123	cra 123	t	2014-11-02 09:24:11.882524	\N
+14	1	1	1	456029145	Diego Sierra Gerencia	sierralean38@outlook.com	202cb962ac59075b964b07152d234b70 	14234569	dfjkwndfuiwneui	t	2014-11-10 18:45:56.07526	2014-11-10 18:45:56.07526
 \.
 
 
@@ -1206,7 +1200,7 @@ COPY usuario (id_usuario, id_perfil, id_tipo_documento, id_ubicacion, documento,
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('usuario_id_usuario_seq', 14, true);
+SELECT pg_catalog.setval('usuario_id_usuario_seq', 15, true);
 
 
 --
@@ -1253,14 +1247,14 @@ COPY vehiculo_estado (id_vehiculo_estado, vehiculo_estado) FROM stdin;
 -- Name: vehiculo_estado_id_vehiculo_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('vehiculo_estado_id_vehiculo_estado_seq', 4, true);
+SELECT pg_catalog.setval('vehiculo_estado_id_vehiculo_estado_seq', 6, true);
 
 
 --
 -- Name: vehiculo_id_vehiculo_seq; Type: SEQUENCE SET; Schema: public; Owner: peajetron
 --
 
-SELECT pg_catalog.setval('vehiculo_id_vehiculo_seq', 19, true);
+SELECT pg_catalog.setval('vehiculo_id_vehiculo_seq', 20, true);
 
 
 --

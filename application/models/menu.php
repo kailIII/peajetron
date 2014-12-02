@@ -50,7 +50,7 @@ Class Menu extends CI_Model
 			return $menu;
 		}
 		catch(Exception $e)
-		{		
+		{
 			log_message('error', $e->getMessage());
 			return false;
 		}
@@ -65,6 +65,45 @@ Class Menu extends CI_Model
 				$combo[] = array("value" => $row->id_menu, "text" => $row->menu);
 
 			return json_encode(array("options" => $combo));
+		}
+		catch(Exception $e)
+		{
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function listar()
+	{
+		try
+		{
+			$this->db->order_by('menu', 'asc');
+			$query = $this->db->get('menu');
+			foreach($query->result() as $row)
+				$menu[$row->id_menu] = $row->menu;
+
+			return json_encode(array("status" => true, "content" => $menu));
+		}
+		catch(Exception $e)
+		{
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function buscar($menu)
+	{
+		try
+		{
+			$query = $this->db->get_where('menu', array('id_menu_padre' => $menu));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 		catch(Exception $e)
 		{		

@@ -154,6 +154,69 @@ Class Usuarios extends CI_Model
 		}
 	}
 
+	function buscarPerfil($perfil)
+	{
+		try
+		{
+			$query = $this->db->get_where('usuario', array('id_perfil' => $perfil));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function buscarDocumento($documento)
+	{
+		try
+		{
+			$query = $this->db->get_where('usuario', array('id_tipo_documento' => $documento));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function buscarUbicacion($ubicacion)
+	{
+		try
+		{
+			$query = $this->db->get_where('usuario', array('id_ubicacion' => $ubicacion));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
 	/**
 	 * Función que se encarga de obtener toda la información de un  usuario
 	 * en especifico.

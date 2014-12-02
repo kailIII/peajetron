@@ -27,6 +27,48 @@ Class Vehiculos extends CI_Model
 		}
 	}
 
+	function buscarCategoria($categoria)
+	{
+		try
+		{
+			$query = $this->db->get_where('vehiculo', array('id_categoria' => $categoria));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+	function buscarEstado($estado)
+	{
+		try
+		{
+			$query = $this->db->get_where('vehiculo', array('id_estado_vehiculo' => $estado));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
 	function insertar($datos)
 	{
 		try

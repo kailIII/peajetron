@@ -13,6 +13,7 @@ class Ubicacion extends CI_Controller {
 		{
 			$this->load->model('menu', '', TRUE);
 			$this->load->model('ubicaciones', '', TRUE);
+			$this->load->model('usuarios', '', TRUE);
 		}
 		else
 		{
@@ -41,6 +42,8 @@ class Ubicacion extends CI_Controller {
 			$connector = new GridConnector($this->db, 'phpCI');
 			$connector->configure('ubicacion', 'id_ubicacion', 'id_ubicacion_padre,ubicacion');
 			$connector->event->attach($this);
+			$connector->event->attach('beforeInsert', 'insertar');
+			$connector->event->attach('beforeDelete', 'borrar');
 			$connector->render();
 		}
 		catch(Exception $e)
@@ -48,6 +51,59 @@ class Ubicacion extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
+	}
+
+	function permitir($ubicacion)
+	{
+		try
+		{
+			$ubica = $this->ubicaciones->buscar($ubicacion);
+			$usuario = $this->usuarios->buscarUbicacion($ubicacion);
+			if($ubica && $usuario)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+
+}
+
+function insertar($action)
+{
+	try
+	{
+		$action->set_value('id_ubicacion_padre', Null);
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
+	}
+}
+
+function borrar($action)
+{
+	try
+	{
+		$c = new Ubicacion;
+		$result = $c->permitir($action->get_value('id_ubicacion'));
+	
+		if(!$result)
+			$action->invalid();
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 require_once('application/third_party/phpqrcode/qrlib.php');
 
-$vcard = "BEGIN:VCARD%0AVERSION:4.0%0AN:".$_GET['placa']."%0ANOTE:".hash("sha256", $_GET['placa'])."%0AREV:".date("Ymd\THis")."%0AEND:VCARD";
-QRcode::png($vcard);
+$vcard = "BEGIN:VCARD\nVERSION:4.0\nN:".$_GET['placa']."\nNOTE:".hash("sha256", $_GET['placa'])."\nREV:".date("Ymd\THis")."\nEND:VCARD";
+QRcode::png($vcard, null, QR_ECLEVEL_L, 3);
 ?>

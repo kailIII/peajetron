@@ -11,7 +11,8 @@ class Ruta extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
+			$this->load->model('menu', '', TRUE);
+			$this->load->model('peajes', '', TRUE);
 		}
 		else
 		{
@@ -38,6 +39,7 @@ class Ruta extends CI_Controller {
 			$connector = new GridConnector($this->db, 'phpCI');
 			$connector->configure('ruta', 'id_ruta', 'ruta');
 			$connector->event->attach($this);
+			$connector->event->attach('beforeDelete', 'borrar');
 			$connector->render();
 		}
 		catch(Exception $e)
@@ -45,6 +47,36 @@ class Ruta extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
+	}
+
+	function permitir($ruta)
+	{
+		try
+		{
+			return $this->peajes->buscar($ruta);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+}
+
+function borrar($action)
+{
+	try
+	{
+		$c = new Ruta;
+		$result = $c->permitir($action->get_value('id_ruta'));
+
+		if(!$result)
+			$action->invalid();
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
 	}
 }
 ?>

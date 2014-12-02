@@ -38,7 +38,7 @@ $banner_image = array('src' => 'images/banner.png','alt' => 'banner', 'width' =>
 				      </button>
 				     <div id="menuObj"></div>
 				    </div>
-
+				<?php if($titulo != "Pago de Peajes") {?>
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					  
@@ -52,7 +52,9 @@ $banner_image = array('src' => 'images/banner.png','alt' => 'banner', 'width' =>
 				        </li>
 				      </ul>
 				    </div><!-- /.navbar-collapse -->
+				<?php } ?>
 				  </div><!-- /.container-fluid -->
+					
 				</nav>
 		</div>
 

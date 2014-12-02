@@ -33,5 +33,26 @@ Class Ubicaciones extends CI_Model
 			return false;
 		}
 	}
+
+	function buscar($ubicacion)
+	{
+		try
+		{
+			$query = $this->db->get_where('ubicacion', array('id_ubicacion_padre' => $ubicacion));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
 }
 ?>

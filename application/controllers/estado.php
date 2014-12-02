@@ -11,7 +11,8 @@ class Estado extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
+			$this->load->model('menu', '', TRUE);
+			$this->load->model('vehiculos', '', TRUE);
 		}
 		else
 		{
@@ -38,6 +39,7 @@ class Estado extends CI_Controller {
 			$connector = new GridConnector($this->db, 'phpCI');
 			$connector->configure('vehiculo_estado', 'id_vehiculo_estado', 'vehiculo_estado');
 			$connector->event->attach($this);
+			$connector->event->attach('beforeDelete', 'borrar');
 			$connector->render();
 		}
 		catch(Exception $e)
@@ -45,6 +47,36 @@ class Estado extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
+	}
+
+	function permitir($estado)
+	{
+		try
+		{
+			return $this->vehiculos->buscarEstado($estado);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+}
+
+function borrar($action)
+{
+	try
+	{
+		$c = new Estado;
+		$result = $c->permitir($action->get_value('id_vehiculo_estado'));
+	
+		if(!$result)
+			$action->invalid();
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
 	}
 }
 ?>

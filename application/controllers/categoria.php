@@ -11,8 +11,9 @@ class Categoria extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
+			$this->load->model('menu', '', TRUE);
 			$this->load->model('categorias', '', TRUE);
+			$this->load->model('vehiculos', '', TRUE);
 		}
 		else
 		{
@@ -39,6 +40,7 @@ class Categoria extends CI_Controller {
 			$connector = new GridConnector($this->db, 'phpCI');
 			$connector->configure('categoria', 'id_categoria', 'categoria,descripcion');
 			$connector->event->attach($this);
+			$connector->event->attach('beforeDelete', 'borrar');
 			$connector->render();
 		}
 		catch(Exception $e)
@@ -46,6 +48,36 @@ class Categoria extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
+	}
+
+	function permitir($categoria)
+	{
+		try
+		{
+			return $this->vehiculos->buscarCategoria($categoria);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+}
+
+function borrar($action)
+{
+	try
+	{
+		$c = new Categoria;
+		$result = $c->permitir($action->get_value('id_categoria'));
+	
+		if(!$result)
+			$action->invalid();
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
 	}
 }
 ?>

@@ -93,6 +93,26 @@ Class Cobros extends CI_Model
 		}
 	}
 
+	function buscar($peaje)
+	{
+		try
+		{
+			$query = $this->db->get_where('cobro', array('id_peaje' => $peaje));
+			if($query->num_rows() > 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
 
 	/**
 	 * Obtiene la lista de peajes por los cuales ha cruzado

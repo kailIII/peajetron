@@ -11,7 +11,8 @@ class Documento extends CI_Controller {
 		parent::__construct();
 		if($this->session->userdata('peajetron'))
 		{
-	    $this->load->model('menu', '', TRUE);
+			$this->load->model('menu', '', TRUE);
+			$this->load->model('usuarios', '', TRUE);
 		}
 		else
 		{
@@ -38,6 +39,7 @@ class Documento extends CI_Controller {
 			$connector = new GridConnector($this->db, 'phpCI');
 			$connector->configure('tipo_documento', 'id_tipo_documento', 'tipo_documento');
 			$connector->event->attach($this);
+			$connector->event->attach('beforeDelete', 'borrar');
 			$connector->render();
 		}
 		catch(Exception $e)
@@ -45,6 +47,36 @@ class Documento extends CI_Controller {
 			log_message('error', $e->getMessage());
 			return false;
 		}
+	}
+
+	function permitir($documento)
+	{
+		try
+		{
+			return $this->usuarios->buscarDocumento($documento);
+		}
+		catch(Exception $e)
+		{		
+			log_message('error', $e->getMessage());
+			return false;
+		}
+	}
+}
+
+function borrar($action)
+{
+	try
+	{
+		$c = new Documento;
+		$result = $c->permitir($action->get_value('id_tipo_documento'));
+
+		if(!$result)
+			$action->invalid();
+	}
+	catch(Exception $e)
+	{		
+		log_message('error', $e->getMessage());
+		return false;
 	}
 }
 ?>
