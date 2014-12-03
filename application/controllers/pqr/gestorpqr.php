@@ -153,9 +153,13 @@ class GestorPQR extends CI_Controller {
 		 * Controlador para remitir la queja a otro usuario invias o departamento
 		 * */
 	public function remitirQueja($radicado){
+		$this->gestorCorreo=new GestorCorreo();
+
 		$datos['usuarioencargado']=$this->input->post('encargado');
 		$error = $this->Modelo_pqr->responderQuejaInv($datos,$radicado);
 		$dato = array('valor'=>'Queja remitida correctamente');
+		$this->gestorCorreo->enviarPQRAdmin($queja);
+
 		$this->cargarEncabezado();
 		$this->load->view('pqr/formvalidadoinvias',$dato);
 		$this->cargarPie();
@@ -191,6 +195,7 @@ class GestorPQR extends CI_Controller {
 					$dato = array('valor'=>'Creación exitosa. Su número de radicado es: '.$datos['identificador']);
 					$queja = $this->Modelo_pqr->obtenerQueja($datos['identificador'],$session['id_usuario']);
 					$this->gestorCorreo->enviarPQR($queja);
+					$this->gestorCorreo->enviarPQRAdmin($queja);
 					$this->cargarEncabezado();
 					$this->load->view('pqr/formvalidado',$dato);
 					$this->cargarPie();

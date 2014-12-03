@@ -1,6 +1,20 @@
+			
+			<!-- bootbox code -->
+		    <script src="https://github.com/makeusabrew/bootbox/releases/download/v4.3.0/bootbox.min.js"></script>
+		    <script>
+		    	function ayudaF(){	       
+		        	bootbox.alert("¿Cómo leer un código QR?\n El sistema genera una opción para dar permisos al uso de la cámara y micrófono del equipo.  Usted debe dar clic en permitir, en caso de que no aparezca el mensaje, asegúrese de que el navegador le dé permiso de acceso a la cámara para la página. Luego de dar permisos aparecerá la interfaz de la cámara para que usted lea su código QR poniéndolo frente al dispositivo. En caso de que la lectura falle  aparecerá el mensaje “Formato de vcard incorrecto”. Luego podrá intentar nuevamente dando clic en Registrar QR o seleccionando la opción Registrar Placa, para tomarle foto a  la placa. En caso de seleccionar la segunda opción puede acceder al botón de ayuda para saber el procedimiento que debe seguir en ese caso.");
+		    	}
+		    </script>
+			
+		
+
 			<div id="botones">
 				<input type="button" value="Registrar QR" onclick="$('#cruceForm').submit();">
 				<input type="button" value="Registrar Placa" onclick="window.location='http://104.131.178.140/peajetron/index.php/fotografia/tomarFoto'">
+				<button onclick="ayudaF()">
+					<img src="http://www.iconarchive.com/download/i31936/thiago-silva/palm/Help.ico" alt="Help" height="42" width="42" id="ayuda">
+				</button>
 			</div>
 			<div id="dhtmlx">
 				<table>

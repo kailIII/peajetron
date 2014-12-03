@@ -105,7 +105,7 @@ class Usuario extends CI_Controller {
 				$this->email->subject('Registro Usuario');
 				$this->email->message($mensaje);
 
-				$this->email->send();
+//				$this->email->send();
 				redirect('usuario/crear', 'refresh');
 			}
 		}

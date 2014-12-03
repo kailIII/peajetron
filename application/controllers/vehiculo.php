@@ -93,7 +93,7 @@ class Vehiculo extends CI_Controller {
 				$this->email->subject('Registro Vehiculo');
 				$this->email->message($mensaje);
 
-				$this->email->send();
+//				$this->email->send();
 				redirect('vehiculo/crear', 'refresh');
 			}
 		}

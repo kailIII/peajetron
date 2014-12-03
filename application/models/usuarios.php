@@ -124,7 +124,7 @@ Class Usuarios extends CI_Model
 	{
 		try
 		{
-			return substr(str_shuffle('abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789|!#$%¡+()=[]{}_'), 0, 8);
+			return substr(str_shuffle('abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789'), 0, 8);
 		}
 		catch(Exception $e)
 		{		
