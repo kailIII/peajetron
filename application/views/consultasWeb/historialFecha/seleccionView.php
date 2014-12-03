@@ -1,5 +1,18 @@
 
 			<h1> Historial de peajes Cruzados por Fecha  </h1>
+			<div class="ayuda">
+					<button id="ayuda"> Ayuda</button>
+					<div>
+						<script>
+							$(function(){
+								$( "#ayuda").bind( 'click', function(){
+									bootbox.alert("<b>Historial de Peajes cruzados por fecha</b><p>1. Para mostrar la lista de peajes por las cuales ha cruzado un vehiculo debe seleccionar el vehiculo  </p><p>2. Seleccione un rango de fecha en las cuales desea filtrar </p><p>Luego de seleccionar las fechas se presenta la lista de peajes por el que cruzo el vehiculo</p>");
+								} );
+							});
+							
+						</script>
+					</div>
+				</div>
 			   <?php if ( $status ) : ?>
 				    <div>
 						<?php

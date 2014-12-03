@@ -1,5 +1,14 @@
 
 			<h1> Ultimo peaje Cruzado </h1>
+					<script>
+							$(function(){
+								$( "#ayuda").bind( 'click', function(){
+									bootbox.alert("<b>Último peaje cruzado</b><p>1. Para mostrar  el ultimo peaje cruzado 
+										de un vehiculo debe seleccionar la placa del vehiculo  y luego se muestra el resultado</p>");
+								} );
+							});
+							
+						</script>
 				<?php if ( $status ) : ?>
 				    <div>
 						<?php

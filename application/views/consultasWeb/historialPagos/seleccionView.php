@@ -1,5 +1,14 @@
 
 			<h1> Historial de Pagos</h1>
+			<script>
+							$(function(){
+								$( "#ayuda").bind( 'click', function(){
+									bootbox.alert("<b>Historial de pagos</b><p>1. Para mostrar  el historial de pagos  
+										de un vehiculo debe seleccionar la placa del vehiculo  y luego se muestra una tabla de resultados</p>");
+								} );
+							});
+							
+						</script>
 			<?php if ( $status ) : ?>
 		    <div>
 				<?php

@@ -1,5 +1,14 @@
 
 			<h1> Valor último mes a pagar  </h1>
+			<script>
+							$(function(){
+								$( "#ayuda").bind( 'click', function(){
+									bootbox.alert("<b>Valor último mes</b><p>1. Para mostrar  el último valor a pagar 
+										debe seleccionar la placa del vehiculo  y luego se muestra el resultado</p>");
+								} );
+							});
+							
+						</script>
 			  <?php if ( $status ) : ?>
 				    <div>
 						<?php

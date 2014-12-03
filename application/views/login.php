@@ -1,5 +1,5 @@
 
-<div class="login">
+<div class="login container">
 	<?php
 		echo validation_errors();
 		echo form_open('verifylogin');

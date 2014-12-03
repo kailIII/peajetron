@@ -1,5 +1,20 @@
 
 			<h1> Historial de peajes Cruzados  </h1>
+				<div class="ayuda">
+					<button id="ayuda"> Ayuda</button>
+					<div>
+						<script>
+							$(function(){
+								$( "#ayuda").bind( 'click', function(){
+									bootbox.alert("<b>Historial de Peajes cruzados</b><p>Para mostrar la lista de peajes por las cuales ha cruzado un vehiculo debe seleccionar el vehiculo y luego se muestra una tabla con los  peajes </p>");
+								} );
+							});
+							
+						</script>
+					</div>
+				</div>
+				
+
 
 				<?php if ( $status ) : ?>
 				    <div>
@@ -32,6 +47,8 @@
 						El usuario  no es propietario de ningún vehículo
 					</div>
 				<?php endif; ?>
+
+
 		</div>
 	</body>
 </html>
