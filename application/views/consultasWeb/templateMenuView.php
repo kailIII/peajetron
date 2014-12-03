@@ -8,7 +8,6 @@
 		 	<div id="menu-top">
 				<div id="menu-imagenes">
 					<img src="http://www.invias.gov.co/templates/new_vision/images/s5_logo.png" alt="Logo INVIAS">
-					<img src="http://www.invias.gov.co/images/logoProsperidad.png" alt="Logo INVIAS">
 				</div>
 				<div id="menu-informacion">
 
