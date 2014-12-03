@@ -136,7 +136,7 @@ class Usuario extends CI_Controller {
 		$this->form_validation->set_rules('correo', 'Correo', 'trim|required|xss_clean|valid_email'.$correo);
 		$this->form_validation->set_rules('telefono', 'Teléfono', 'trim|required|xss_clean|integer');
 		$this->form_validation->set_rules('direccion', 'Dirección', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|matches[contrasena2]|md5');
+		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|matches[contrasena2]');
 
 		if($this->form_validation->run() == true) {
 			$result = $this->usuarios->actualizar($session['id_usuario'], $this->input->post());

@@ -34,7 +34,7 @@ Class Usuarios extends CI_Model
 		try
 		{
 			$this->db->trans_begin();
-			$data = array('id_perfil' => $datos['id_perfil'], 'id_tipo_documento' => $datos['id_tipo_documento'], 'id_ubicacion' => $datos['id_ubicacion'], 'documento' => $datos['documento'], 'nombre' => $datos['nombre'], 'correo' => $datos['correo'], 'contrasena' => md5($contrasena), 'telefono' => $datos['telefono'], 'direccion' => $datos['direccion']);
+			$data = array('id_perfil' => $datos['id_perfil'], 'id_tipo_documento' => $datos['id_tipo_documento'], 'id_ubicacion' => $datos['id_ubicacion'], 'documento' => $datos['documento'], 'nombre' => $datos['nombre'], 'correo' => $datos['correo'], 'contrasena' => $contrasena, 'telefono' => $datos['telefono'], 'direccion' => $datos['direccion']);
 			$this->db->insert('usuario', $data);
 			$this->db->trans_commit();
 
